@@ -16,6 +16,9 @@ This page contains software development kits (SDK), libraries, and code samples 
 
 - **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
 - **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
+  <br><br>
+  Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app), and [UbiHome](https://github.com/UbiHome/UbiHome)
+  
 - **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
 - **C#/.NET** - [Sendspin.SDK](https://github.com/chrisuthe/windowsSpin/tree/master/src/Sendspin.SDK)
   <br><br>
