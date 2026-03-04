@@ -1,20 +1,14 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/typescript-node
 {
 	"name": "sendspin/sendspin-audio.com",
-	"image": "mcr.microsoft.com/devcontainers/typescript-node",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:22-bookworm",
 	"forwardPorts": [
 		8080
 	],
 	"portsAttributes": {
 		"8080": {
-			"label": "Preview"
-		}
-	},
-	"postCreateCommand": {
-		"node": ". ${NVM_DIR}/nvm.sh && nvm install && nvm alias default $(cat .nvmrc) && npm install"
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "default"
+			"label": "Astro Preview"
 		}
 	},
 	"customizations": {
@@ -25,17 +19,21 @@
 				"davidanson.vscode-markdownlint"
 			],
 			"settings": {
+				"files.eol": "\n",
+				"editor.tabSize": 2,
 				"editor.formatOnPaste": false,
 				"editor.formatOnSave": true,
 				"editor.formatOnType": true,
-				"[html]": {
+				"[typescript]": {
 					"editor.defaultFormatter": "esbenp.prettier-vscode"
 				},
-				"[typescript]": {
+				"[javascript]": {
 					"editor.defaultFormatter": "esbenp.prettier-vscode"
 				},
 				"files.trimTrailingWhitespace": true
 			}
 		}
-	}
+	},
+	"postCreateCommand": "npm install",
+	"remoteUser": "node"
 }
