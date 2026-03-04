@@ -79,6 +79,33 @@ h3 {
 .project .name {
   margin-top: 8px;
 }
+.cta-button {
+  display: inline-block;
+  padding: 10px 24px;
+  background-color: #03a9f4;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.cta-button:hover {
+  background-color: #0288d1;
+}
+.cta-button-outline {
+  background-color: transparent;
+  color: #03a9f4;
+  border: 2px solid #03a9f4;
+}
+.cta-button-outline:hover {
+  background-color: #03a9f4;
+  color: #fff;
+}
+.cta-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
 .center {
   text-align: center;
 }
