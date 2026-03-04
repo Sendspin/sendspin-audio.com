@@ -8,7 +8,7 @@
 	],
 	"portsAttributes": {
 		"8080": {
-			"label": "Astro Preview"
+			"label": "Preview"
 		}
 	},
 	"customizations": {
