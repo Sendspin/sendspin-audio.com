@@ -4,7 +4,9 @@ title: Build premium audio experiences with Sendspin
 description: "Sendspin offers audio hardware manufacturers an open alternative to AirPlay and Cast: discover how it creates a premium music experience for customers."
 ---
 
-<h2>Build premium audio experiences with Sendspin</h2>
+# For manufacturers
+
+## Build premium audio experiences with Sendspin
 
 **Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra control and visualization features to create a truly immersive music experience for your customers.**
 
@@ -56,9 +58,9 @@ Sendspin acts as an "orchestration layer" between your hardware and the user's m
 
 Sendspin is protected by the Open Home Foundation, a Swiss non-profit organization that fights for the fundamental principles of privacy, choice, and sustainability in smart homes. This strict governance ensures the protocol remains a permanent, open standard that cannot be bought, closed off, or monetized by a single corporate entity.
 
-When you use Sendspin, you join the world's largest open source smart home community. The foundation owns more than 250 projects, standards, drivers, and libraries – including <a href="https://esphome.io/" target="_blank" rel="noopener noreferrer">ESPHome</a> as well as <a href="https://www.home-assistant.io/" target="_blank" rel="noopener noreferrer">Home Assistant</a> and <a href="https://www.music-assistant.io/" target="_blank" rel="noopener noreferrer">Music Assistant</a>. This gives you credibility with a global audience that values hardware built to protect our principles. Sendspin isn't just a protocol, it's your connection to a thriving ecosystem dedicated to making the "Open Home" a reality.
+When you use Sendspin, you join the world's largest open source smart home community. The foundation owns more than 250 projects, standards, drivers, and libraries – including [ESPHome](https://esphome.io/) as well as [Home Assistant](https://www.home-assistant.io/) and [Music Assistant](https://www.music-assistant.io/). This gives you credibility with a global audience that values hardware built to protect our principles. Sendspin isn't just a protocol, it's your connection to a thriving ecosystem dedicated to making the "Open Home" a reality.
 
-**Sendspin certification (coming soon):** We are developing a Sendspin Certified program. Similar to our <a href="https://works-with.home-assistant.io/" target="_blank" rel="noopener noreferrer">Works with Home Assistant</a> program, this will allow manufacturers to display a trusted quality badge on compatible products (subject to testing and a nominal fee). This badge would signal premium interoperability and build trust with our community.
+**Sendspin certification (coming soon):** We are developing a Sendspin Certified program. Similar to our [Works with Home Assistant](https://works-with.home-assistant.io/) program, this will allow manufacturers to display a trusted quality badge on compatible products (subject to testing and a nominal fee). This badge would signal premium interoperability and build trust with our community.
 
 ### Join us as we build the future of open audio
 
