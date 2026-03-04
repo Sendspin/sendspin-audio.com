@@ -1,6 +1,6 @@
 {
 	"name": "sendspin/sendspin-audio.com",
-	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node",
 	"forwardPorts": [
 		8080
 	],
