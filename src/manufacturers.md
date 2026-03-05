@@ -40,7 +40,7 @@ Sendspin unifies your hardware – from speakers and screens to smart lighting �
 Sendspin can be added alongside existing protocols like AirPlay and Cast – or used as a standalone solution – giving you flexibility to serve users across all platforms. It is also part of the broader <a href="https://www.openhomefoundation.org/" target="_blank" rel="noopener noreferrer">Open Home Foundation</a>, <a href="https://www.home-assistant.io/" target="_blank" rel="noopener noreferrer">Home Assistant</a>, and <a href="https://www.music-assistant.io/" target="_blank" rel="noopener noreferrer">Music Assistant</a> communities: giving you access to millions of users who actively choose open, interoperable devices.
 
 **Protect your margins**\
-Sendspin doesn't require expensive, high-spec processors to manage multi-room synchronization, so can be run on cost-effective components like ESP32 processors. As an open standard, it also eliminates the "Big Tech tax": it is free for everyone to use with no licensing fees or royalties to Apple or Google. This protects your margins and allows you to reinvest resources back into your own hardware and product development.
+Sendspin doesn't require expensive, high-spec processors to manage multi-room synchronization, so can be run on cost-effective components like ESP32 microcontrollers. As an open standard, it also eliminates the "Big Tech tax": it is free for everyone to use with no licensing fees or royalties to Apple or Google. This protects your margins and allows you to reinvest resources back into your own hardware and product development.
 
 ### How it works
 
