@@ -50,7 +50,7 @@ Sendspin acts as an "orchestration layer" between your hardware and the user's m
 - **Automatic discovery:** Devices identify each other instantly without complex manual pairing, creating a "plug-and-play" experience for the end user.
 - **Open implementation:** We provide the open specifications and reference code, allowing your engineers to integrate the protocol directly into your existing firmware.
 
-**Ready to build?** Check out the [specifications](/spec/) and [documentation](/code/).
+**Ready to build?** Check out the [specifications](/spec/) and [code](/code/).
 
 ### Protected by the Open Home Foundation
 
