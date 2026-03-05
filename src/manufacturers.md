@@ -26,12 +26,12 @@ This leaves you with a difficult choice: pay ongoing royalties for proprietary s
 
 ### There is another way: Sendspin
 
-Sendspin is flexible. It's designed to drive a complete music listening experience, or coexist alongside your existing technology stack, allowing you to synchronize audio, lighting, visual and more without sacrificing support for standards like AirPlay, Cast, or Bluetooth – and your customers who use them.
+Sendspin is flexible. It's designed to drive a complete music listening experience, or coexist alongside your existing technology stack, allowing you to synchronize audio, lighting, visuals and more without sacrificing support for standards like AirPlay, Cast, or Bluetooth – and your customers who use them.
 
 ### Strategic advantages for your brand
 
 **Elevate your offering**\
-Move beyond basic audio streaming: Sendspin coordinates sound with visual displays, album artwork, track metadata (artist, title, lyrics), and music-reactive lighting to deliver immersive experiences that go beyond what most ecosystems offer. Precision engineering provides microsecond-level synchronization that eliminates the echo and timing drift, giving you the technical foundation to command premium positioning.
+Move beyond basic audio streaming: Sendspin coordinates sound with visual displays, album artwork, track metadata (artist, title, lyrics), and music-reactive lighting to deliver immersive experiences that go beyond what most ecosystems offer. Precision engineering provides microsecond-level synchronization that eliminates echo and timing drift, giving you the technical foundation to command premium positioning.
 
 **Enrich your ecosystem**\
 Sendspin unifies your hardware – from speakers and screens to smart lighting – into a single, coordinated environment. As an open standard, Sendspin also allows your products to mix and match with a growing ecosystem of third-party devices, ensuring your hardware is always compatible with the products your customers already own.
@@ -54,7 +54,7 @@ Sendspin acts as an "orchestration layer" between your hardware and the user's m
 
 ### Protected by the Open Home Foundation
 
-Sendspin is protected by the Open Home Foundation, a Swiss non-profit organization that fights for the fundamental principles of privacy, choice, and sustainability in smart homes. This strict governance ensures the protocol remains a permanent, open standard that cannot be bought, closed off, or monetized by a single corporate entity.
+Sendspin is protected by the <a href="https://www.openhomefoundation.org/" target="_blank" rel="noopener noreferrer">Open Home Foundation</a>, a Swiss non-profit organization that fights for the fundamental principles of privacy, choice, and sustainability in smart homes. This strict governance ensures the protocol remains a permanent, open standard that cannot be bought, closed off, or monetized by a single corporate entity.
 
 When you use Sendspin, you join the world's largest open source smart home community. The foundation owns more than 250 projects, standards, drivers, and libraries – including [ESPHome](https://esphome.io/) as well as [Home Assistant](https://www.home-assistant.io/) and [Music Assistant](https://www.music-assistant.io/). This gives you credibility with a global audience that values hardware built to protect our principles. Sendspin isn't just a protocol, it's your connection to a thriving ecosystem dedicated to making the "Open Home" a reality.
 
