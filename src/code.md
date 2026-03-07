@@ -20,7 +20,8 @@ This page contains software development kits (SDK), libraries, and code samples 
   Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app), and [UbiHome](https://github.com/UbiHome/UbiHome)
   
 - **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
-- **C#/.NET** - [Sendspin.SDK](https://github.com/chrisuthe/windowsSpin/tree/master/src/Sendspin.SDK)
+- **C#/.NET** - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) - 
+  [Nuget Package](https://www.nuget.org/packages/Sendspin.SDK)
   <br><br>
   Used by [windowsSpin](https://github.com/chrisuthe/windowsSpin)
 
