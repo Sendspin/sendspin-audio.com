@@ -55,6 +55,7 @@ Clients announce their presence via mDNS using:
 - Service type: `_sendspin._tcp.local.`
 - Port: The port the Sendspin client is listening on (recommended: `8928`)
 - TXT record: `path` key specifying the WebSocket endpoint (recommended: `/sendspin`)
+- TXT record: `name` key specifying the friendly name of the player (optional)
 
 The server discovers available clients through mDNS and connects to each client via WebSocket using the advertised address and path.
 
@@ -85,6 +86,7 @@ If clients prefer to initiate the connection instead of waiting for the server t
 - Service type: `_sendspin-server._tcp.local.`
 - Port: The port the Sendspin server is listening on (recommended: `8927`)
 - TXT record: `path` key specifying the WebSocket endpoint (recommended: `/sendspin`)
+- TXT record: `name` key specifying the friendly name of the server (optional)
 
 Clients discover the server through mDNS and initiate a WebSocket connection using the advertised address and path.
 
@@ -174,10 +176,12 @@ Binary audio messages contain timestamps in the server's time domain indicating 
 
 - Each client is responsible for maintaining synchronization with the server's timestamps
 - Clients maintain accurate sync by adding or removing samples using interpolation to compensate for clock drift
-- When a client cannot maintain sync (e.g., buffer underrun), it should send the 'error' state via [`client/state`](#client--server-clientstate-player-object), mute its audio output, and continue buffering until it can resume synchronized playback, at which point it should send the 'synchronized' state
+- When a client cannot maintain sync (e.g., buffer underrun), it should send `state: 'error'` via [`client/state`](#client--server-clientstate), mute its audio output, and continue buffering until it can resume synchronized playback, at which point it should send `state: 'synchronized'`
 - The server is unaware of individual client synchronization accuracy - it simply broadcasts timestamped audio
 - The server sends audio to late-joining clients with future timestamps only, allowing them to buffer and start playback in sync with existing clients
 - Audio chunks may arrive with timestamps in the past due to network delays or buffering; clients should drop these late chunks to maintain sync
+- Clients subtract their [`static_delay_ms`](#client--server-clientstate-player-object) from server timestamps before scheduling playback
+- Servers factor in each client's `static_delay_ms` when calculating how far ahead to send audio, keeping effective buffer headroom constant
 
 ```mermaid
 sequenceDiagram
@@ -191,8 +195,9 @@ sequenceDiagram
     Client->>Server: client/hello (roles and capabilities)
     Server->>Client: server/hello (server info, connection_reason)
 
+    Client->>Server: client/state (state: synchronized)
     alt Player role
-        Client->>Server: client/state (player: volume, muted, state)
+        Client->>Server: client/state (player: volume, muted)
     end
 
     loop Continuous clock sync
@@ -232,8 +237,8 @@ sequenceDiagram
         Client->>Server: client/command (controller: play/pause/volume/switch/etc)
     end
 
-    alt Player role state changes
-        Client->>Server: client/state (player state changes)
+    alt State changes
+        Client->>Server: client/state (state and/or player changes)
     end
 
     alt Server commands player
@@ -241,9 +246,6 @@ sequenceDiagram
     end
 
     Server->>Client: stream/end (ends all role streams)
-    alt Player role
-        Client->>Server: client/state (player idle state)
-    end
 
     alt Graceful disconnect
         Client->>Server: client/goodbye (reason)
@@ -317,15 +319,34 @@ For synchronization, all timing is relative to the server's monotonic clock. The
 
 ### Client → Server: `client/state`
 
-Client sends state updates to the server. Contains role-specific state objects based on the client's supported roles.
+Client sends state updates to the server. Contains client-level state and role-specific state objects.
 
-Must be sent immediately after receiving [`server/hello`](#server--client-serverhello) for roles that report state (such as `player`), and whenever any state changes thereafter.
+Must be sent immediately after receiving [`server/hello`](#server--client-serverhello), and whenever any state changes thereafter.
 
 For the initial message, include all state fields. For subsequent updates, only include fields that have changed. The server will merge these updates into existing state.
 
+- `state`: 'synchronized' | 'error' | 'external_source' - operational state of the client
+  - `'synchronized'` - client is operational and synchronized with server timestamps
+  - `'error'` - client has a problem preventing normal operation (unable to keep up, clock sync issues, etc.)
+  - `'external_source'` - client is in use by an external system and is not currently participating in Sendspin playback with this server. See [External Source Handling](#external-source-handling)
 - `player?`: object - only if client has `player` role ([see player state object details](#client--server-clientstate-player-object))
 
 [Application-specific roles](#application-specific-roles) may also include objects in this message (keys starting with `_`).
+
+### External Source Handling
+
+When a client sets `state: 'external_source'`, it indicates the client's output is in use by an external system (e.g., a different audio source, HDMI input, or local media playback) and is not currently participating in Sendspin playback with this server.
+
+#### Server behavior when `state` changes to `'external_source'`:
+
+If the client is in a multi-client group:
+1. Remember the client's current group as its "previous group" (see [switch command cycle](#switch-command-cycle))
+2. Move the client to a new solo group (stopped)
+   - Send [`group/update`](#server--client-groupupdate) with the new group information
+   - Send [`stream/end`](#server--client-streamend) for all active streams
+
+If the client is already in a solo group:
+- Stop playback and send [`stream/end`](#server--client-streamend) for all active streams
 
 ### Client → Server: `client/command`
 
@@ -437,18 +458,23 @@ The `player@v1_support` object in [`client/hello`](#client--server-clienthello) 
 
 **Note:** Servers must support all audio codecs: 'opus', 'flac', and 'pcm'.
 
+**PCM Encoding Convention:** For the `pcm` codec, samples are encoded as little-endian signed integers (two's complement). 24-bit samples are packed as 3 bytes per sample.
+
 ### Client → Server: `client/state` player object
 
 The `player` object in [`client/state`](#client--server-clientstate) has this structure:
 
-Informs the server of player state changes. Only for clients with the `player` role.
+Informs the server of player-specific state changes. Only for clients with the `player` role.
 
 State updates must be sent whenever any state changes, including when the volume was changed through a `server/command` or via device controls.
 
 - `player`: object
-  - `state`: 'synchronized' | 'error' - state of the player, should always be `synchronized` unless there is an error preventing current or future playback (unable to keep up, issues keeping the clock in sync, etc)
   - `volume?`: integer - range 0-100, must be included if 'volume' is in `supported_commands` from [`player@v1_support`](#client--server-clienthello-playerv1-support-object)
   - `muted?`: boolean - mute state, must be included if 'mute' is in `supported_commands` from [`player@v1_support`](#client--server-clienthello-playerv1-support-object)
+  - `static_delay_ms`: integer - static delay in milliseconds (0-5000), always required for players
+  - `supported_commands?`: string[] - subset of: 'set_static_delay'
+
+**Static delay:** The default is 0, meaning audio exits the device's audio port at the timestamp. `static_delay_ms` compensates for additional delay beyond the port (external speakers, amplifiers). Negative values are not supported and should never be required for any compliant implementation. Clients must persist `static_delay_ms` locally across reboots and server reconnections. Clients may update `static_delay_ms` and `supported_commands` when audio output changes (e.g., external speaker connected), persisting separate delays per output.
 
 ### Client → Server: `stream/request-format` player object
 
@@ -471,9 +497,10 @@ The `player` object in [`server/command`](#server--client-servercommand) has thi
 Request the player to perform an action, e.g., change volume or mute state.
 
 - `player`: object
-  - `command`: 'volume' | 'mute' - should be one of the values listed in `supported_commands` in the [`player@v1_support`](#client--server-clienthello-playerv1-support-object) object in the [`client/hello`](#client--server-clienthello) message. Commands not in `supported_commands` are ignored by the client
+  - `command`: 'volume' | 'mute' | 'set_static_delay' - must be listed in `supported_commands` from [`player@v1_support`](#client--server-clienthello-playerv1-support-object) or from [`client/state`](#client--server-clientstate-player-object); unlisted commands are ignored by the client
   - `volume?`: integer - volume range 0-100, only set if `command` is `volume`
   - `mute?`: boolean - true to mute, false to unmute, only set if `command` is `mute`
+  - `static_delay_ms?`: integer - delay in milliseconds (0-5000), only set if `command` is `set_static_delay`
 
 ### Server → Client: `stream/start` player object
 
@@ -498,7 +525,7 @@ Binary messages should be rejected if there is no active stream.
 - Bytes 1-8: timestamp (big-endian int64) - server clock time in microseconds when the first sample should be output
 - Rest of bytes: encoded audio frame
 
-The timestamp indicates when the first audio sample in this chunk should be output. Clients must translate this server timestamp to their local clock using the offset computed from clock synchronization. Clients should compensate for any known processing delays (e.g., DAC latency, audio buffer delays, amplifier delays) by accounting for these delays when submitting audio to the hardware.
+The timestamp indicates when the first audio sample in this chunk should be output. Clients must translate this server timestamp to their local clock using the offset computed from clock synchronization, subtracting their [`static_delay_ms`](#client--server-clientstate-player-object) from the timestamp. Clients should compensate for any known processing delays (e.g., DAC latency, audio buffer delays, amplifier delays) by accounting for these delays when submitting audio to the hardware.
 
 ## Controller messages
 This section describes messages specific to clients with the `controller` role, which enables the client to control the Sendspin group this client is part of, and switch between groups.
@@ -549,6 +576,8 @@ This ensures that when setting group volume to 100%, all players will reach 100%
 **Setting group mute:** When setting group mute via the 'mute' command, the server applies the mute state to all players in the group.
 
 #### Switch command cycle
+
+**Previous group priority:** If the client is still in the solo group from its `'external_source'` transition, the `switch` command prioritizes rejoining the previous group.
 
 For clients **with** the `player` role, the cycle includes:
 1. Multi-client groups that are currently playing
@@ -624,7 +653,7 @@ The `artwork@v1_support` object in [`client/hello`](#client--server-clienthello)
     - `media_width`: integer - max width in pixels
     - `media_height`: integer - max height in pixels
 
-**Note:** The server will scale images to fit within the specified dimensions while preserving aspect ratio. Clients can support 1-4 independent artwork channels depending on their display capabilities. The channel number is determined by array position: `channels[0]` is channel 0 (binary message type 4), `channels[1]` is channel 1 (binary message type 5), etc.
+**Note:** The server will scale images to fit within the specified dimensions while preserving aspect ratio. Clients can support 1-4 independent artwork channels depending on their display capabilities. The channel number is determined by array position: `channels[0]` is channel 0 (binary message type 8), `channels[1]` is channel 1 (binary message type 9), etc.
 
 **None source:** If a channel has `source` set to `none`, the server will not send any artwork data for that channel. This allows clients to disable and enable specific channels on the fly through [`stream/request-format`](#client--server-streamrequest-format-artwork-object) without needing to re-establish the WebSocket connection (useful for dynamic display layouts).
 
