@@ -16,6 +16,12 @@ module.exports = function (eleventyConfig) {
 
   const md = markdownIt({ html: true }).use(markdownItAnchor, {
     slugify: githubSlugify,
+    permalink: markdownItAnchor.permalink.ariaHidden({
+      class: "heading-anchor",
+      symbol: "#",
+      placement: "before",
+      space: false,
+    }),
   });
 
   // Convert ```mermaid blocks to <pre class="mermaid">
