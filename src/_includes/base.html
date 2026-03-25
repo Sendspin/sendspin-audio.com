@@ -28,6 +28,11 @@ Sendspin: Music Experience Protocol
   <head>
     <meta charset="utf-8" />
     <link href="/style.css" rel="stylesheet" />
+    {% if stylesheets %}
+    {% for href in stylesheets %}
+    <link href="{{ href }}" rel="stylesheet" />
+    {% endfor %}
+    {% endif %}
     <title>{{ full_title }}</title>
     <link rel="icon" href="/images/sendspin-favicon.png" type="image/png" />
     <meta name="description" content="{{ description }}" />
@@ -85,6 +90,16 @@ Sendspin: Music Experience Protocol
     {% if mermaid %}
     <script src="/js/mermaid-11.12.2.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: true });</script>
+    {% endif %}
+    {% if scripts %}
+    {% for src in scripts %}
+    <script src="{{ src }}"></script>
+    {% endfor %}
+    {% endif %}
+    {% if module_scripts %}
+    {% for src in module_scripts %}
+    <script type="module" src="{{ src }}"></script>
+    {% endfor %}
     {% endif %}
   </body>
 </html>
