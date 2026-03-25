@@ -1,6 +1,11 @@
 ---
 layout: base
 description: Open protocol for synchronized music experiences across devices.
+stylesheets:
+  - /sendspin-demo.css?v=20260325-5
+module_scripts:
+  - /js/sendspin-demo-card.js?v=20260325-3
+demo_server_url: https://sendspin-demo.openhomefoundation.org
 ---
 
 <h2>
@@ -36,6 +41,98 @@ description: Open protocol for synchronized music experiences across devices.
   <a href="/spec/" class="cta-button cta-button-outline">Read the spec</a>
 </div>
 
+<section class="demo-showcase" aria-labelledby="live-demo-heading">
+  <div class="demo-showcase__intro">
+    <p class="demo-showcase__eyebrow">Live Demo</p>
+    <h3 id="live-demo-heading">Try Sendspin in your browser</h3>
+    <p class="demo-showcase__copy">
+      Open it on multiple devices, press Start Listening on each one, and hear
+      them lock together.
+    </p>
+  </div>
+
+  <div
+    id="sendspin-demo"
+    class="sendspin-demo"
+    data-server-url="{{ demo_server_url }}"
+  >
+    <div id="sendspin-demo-surface" class="sendspin-demo__surface">
+      <div class="sendspin-demo__listen-row">
+        <button
+          id="sendspin-demo-listen-toggle-btn"
+          class="sendspin-demo__listen-btn"
+          aria-pressed="false"
+          type="button"
+        >
+          <span
+            class="sendspin-demo__listen-btn-icon"
+            aria-hidden="true"
+          ></span>
+          <span id="sendspin-demo-listen-toggle-label">Start Listening</span>
+        </button>
+
+        <div class="sendspin-demo__attribution" aria-live="polite">
+          <span class="sendspin-demo__attribution-label">Now playing</span>
+          <p class="sendspin-demo__attribution-text">
+            <a
+              href="https://soundcloud.com/teetow/"
+              target="_blank"
+              rel="noreferrer"
+              ><strong>Pizza Hat</strong> by Johan Althoff</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div
+        id="sendspin-demo-sync-panel"
+        class="sendspin-demo__sync-panel"
+        aria-hidden="true"
+      >
+        <div class="sendspin-demo__sync-header">
+          <span class="sendspin-demo__sync-title">Synchronization</span>
+          <span
+            id="sendspin-demo-sync-status"
+            class="sendspin-demo__sync-readout sync-idle"
+            >--.- ms</span
+          >
+        </div>
+        <div
+          id="sendspin-demo-sync-graph-shell"
+          class="sendspin-demo__sync-graph-shell sync-idle"
+        >
+          <canvas
+            id="sendspin-demo-sync-graph"
+            class="sendspin-demo__sync-graph"
+            aria-label="Synchronization graph"
+          ></canvas>
+        </div>
+      </div>
+
+      <div class="sendspin-demo__share-grid">
+        <div class="sendspin-demo__qr-panel">
+          <div class="sendspin-demo__qr-code">
+            <img
+              src="/images/sendspin-audio-qr.svg"
+              alt="QR code for sendspin-audio.com"
+            />
+          </div>
+          <p class="sendspin-demo__qr-copy">
+            Scan to open
+            <a
+              href="https://sendspin-audio.com/"
+              target="_blank"
+              rel="noreferrer"
+              >sendspin-audio.com</a
+            >
+            on another phone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <h3>Try it out today</h3>
 
 <p>
@@ -63,7 +160,9 @@ description: Open protocol for synchronized music experiences across devices.
   </li>
   <li>
     Turn an old phone into a Sendspin receiver with
-    <a href="https://github.com/chrisuthe/SendspinDroid/releases" target="_blank"
+    <a
+      href="https://github.com/chrisuthe/SendspinDroid/releases"
+      target="_blank"
       >SendspinDroid</a
     >
   </li>
@@ -72,7 +171,9 @@ description: Open protocol for synchronized music experiences across devices.
     <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank"
       >windowsSpin</a
     >, or install
-    <a href="https://github.com/Sendspin/sendspin-cli?tab=readme-ov-file#install-as-daemon-systemd-linux" target="_blank"
+    <a
+      href="https://github.com/Sendspin/sendspin-cli?tab=readme-ov-file#install-as-daemon-systemd-linux"
+      target="_blank"
       >Sendspin Daemon</a
     >
     on a Linux machine
@@ -82,13 +183,6 @@ description: Open protocol for synchronized music experiences across devices.
 <p>For nerds:</p>
 
 <ul>
-  <li>
-    If you want to see what Sendspin is capable off, and are familiar with
-    Python and the command-line, run
-    <code>uvx sendspin serve --demo</code>
-    (requires
-    <a href="https://docs.astral.sh/uv/#highlights" target="_blank">uv</a>)
-  </li>
   <li>
     Show album art and control your music from ESPHome using
     <a

@@ -1,0 +1,650 @@
+const DEMO_SERVER_URL = "https://sendspin-demo.openhomefoundation.org";
+const MAX_VOLUME = 100;
+const UI_ACTIVATION_MS = 550;
+const SYNC_UPDATE_INTERVAL_MS = 250;
+const START_HAPTIC_PATTERN = [18, 28, 24];
+const STOP_HAPTIC_PATTERN = [14];
+const SYNC_PLACEHOLDER = "--.- ms";
+const SYNC_CLASSES = ["sync-good", "sync-warn", "sync-bad", "sync-idle"];
+const SYNC_GRAPH = {
+  rangeMs: 50,
+  historyLength: 180,
+  sampleIntervalMs: 45,
+  insets: {
+    left: 0,
+    right: 18,
+    top: 6,
+    bottom: 6,
+  },
+  labels: {
+    xInset: 6,
+    positiveOffsetY: 12,
+    zeroOffsetY: 1,
+    negativeOffsetY: -12,
+  },
+  strokeWidthPx: 2.5,
+  endpointRadiusPx: 4.5,
+  lineShadowBlurPx: 16,
+  pointShadowBlurPx: 14,
+};
+const TONE_COLORS = {
+  "sync-idle": [239, 225, 187],
+  "sync-good": [245, 255, 246],
+  "sync-warn": [255, 224, 130],
+  "sync-bad": [255, 154, 146],
+};
+
+const root = document.getElementById("sendspin-demo");
+
+if (!root) {
+  // Nothing to do outside the homepage.
+} else {
+  const showcase = root.closest(".demo-showcase");
+  const elements = {
+    showcase,
+    surface: document.getElementById("sendspin-demo-surface"),
+    listenToggleBtn: document.getElementById("sendspin-demo-listen-toggle-btn"),
+    listenToggleLabel: document.getElementById("sendspin-demo-listen-toggle-label"),
+    syncPanel: document.getElementById("sendspin-demo-sync-panel"),
+    syncStatus: document.getElementById("sendspin-demo-sync-status"),
+    syncGraphShell: document.getElementById("sendspin-demo-sync-graph-shell"),
+    syncGraph: document.getElementById("sendspin-demo-sync-graph"),
+  };
+
+  const state = {
+    player: null,
+    syncUpdateInterval: null,
+    isListening: false,
+    isStarting: false,
+    sync: {
+      currentMs: null,
+      tone: "sync-idle",
+    },
+  };
+
+  const serverUrl = root.dataset.serverUrl || DEMO_SERVER_URL;
+
+  function wait(ms) {
+    return new Promise((resolve) => {
+      window.setTimeout(resolve, ms);
+    });
+  }
+
+  function triggerHaptic(pattern) {
+    if (typeof navigator.vibrate !== "function") {
+      return;
+    }
+
+    try {
+      navigator.vibrate(pattern);
+    } catch (err) {
+      console.warn("Failed to trigger vibration:", err);
+    }
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function rgba(color, alpha) {
+    const [red, green, blue] = color;
+    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+  }
+
+  function applySyncToneClass(element, tone) {
+    element.classList.remove(...SYNC_CLASSES);
+    element.classList.add(tone);
+  }
+
+  function formatSyncValue(syncMs) {
+    const normalizedSyncMs = Math.abs(syncMs) < 0.05 ? 0 : syncMs;
+    return `${normalizedSyncMs.toFixed(1)} ms`;
+  }
+
+  function getSyncTone(syncMs) {
+    const absSyncMs = Math.abs(syncMs);
+    if (absSyncMs < 10) {
+      return "sync-good";
+    }
+    if (absSyncMs <= 25) {
+      return "sync-warn";
+    }
+    return "sync-bad";
+  }
+
+  function createSyncGraph({ canvas, shell }) {
+    let animationFrame = null;
+    let lastSampleAtMs = 0;
+    let history = [];
+    let currentSyncMs = null;
+    let currentTone = "sync-idle";
+    const resetThresholdMs =
+      SYNC_GRAPH.sampleIntervalMs * SYNC_GRAPH.historyLength;
+
+    function clearHistory() {
+      history = [];
+      lastSampleAtMs = 0;
+    }
+
+    function getContext() {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) {
+        return null;
+      }
+
+      const dpr = window.devicePixelRatio || 1;
+      const width = rect.width;
+      const height = rect.height;
+      const pixelWidth = Math.round(width * dpr);
+      const pixelHeight = Math.round(height * dpr);
+
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        return null;
+      }
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width, height };
+    }
+
+    function getMetrics(width, height) {
+      const { left, right, top, bottom } = SYNC_GRAPH.insets;
+      return {
+        width,
+        height,
+        left,
+        right,
+        top,
+        bottom,
+        plotWidth: width - left - right,
+        plotHeight: height - top - bottom,
+      };
+    }
+
+    function getX(index, historyLength, metrics) {
+      const ageFromNewest = historyLength - 1 - index;
+      const ratio = ageFromNewest / Math.max(SYNC_GRAPH.historyLength - 1, 1);
+      return metrics.width - metrics.right - ratio * metrics.plotWidth;
+    }
+
+    function getY(syncMs, metrics) {
+      const clamped = clamp(syncMs, -SYNC_GRAPH.rangeMs, SYNC_GRAPH.rangeMs);
+      const ratio = (SYNC_GRAPH.rangeMs - clamped) / (SYNC_GRAPH.rangeMs * 2);
+      return metrics.top + ratio * metrics.plotHeight;
+    }
+
+    function getGridLines() {
+      const max = SYNC_GRAPH.rangeMs;
+      const half = max / 2;
+      return [
+        { value: max, label: String(max), alpha: 0.16, dash: [] },
+        { value: half, label: null, alpha: 0.08, dash: [4, 6] },
+        { value: 0, label: "0", alpha: 0.22, dash: [] },
+        { value: -half, label: null, alpha: 0.08, dash: [4, 6] },
+        { value: -max, label: String(-max), alpha: 0.16, dash: [] },
+      ];
+    }
+
+    function getLabelOffsetY(value) {
+      if (value > 0) {
+        return SYNC_GRAPH.labels.positiveOffsetY;
+      }
+      if (value < 0) {
+        return SYNC_GRAPH.labels.negativeOffsetY;
+      }
+      return SYNC_GRAPH.labels.zeroOffsetY;
+    }
+
+    function drawGrid(ctx, metrics) {
+      const lines = getGridLines();
+
+      ctx.save();
+      ctx.font = '11px "SF Mono", "Monaco", "Menlo", monospace';
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+
+      for (const line of lines) {
+        const y = getY(line.value, metrics);
+        ctx.beginPath();
+        ctx.setLineDash(line.dash);
+        ctx.moveTo(metrics.left, y);
+        ctx.lineTo(metrics.width - metrics.right, y);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${line.alpha})`;
+        ctx.lineWidth = line.value === 0 ? 1.2 : 1;
+        ctx.stroke();
+
+        if (line.label !== null) {
+          const labelY = clamp(
+            y + getLabelOffsetY(line.value),
+            12,
+            metrics.height - 12,
+          );
+          ctx.fillStyle = "rgba(255, 255, 255, 0.46)";
+          ctx.fillText(
+            line.label,
+            metrics.width - SYNC_GRAPH.labels.xInset,
+            labelY,
+          );
+        }
+      }
+
+      ctx.restore();
+    }
+
+    function traceSmoothLine(ctx, points) {
+      if (points.length === 0) {
+        return;
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+
+      if (points.length === 1) {
+        return;
+      }
+
+      for (let i = 1; i < points.length - 1; i += 1) {
+        const midX = (points[i].x + points[i + 1].x) / 2;
+        const midY = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
+      }
+
+      const lastPoint = points[points.length - 1];
+      ctx.quadraticCurveTo(lastPoint.x, lastPoint.y, lastPoint.x, lastPoint.y);
+    }
+
+    function getSegments(metrics) {
+      const segments = [];
+      let currentSegment = [];
+
+      for (let i = 0; i < history.length; i += 1) {
+        const sample = history[i];
+        if (typeof sample.syncMs !== "number") {
+          if (currentSegment.length > 0) {
+            segments.push(currentSegment);
+            currentSegment = [];
+          }
+          continue;
+        }
+
+        currentSegment.push({
+          x: getX(i, history.length, metrics),
+          y: getY(sample.syncMs, metrics),
+        });
+      }
+
+      if (currentSegment.length > 0) {
+        segments.push(currentSegment);
+      }
+
+      return segments;
+    }
+
+    function drawLine(ctx, metrics) {
+      const segments = getSegments(metrics);
+      if (segments.length === 0) {
+        return;
+      }
+
+      const toneColor = TONE_COLORS[currentTone] ?? TONE_COLORS["sync-idle"];
+      const strokeGradient = ctx.createLinearGradient(
+        metrics.left,
+        0,
+        metrics.width - metrics.right,
+        0,
+      );
+      strokeGradient.addColorStop(0, rgba(toneColor, 0.12));
+      strokeGradient.addColorStop(0.7, rgba(toneColor, 0.58));
+      strokeGradient.addColorStop(1, rgba(toneColor, 0.98));
+
+      ctx.save();
+      ctx.lineWidth = SYNC_GRAPH.strokeWidthPx;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.strokeStyle = strokeGradient;
+      ctx.shadowBlur = SYNC_GRAPH.lineShadowBlurPx;
+      ctx.shadowColor = rgba(toneColor, 0.28);
+
+      for (const segment of segments) {
+        traceSmoothLine(ctx, segment);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+
+      const lastSegment = segments[segments.length - 1];
+      const lastPoint = lastSegment[lastSegment.length - 1];
+      if (!lastPoint) {
+        return;
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(
+        lastPoint.x,
+        lastPoint.y,
+        SYNC_GRAPH.endpointRadiusPx,
+        0,
+        Math.PI * 2,
+      );
+      ctx.fillStyle = rgba(toneColor, 0.98);
+      ctx.shadowBlur = SYNC_GRAPH.pointShadowBlurPx;
+      ctx.shadowColor = rgba(toneColor, 0.42);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function draw() {
+      const graph = getContext();
+      if (!graph) {
+        return;
+      }
+
+      const { ctx, width, height } = graph;
+      const metrics = getMetrics(width, height);
+
+      ctx.clearRect(0, 0, width, height);
+      drawGrid(ctx, metrics);
+      drawLine(ctx, metrics);
+    }
+
+    function sampleHistory() {
+      history.push({ syncMs: currentSyncMs });
+
+      if (history.length > SYNC_GRAPH.historyLength) {
+        history.shift();
+      }
+    }
+
+    function loop(timestampMs) {
+      if (lastSampleAtMs === 0) {
+        lastSampleAtMs = timestampMs;
+        sampleHistory();
+      }
+
+      const elapsedMs = timestampMs - lastSampleAtMs;
+      if (elapsedMs > resetThresholdMs) {
+        clearHistory();
+        lastSampleAtMs = timestampMs;
+        sampleHistory();
+      } else {
+        while (timestampMs - lastSampleAtMs >= SYNC_GRAPH.sampleIntervalMs) {
+          lastSampleAtMs += SYNC_GRAPH.sampleIntervalMs;
+          sampleHistory();
+        }
+      }
+
+      draw();
+      animationFrame = window.requestAnimationFrame(loop);
+    }
+
+    return {
+      start() {
+        if (animationFrame !== null) {
+          return;
+        }
+
+        draw();
+        animationFrame = window.requestAnimationFrame(loop);
+      },
+
+      stop() {
+        if (animationFrame === null) {
+          return;
+        }
+
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      },
+
+      reset() {
+        clearHistory();
+        draw();
+      },
+
+      updateSample({ syncMs, tone }) {
+        currentSyncMs = syncMs;
+        currentTone = tone;
+        applySyncToneClass(shell, tone);
+
+        if (animationFrame === null) {
+          draw();
+        }
+      },
+    };
+  }
+
+  const syncGraph = createSyncGraph({
+    canvas: elements.syncGraph,
+    shell: elements.syncGraphShell,
+  });
+
+  function renderSyncDisplay({ label, tone = "sync-idle", syncMs = null }) {
+    state.sync.currentMs = syncMs;
+    state.sync.tone = tone;
+    elements.syncStatus.textContent = label;
+    applySyncToneClass(elements.syncStatus, tone);
+    syncGraph.updateSample({ syncMs, tone });
+  }
+
+  function resetSyncDisplay() {
+    renderSyncDisplay({
+      label: SYNC_PLACEHOLDER,
+      tone: "sync-idle",
+      syncMs: null,
+    });
+  }
+
+  function getListenToggleLabel() {
+    if (state.isStarting) {
+      return "Connecting...";
+    }
+
+    return state.isListening ? "Stop Listening" : "Start Listening";
+  }
+
+  function renderUiState() {
+    const pageIsActive = state.isListening || state.isStarting;
+
+    elements.showcase?.classList.toggle("is-listening", pageIsActive);
+    elements.showcase?.classList.toggle("is-starting", state.isStarting);
+    elements.surface.classList.toggle("is-expanded", pageIsActive);
+    elements.syncPanel.setAttribute("aria-hidden", String(!pageIsActive));
+    elements.listenToggleBtn.setAttribute("aria-pressed", String(pageIsActive));
+    elements.listenToggleBtn.classList.toggle(
+      "is-stop",
+      state.isListening && !state.isStarting,
+    );
+    elements.listenToggleLabel.textContent = getListenToggleLabel();
+  }
+
+  function handlePlayerStateChange() {
+    if (!state.player) {
+      return;
+    }
+
+    updateSyncStatus();
+  }
+
+  function stopSyncUpdates() {
+    if (state.syncUpdateInterval === null) {
+      return;
+    }
+
+    window.clearInterval(state.syncUpdateInterval);
+    state.syncUpdateInterval = null;
+  }
+
+  function startSyncUpdates() {
+    stopSyncUpdates();
+    state.syncUpdateInterval = window.setInterval(
+      updateSyncStatus,
+      SYNC_UPDATE_INTERVAL_MS,
+    );
+  }
+
+  function destroyPlayer(reason = "shutdown") {
+    stopSyncUpdates();
+
+    if (!state.player) {
+      return;
+    }
+
+    const activePlayer = state.player;
+    state.player = null;
+
+    try {
+      activePlayer.disconnect(reason);
+    } catch (err) {
+      console.warn("Failed to disconnect player:", err);
+    }
+  }
+
+  async function createPlayer() {
+    const { SendspinPlayer } = await sdkImport;
+    return new SendspinPlayer({
+      baseUrl: serverUrl,
+      onStateChange: handlePlayerStateChange,
+    });
+  }
+
+  async function connectPlayer() {
+    if (state.player?.isConnected) {
+      return state.player;
+    }
+
+    destroyPlayer("user_request");
+
+    const nextPlayer = await createPlayer();
+    state.player = nextPlayer;
+
+    try {
+      await nextPlayer.connect();
+      startSyncUpdates();
+      return nextPlayer;
+    } catch (err) {
+      if (state.player === nextPlayer) {
+        destroyPlayer("user_request");
+      } else {
+        try {
+          nextPlayer.disconnect("user_request");
+        } catch (disconnectErr) {
+          console.warn(
+            "Failed to clean up after connection error:",
+            disconnectErr,
+          );
+        }
+      }
+
+      throw err;
+    }
+  }
+
+  function updateSyncStatus() {
+    const activePlayer = state.player;
+    if (!activePlayer) {
+      return;
+    }
+
+    if (!activePlayer.isConnected) {
+      disconnect();
+      return;
+    }
+
+    const syncInfo = activePlayer.syncInfo ?? {};
+    const syncMs =
+      typeof syncInfo.syncErrorMs === "number" &&
+      Number.isFinite(syncInfo.syncErrorMs)
+        ? syncInfo.syncErrorMs
+        : null;
+
+    if (!activePlayer.isPlaying || syncMs === null) {
+      resetSyncDisplay();
+      return;
+    }
+
+    renderSyncDisplay({
+      label: formatSyncValue(syncMs),
+      tone: getSyncTone(syncMs),
+      syncMs,
+    });
+  }
+
+  async function startListening() {
+    if (state.isListening || state.isStarting) {
+      return;
+    }
+
+    state.isListening = true;
+    state.isStarting = true;
+    elements.listenToggleBtn.disabled = true;
+
+    resetSyncDisplay();
+    syncGraph.reset();
+    syncGraph.start();
+    renderUiState();
+
+    try {
+      const connectPromise = connectPlayer();
+
+      await wait(UI_ACTIVATION_MS);
+      renderUiState();
+
+      const activePlayer = await connectPromise;
+      activePlayer.setVolume(MAX_VOLUME);
+      activePlayer.setMuted(false);
+      updateSyncStatus();
+    } catch (err) {
+      console.error("Connection failed:", err);
+      disconnect();
+    } finally {
+      state.isStarting = false;
+      elements.listenToggleBtn.disabled = false;
+      renderUiState();
+    }
+  }
+
+  function stopListening() {
+    disconnect("user_request");
+  }
+
+  function disconnect(reason = "shutdown") {
+    destroyPlayer(reason);
+
+    state.isListening = false;
+    state.isStarting = false;
+    elements.listenToggleBtn.disabled = false;
+
+    syncGraph.stop();
+    resetSyncDisplay();
+    syncGraph.reset();
+    renderUiState();
+  }
+
+  elements.listenToggleBtn.addEventListener("click", async () => {
+    if (state.isListening) {
+      triggerHaptic(STOP_HAPTIC_PATTERN);
+      stopListening();
+      return;
+    }
+
+    triggerHaptic(START_HAPTIC_PATTERN);
+    await startListening();
+  });
+
+  window.addEventListener("pagehide", () => {
+    destroyPlayer("shutdown");
+  });
+
+  const sdkImport = import(
+    "https://unpkg.com/@sendspin/sendspin-js@2.0.5/dist/index.js?module",
+  );
+
+  renderUiState();
+  resetSyncDisplay();
+}
