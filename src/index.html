@@ -61,6 +61,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     id="sendspin-demo"
     class="sendspin-demo"
     data-server-url="{{ demo_server_url }}"
+    data-share-url="{{ demo_share_url }}"
   >
     <div id="sendspin-demo-surface" class="sendspin-demo__surface">
       <div class="sendspin-demo__listen-row">
@@ -117,18 +118,40 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
       <div class="sendspin-demo__share-grid">
         <div class="sendspin-demo__qr-panel">
-          <a
-            class="sendspin-demo__qr-code"
-            href="{{ demo_share_url }}"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open the Sendspin live demo"
-          >
-            <img
-              src="/images/sendspin-audio-qr.svg?v=20260326-3"
-              alt="QR code for the Sendspin live demo"
-            />
-          </a>
+          <div class="sendspin-demo__share-actions">
+            <a
+              class="sendspin-demo__qr-code"
+              href="{{ demo_share_url }}"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Sendspin live demo"
+            >
+              <img
+                src="/images/sendspin-audio-qr.svg?v=20260326-3"
+                alt="QR code for the Sendspin live demo"
+              />
+            </a>
+            <button
+              id="sendspin-demo-share-btn"
+              class="sendspin-demo__share-btn"
+              type="button"
+              aria-label="Share the Sendspin live demo"
+            >
+              <svg
+                class="sendspin-demo__share-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M12 4v9" />
+                <path d="M8.5 7.5 12 4l3.5 3.5" />
+                <path
+                  d="M6 12.5v5.5A2 2 0 0 0 8 20h8a2 2 0 0 0 2-2v-5.5"
+                />
+              </svg>
+              <span class="sendspin-demo__share-btn-label">Share</span>
+            </button>
+          </div>
           <p class="sendspin-demo__qr-copy">
             Scan to open the
             <a

@@ -45,6 +45,7 @@ if (!root) {
     surface: document.getElementById("sendspin-demo-surface"),
     listenToggleBtn: document.getElementById("sendspin-demo-listen-toggle-btn"),
     listenToggleLabel: document.getElementById("sendspin-demo-listen-toggle-label"),
+    shareBtn: document.getElementById("sendspin-demo-share-btn"),
     syncPanel: document.getElementById("sendspin-demo-sync-panel"),
     syncStatus: document.getElementById("sendspin-demo-sync-status"),
     syncGraphShell: document.getElementById("sendspin-demo-sync-graph-shell"),
@@ -63,11 +64,36 @@ if (!root) {
   };
 
   const serverUrl = root.dataset.serverUrl || DEMO_SERVER_URL;
+  const shareUrl = root.dataset.shareUrl || window.location.href;
+  const canUseWebShare =
+    typeof navigator.share === "function" && Boolean(shareUrl);
+
+  root.classList.toggle("has-web-share", canUseWebShare);
 
   function wait(ms) {
     return new Promise((resolve) => {
       window.setTimeout(resolve, ms);
     });
+  }
+
+  async function shareLiveDemoUrl() {
+    if (!canUseWebShare) {
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: "Sendspin live demo",
+        text: "Open the Sendspin live demo in your browser.",
+        url: shareUrl,
+      });
+    } catch (err) {
+      if (err?.name === "AbortError") {
+        return;
+      }
+
+      console.warn("Failed to share the live demo URL:", err);
+    }
   }
 
   function triggerHaptic(pattern) {
@@ -639,6 +665,10 @@ if (!root) {
 
     triggerHaptic(START_HAPTIC_PATTERN);
     await startListening();
+  });
+
+  elements.shareBtn?.addEventListener("click", async () => {
+    await shareLiveDemoUrl();
   });
 
   window.addEventListener("pagehide", () => {
