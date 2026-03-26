@@ -2,6 +2,7 @@ const DEMO_SERVER_URL = "https://sendspin-demo.openhomefoundation.org";
 const MAX_VOLUME = 100;
 const UI_ACTIVATION_MS = 550;
 const SYNC_UPDATE_INTERVAL_MS = 250;
+const SCROLL_TO_LIVE_DEMO_MS = 850;
 const START_HAPTIC_PATTERN = [18, 28, 24];
 const STOP_HAPTIC_PATTERN = [14];
 const SYNC_PLACEHOLDER = "--.- ms";
@@ -74,6 +75,55 @@ if (!root) {
     return new Promise((resolve) => {
       window.setTimeout(resolve, ms);
     });
+  }
+
+  function easeInOutCubic(progress) {
+    if (progress < 0.5) {
+      return 4 * progress * progress * progress;
+    }
+
+    return 1 - Math.pow(-2 * progress + 2, 3) / 2;
+  }
+
+  function scrollLiveDemoToTop() {
+    if (!elements.showcase) {
+      return;
+    }
+
+    const targetTop = Math.max(
+      window.scrollY + elements.showcase.getBoundingClientRect().top,
+      0,
+    );
+    const startTop = window.scrollY;
+    const distance = targetTop - startTop;
+
+    if (Math.abs(distance) < 8) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      window.scrollTo({ top: targetTop, behavior: "auto" });
+      return;
+    }
+
+    const startedAt = performance.now();
+
+    function step(now) {
+      const elapsed = now - startedAt;
+      const progress = Math.min(elapsed / SCROLL_TO_LIVE_DEMO_MS, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      window.scrollTo({
+        top: startTop + distance * easedProgress,
+        behavior: "auto",
+      });
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    }
+
+    window.requestAnimationFrame(step);
   }
 
   async function shareLiveDemoUrl() {
@@ -618,6 +668,7 @@ if (!root) {
     syncGraph.reset();
     syncGraph.start();
     renderUiState();
+    scrollLiveDemoToTop();
 
     try {
       const connectPromise = connectPlayer();
