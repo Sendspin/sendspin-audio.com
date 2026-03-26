@@ -450,15 +450,19 @@ if (!root) {
 
   function renderUiState() {
     const pageIsActive = state.isListening || state.isStarting;
+    const detailPanelsAreVisible = state.isListening && !state.isStarting;
 
     elements.showcase?.classList.toggle("is-listening", pageIsActive);
     elements.showcase?.classList.toggle("is-starting", state.isStarting);
-    elements.surface.classList.toggle("is-expanded", pageIsActive);
-    elements.syncPanel.setAttribute("aria-hidden", String(!pageIsActive));
+    elements.surface.classList.toggle("is-expanded", detailPanelsAreVisible);
+    elements.syncPanel.setAttribute(
+      "aria-hidden",
+      String(!detailPanelsAreVisible),
+    );
     elements.listenToggleBtn.setAttribute("aria-pressed", String(pageIsActive));
     elements.listenToggleBtn.classList.toggle(
       "is-stop",
-      state.isListening && !state.isStarting,
+      detailPanelsAreVisible,
     );
     elements.listenToggleLabel.textContent = getListenToggleLabel();
   }

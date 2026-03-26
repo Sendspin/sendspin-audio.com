@@ -142,7 +142,7 @@
     column-gap 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.demo-showcase.is-listening .sendspin-demo__listen-row {
+.demo-showcase.is-listening:not(.is-starting) .sendspin-demo__listen-row {
   grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
   column-gap: 0.9rem;
 }
