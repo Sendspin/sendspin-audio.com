@@ -2,10 +2,11 @@
 layout: base
 description: Open protocol for synchronized music experiences across devices.
 stylesheets:
-  - /sendspin-demo.css?v=20260325-5
+  - /sendspin-demo.css?v=20260326-3
 module_scripts:
-  - /js/sendspin-demo-card.js?v=20260325-3
+  - /js/sendspin-demo-card.js?v=20260326-3
 demo_server_url: https://sendspin-demo.openhomefoundation.org
+demo_share_url: https://www.sendspin-audio.com/#live-demo
 ---
 
 <h2>
@@ -46,7 +47,7 @@ demo_server_url: https://sendspin-demo.openhomefoundation.org
   <i>Sendspin is in public preview. The specification is subject to change.</i>
 </p>
 
-<section class="demo-showcase" aria-labelledby="live-demo-heading">
+<section id="live-demo" class="demo-showcase" aria-labelledby="live-demo-heading">
   <div class="demo-showcase__intro">
     <p class="demo-showcase__eyebrow">Live Demo</p>
     <h3 id="live-demo-heading">Try Sendspin in your browser</h3>
@@ -116,19 +117,25 @@ demo_server_url: https://sendspin-demo.openhomefoundation.org
 
       <div class="sendspin-demo__share-grid">
         <div class="sendspin-demo__qr-panel">
-          <div class="sendspin-demo__qr-code">
+          <a
+            class="sendspin-demo__qr-code"
+            href="{{ demo_share_url }}"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the Sendspin live demo"
+          >
             <img
-              src="/images/sendspin-audio-qr.svg"
-              alt="QR code for sendspin-audio.com"
+              src="/images/sendspin-audio-qr.svg?v=20260326-3"
+              alt="QR code for the Sendspin live demo"
             />
-          </div>
+          </a>
           <p class="sendspin-demo__qr-copy">
-            Scan to open
+            Scan to open the
             <a
-              href="https://sendspin-audio.com/"
+              href="{{ demo_share_url }}"
               target="_blank"
               rel="noreferrer"
-              >sendspin-audio.com</a
+              >live demo</a
             >
             on another phone.
           </p>
