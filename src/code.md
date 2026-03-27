@@ -25,6 +25,8 @@ This page contains software development kits (SDK), libraries, and code samples 
   <br><br>
   Used by [windowsSpin](https://github.com/chrisuthe/windowsSpin)
 
+- **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
+
 ## Contributing
 
 Sendspin is open source and welcomes contributions. Visit [Sendspin on GitHub](https://github.com/Sendspin) and the <a href="https://discord.gg/kaVm8hGpne" target="_blank"
