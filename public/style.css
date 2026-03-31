@@ -133,12 +133,6 @@ h3 {
   background-color: #03a9f4;
   color: #fff;
 }
-.cta-group {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 1rem 0;
-}
 .center {
   text-align: center;
 }
