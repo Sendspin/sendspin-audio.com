@@ -45,7 +45,9 @@ if (!root) {
     showcase,
     surface: document.getElementById("sendspin-demo-surface"),
     listenToggleBtn: document.getElementById("sendspin-demo-listen-toggle-btn"),
-    listenToggleLabel: document.getElementById("sendspin-demo-listen-toggle-label"),
+    listenToggleLabel: document.getElementById(
+      "sendspin-demo-listen-toggle-label",
+    ),
     shareBtn: document.getElementById("sendspin-demo-share-btn"),
     syncPanel: document.getElementById("sendspin-demo-sync-panel"),
     syncStatus: document.getElementById("sendspin-demo-sync-status"),
@@ -521,7 +523,7 @@ if (!root) {
       return "Connecting...";
     }
 
-    return state.isListening ? "Stop Listening" : "Start Listening";
+    return state.isListening ? "Stop listening" : "Start listening";
   }
 
   function renderUiState() {
@@ -726,9 +728,8 @@ if (!root) {
     destroyPlayer("shutdown");
   });
 
-  const sdkImport = import(
-    "https://unpkg.com/@sendspin/sendspin-js@2.0.5/dist/index.js?module",
-  );
+  const sdkImport =
+    import("https://unpkg.com/@sendspin/sendspin-js@2.0.5/dist/index.js?module");
 
   renderUiState();
   resetSyncDisplay();
