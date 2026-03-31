@@ -43,7 +43,7 @@ The following components are optional, depending on the roles that the client wa
 - **Audio sink** is your logic to handle the timestamped audio.
 - **User interface** to allow the user to control the Sendspin stream.
 
-<p><img src="/images/client-implementation-guide.png" alt="An image of the Sendspin connection flow" class="d-block mx-auto" /></p>
+<p><img src="/images/client-implementation-guide.jpg" alt="An image of the Sendspin connection flow" class="d-block mx-auto" /></p>
 
 ## Contributing
 
