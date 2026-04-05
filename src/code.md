@@ -6,28 +6,30 @@ description: SDKs, libraries, and code samples for Sendspin.
 
 This page contains software development kits (SDK), libraries, and code samples to help you get started using Sendspin in your projects.
 
-- **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
-  - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
-
-- **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
-  - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), and [Sendspin Party](https://github.com/Sendspin/sendspin-cli?tab=readme-ov-file#sendspin-party)
-
-- **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
-- **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
-  - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app), and [UbiHome](https://github.com/UbiHome/UbiHome)
-
-- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
 - **C#/.NET** - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) -
   [Nuget Package](https://www.nuget.org/packages/Sendspin.SDK)
   - Used by [windowsSpin](https://github.com/chrisuthe/windowsSpin)
 
 - **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
+  - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933)
+
+- **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
+- **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
+  - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), and [sendspin-audio.com](https://github.com/Sendspin/sendspin-audio.com)
+
+- **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
+  - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
+
+- **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
+  - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app)
+
+- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
 
 ## Sendspin client implementation guide
 
 A Sendspin client is an application that can receive synchronized audio and metadata via the Sendspin protocol. Example products for the player role are any products that produce audio signals (aux, optical, analog), or connected speakers. For metadata, example products could be a wall tablet, that once included, can show the album art, metadata and offer controls for the music.
 
-By default, the server will discover clients on the network. It is possible for clients to connect to servers directly without being discoverable. This is meant for scripts and other non-permanent processes, is not a recommended approach, and won’t be covered by this guide.
+By default, the server will discover clients on the network. It is possible for clients to connect to servers directly without being discoverable. This is meant for scripts and other non-permanent processes, is not a recommended approach, and won't be covered by this guide.
 
 ### Components of a Sendspin Client
 
