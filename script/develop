@@ -4,13 +4,6 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-# Load nvm if npm is not available (e.g. non-interactive shells)
-if ! command -v npm &> /dev/null; then
-  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-fi
-
 rm -rf dist
 cp -r public dist
 
