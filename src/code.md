@@ -15,7 +15,7 @@ This page contains software development kits (SDK), libraries, and code samples 
 
 - **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
 - **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
-  - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), [sendspin-audio.com](https://github.com/Sendspin/sendspin-audio.com) (including the [live demo](https://www.sendspin-audio.com/#live-demo))
+  - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), [sendspin-audio.com live demo](https://www.sendspin-audio.com/#live-demo)
 
 - **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
   - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
