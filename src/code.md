@@ -13,7 +13,6 @@ This page contains software development kits (SDK), libraries, and code samples 
 - **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
   - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933)
 
-- **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
 - **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
   - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), [sendspin-audio.com live demo](https://www.sendspin-audio.com/#live-demo)
 
@@ -22,8 +21,6 @@ This page contains software development kits (SDK), libraries, and code samples 
 
 - **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
   - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app)
-
-- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
 
 ## Sendspin client implementation guide
 
