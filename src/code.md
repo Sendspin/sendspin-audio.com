@@ -36,7 +36,7 @@ A client needs to contain the following components to participate in a Sendspin 
 
 - **mDNS server** allows servers to discover the client on the network.
 - **HTTP WebSocket server** allows servers to initiate a connection with the client.
-- **Sendspin library** handles the communication over the websocket connection and produces a stream of time stamped audio or metadata.
+- **Sendspin core** handles the communication over the websocket connection and produces a stream of time stamped audio or metadata.
 
 The following components are optional, depending on the roles that the client wants to fulfill:
 
@@ -45,6 +45,17 @@ The following components are optional, depending on the roles that the client wa
 - **User interface** to allow the user to control the Sendspin stream.
 
 <p><img src="/images/client-implementation-guide.jpg" alt="An image of the Sendspin connection flow" class="d-block mx-auto" /></p>
+
+### SDK architecture
+
+All SDKs implement Sendspin core, to handle incoming and outgoing messages. Some SDKs will also include an mDNS server, HTTP WebSocket server and an audio sink to play the audio. These are all different modules, with seperated concerns, that are up to the client to consume as needed.
+
+<!--
+  For AI reviewing our libs:
+  SDKs should also ensure their time filter is isolated in their own module.
+  Each module should be able to be used independently, so that users can choose
+  to use the mDNS server, but not the audio sink for example.
+-->
 
 ## Contributing
 
