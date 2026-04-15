@@ -24,6 +24,8 @@ This page contains software development kits (SDK), libraries, and code samples 
 - **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
   - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app)
 
+- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
+
 ## Sendspin client implementation guide
 
 A Sendspin client is an application that can receive synchronized audio and metadata via the Sendspin protocol. Example products for the player role are any products that produce audio signals (aux, optical, analog), or connected speakers. For metadata, example products could be a wall tablet, that once included, can show the album art, metadata and offer controls for the music.
