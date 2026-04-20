@@ -53,6 +53,9 @@ if (!root) {
     syncStatus: document.getElementById("sendspin-demo-sync-status"),
     syncGraphShell: document.getElementById("sendspin-demo-sync-graph-shell"),
     syncGraph: document.getElementById("sendspin-demo-sync-graph"),
+    volumeRow: document.getElementById("sendspin-demo-volume-row"),
+    volumeSlider: document.getElementById("sendspin-demo-volume-slider"),
+    muteBtn: document.getElementById("sendspin-demo-mute-btn"),
   };
 
   const state = {
@@ -64,6 +67,8 @@ if (!root) {
       currentMs: null,
       tone: "sync-idle",
     },
+    volume: parseInt(localStorage.getItem("sendspin-demo-volume") ?? String(MAX_VOLUME), 10),
+    isMuted: false,
   };
 
   const serverUrl = root.dataset.serverUrl || DEMO_SERVER_URL;
@@ -545,6 +550,16 @@ if (!root) {
     elements.listenToggleLabel.textContent = getListenToggleLabel();
   }
 
+  function renderVolumeIcon() {
+    const { isMuted, volume } = state;
+    const level =
+      isMuted || volume === 0 ? "muted" : volume <= 50 ? "low" : "high";
+    elements.muteBtn.dataset.volumeLevel = level;
+    elements.muteBtn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
+    elements.muteBtn.setAttribute("aria-pressed", String(isMuted));
+    elements.volumeSlider.style.setProperty("--volume-pct", `${volume}%`);
+  }
+
   function handlePlayerStateChange() {
     if (!state.player) {
       return;
@@ -679,8 +694,8 @@ if (!root) {
       renderUiState();
 
       const activePlayer = await connectPromise;
-      activePlayer.setVolume(MAX_VOLUME);
-      activePlayer.setMuted(false);
+      activePlayer.setVolume(state.volume);
+      activePlayer.setMuted(state.isMuted);
       updateSyncStatus();
     } catch (err) {
       console.error("Connection failed:", err);
@@ -724,6 +739,28 @@ if (!root) {
     await shareLiveDemoUrl();
   });
 
+  elements.volumeSlider.addEventListener("input", () => {
+    state.volume = parseInt(elements.volumeSlider.value, 10);
+    state.isMuted = false;
+    localStorage.setItem("sendspin-demo-volume", String(state.volume));
+    if (state.player) {
+      state.player.setVolume(state.volume);
+      state.player.setMuted(false);
+    }
+    renderVolumeIcon();
+  });
+
+  elements.muteBtn.addEventListener("click", () => {
+    state.isMuted = !state.isMuted;
+    if (state.player) {
+      state.player.setMuted(state.isMuted);
+      if (!state.isMuted) {
+        state.player.setVolume(state.volume);
+      }
+    }
+    renderVolumeIcon();
+  });
+
   window.addEventListener("pagehide", () => {
     destroyPlayer("shutdown");
   });
@@ -731,6 +768,8 @@ if (!root) {
   const sdkImport =
     import("https://unpkg.com/@sendspin/sendspin-js@3.0.1/dist/index.js?module");
 
+  elements.volumeSlider.value = String(state.volume);
+  renderVolumeIcon();
   renderUiState();
   resetSyncDisplay();
 }
