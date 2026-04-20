@@ -53,7 +53,6 @@ if (!root) {
     syncStatus: document.getElementById("sendspin-demo-sync-status"),
     syncGraphShell: document.getElementById("sendspin-demo-sync-graph-shell"),
     syncGraph: document.getElementById("sendspin-demo-sync-graph"),
-    volumeRow: document.getElementById("sendspin-demo-volume-row"),
     volumeSlider: document.getElementById("sendspin-demo-volume-slider"),
     muteBtn: document.getElementById("sendspin-demo-mute-btn"),
   };
@@ -67,7 +66,7 @@ if (!root) {
       currentMs: null,
       tone: "sync-idle",
     },
-    volume: parseInt(localStorage.getItem("sendspin-demo-volume") ?? String(MAX_VOLUME), 10),
+    volume: Math.min(MAX_VOLUME, Math.max(0, parseInt(localStorage.getItem("sendspin-demo-volume"), 10) || MAX_VOLUME)),
     isMuted: false,
   };
 
@@ -557,7 +556,6 @@ if (!root) {
     elements.muteBtn.dataset.volumeLevel = level;
     elements.muteBtn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
     elements.muteBtn.setAttribute("aria-pressed", String(isMuted));
-    elements.volumeSlider.style.setProperty("--volume-pct", `${volume}%`);
   }
 
   function handlePlayerStateChange() {

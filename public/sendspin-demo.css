@@ -148,7 +148,8 @@
 .demo-showcase.is-listening:not(.is-starting) .sendspin-demo__listen-row {
   grid-template-columns:
     minmax(210px, 250px)
-    minmax(var(--demo-attribution-min-width), 1fr);
+    minmax(var(--demo-attribution-min-width), 1fr)
+    auto;
   column-gap: 0.9rem;
 }
 
@@ -380,29 +381,49 @@
   text-decoration-color: currentColor;
 }
 
-.sendspin-demo__volume-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-height: 0;
-  margin-top: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(-16px);
-  transition:
-    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.28s ease,
-    margin-top 0.55s ease,
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+.sendspin-demo__volume-control {
+  display: none;
+  position: relative;
+  align-self: center;
 }
 
-.sendspin-demo__surface.is-expanded .sendspin-demo__volume-row {
-  max-height: 60px;
-  margin-top: 14px;
-  overflow: visible;
+.demo-showcase.is-listening:not(.is-starting) .sendspin-demo__volume-control {
+  display: flex;
+}
+
+.sendspin-demo__volume-control:before {
+  content: "";
+  position: absolute;
+  inset: auto 0 100% 0;
+  height: 12px;
+}
+
+.sendspin-demo__volume-popup {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  background: rgba(16, 22, 30, 0.96);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease 0.1s, transform 0.18s ease 0.1s;
+}
+
+.sendspin-demo__volume-control:hover .sendspin-demo__volume-popup {
   opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.22s;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 .sendspin-demo__volume-icon-btn {
@@ -440,60 +461,30 @@
   display: none;
 }
 
-[data-volume-level="low"] .sendspin-demo__volume-wave2 {
+.sendspin-demo__volume-icon-btn[data-volume-level="low"] .sendspin-demo__volume-wave2 {
   display: none;
 }
 
-[data-volume-level="muted"] .sendspin-demo__volume-wave1,
-[data-volume-level="muted"] .sendspin-demo__volume-wave2 {
+.sendspin-demo__volume-icon-btn[data-volume-level="muted"] .sendspin-demo__volume-wave1,
+.sendspin-demo__volume-icon-btn[data-volume-level="muted"] .sendspin-demo__volume-wave2 {
   display: none;
 }
 
-[data-volume-level="muted"] .sendspin-demo__volume-mute-line {
+.sendspin-demo__volume-icon-btn[data-volume-level="muted"] .sendspin-demo__volume-mute-line {
   display: block;
 }
 
 .sendspin-demo__volume-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  flex: 1;
-  height: 4px;
-  border-radius: 2px;
-  background: linear-gradient(
-    to right,
-    var(--demo-blue) 0%,
-    var(--demo-blue) var(--volume-pct, 100%),
-    rgba(255, 255, 255, 0.2) var(--volume-pct, 100%),
-    rgba(255, 255, 255, 0.2) 100%
-  );
+  -webkit-appearance: slider-vertical;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 20px;
+  height: 96px;
+  accent-color: var(--demo-blue);
   cursor: pointer;
   outline: none;
-  border: none;
-}
-
-.sendspin-demo__volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-  transition: transform 0.15s ease;
-}
-
-.sendspin-demo__volume-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-.sendspin-demo__volume-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  padding: 0;
+  margin: 0;
 }
 
 .sendspin-demo__share-grid {
@@ -737,5 +728,11 @@
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 640px), (hover: none) {
+  .sendspin-demo__volume-control {
+    display: none !important;
   }
 }
