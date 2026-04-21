@@ -475,7 +475,6 @@
 }
 
 .sendspin-demo__volume-slider {
-  -webkit-appearance: slider-vertical;
   writing-mode: vertical-lr;
   direction: rtl;
   width: 20px;
