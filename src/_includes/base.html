@@ -1,15 +1,3 @@
----
-menu:
-  - - /
-    - Home
-  - - /spec/
-    - Spec
-  - - /code/
-    - Code
-  - - /manufacturers/
-    - For manufacturers
----
-
 {% comment %}
 <!-- prettier-ignore -->
 {% endcomment %}
@@ -17,7 +5,7 @@ menu:
 {%- if title -%}
 {{ title }} – Sendspin
 {%- else -%}
-Sendspin: Music Experience Protocol
+Sendspin: Music in every room. Art on every screen. Lights on the beat.
 {%- endif -%}
 {%- endcapture %}
 {% comment %}
@@ -34,9 +22,10 @@ Sendspin: Music Experience Protocol
     {% endfor %}
     {% endif %}
     <title>{{ full_title }}</title>
-    <link rel="icon" href="/images/sendspin-favicon.png" type="image/png" />
+    <link rel="icon" href="/images/sendspin-favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/images/sendspin-favicon.png" type="image/png" sizes="192x192" />
     <meta name="description" content="{{ description }}" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:title" content="{{ full_title }}" />
     <meta property="og:site_name" content="Sendspin" />
     <meta
@@ -58,35 +47,112 @@ Sendspin: Music Experience Protocol
     />
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <a href="/"><h1>Sendspin</h1></a>
-        <ul>
-          {% for item in menu %}
-          <li>
-            <a
-              class="{% if page.url == item[0] %}active{% endif %}"
-              href="{{ item[0] }}"
-              >{{ item[1] }}</a
-            >
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <div class="content">{{ content }}</div>
-
-      <div class="footer">
-        <div>
-          Sendspin &nbsp; – &nbsp;
-          <a href="mailto:sendspin@openhomefoundation.org">contact</a>
-          &nbsp; – &nbsp;
-          <a href="https://www.github.com/Sendspin">GitHub</a>
-          &nbsp; – &nbsp;
-          <a href="https://www.openhomefoundation.org">Open Home Foundation</a>
+    <nav class="nav">
+      <div class="container nav__inner">
+        {% include "brand.html" %}
+        <button
+          class="nav__toggle"
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+        >
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+        </button>
+        <div class="nav__links" id="nav-menu">
+          {% if page.url == "/" %}
+          <a class="nav__link" href="#whole-room">The experience</a>
+          <a class="nav__link" href="#live-demo">Live demo</a>
+          {% else %}
+          <a class="nav__link {% if page.url == '/spec/' %}is-active{% endif %}" href="/spec/">Spec</a>
+          <a class="nav__link {% if page.url == '/code/' %}is-active{% endif %}" href="/code/">Code</a>
+          {% endif %}
+          <a class="nav__cta {% if page.url == '/manufacturers/' %}is-active{% endif %}" href="/manufacturers/">Build with Sendspin</a>
         </div>
       </div>
-    </div>
+    </nav>
+    <script>
+      (function () {
+        var nav = document.querySelector(".nav");
+        if (!nav) return;
+        var toggle = nav.querySelector(".nav__toggle");
+        var links = nav.querySelector(".nav__links");
+        function close() {
+          nav.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+        toggle.addEventListener("click", function () {
+          var open = nav.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", String(open));
+        });
+        links.addEventListener("click", function (e) {
+          if (e.target.tagName === "A") close();
+        });
+        document.addEventListener("click", function (e) {
+          if (!nav.contains(e.target) && nav.classList.contains("is-open")) close();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && nav.classList.contains("is-open")) close();
+        });
+      })();
+    </script>
+
+    {% if homepage %}
+    {{ content }}
+    {% else %}
+    <main class="page-content">
+      <div class="container">
+        {% if title %}<h1>{{ title }}</h1>{% endif %}
+        {{ content }}
+      </div>
+    </main>
+    {% endif %}
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__inner">
+          <div class="site-footer__brand">
+            {% include "brand.html" %}
+            <p class="site-footer__tagline">
+              The open standard for music in every room — from the Open Home Foundation.
+            </p>
+          </div>
+
+          <div class="site-footer__col">
+            <h5>Listen</h5>
+            <ul>
+              {% for item in site.footer.listen %}
+              <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="site-footer__col">
+            <h5>Build</h5>
+            <ul>
+              {% for item in site.footer.build %}
+              <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="site-footer__col">
+            <h5>Community</h5>
+            <ul>
+              {% for item in site.footer.community %}
+              <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="site-footer__legal">
+          <span>© Sendspin · Open Home Foundation. Sendspin is in public preview.</span>
+          <span>Made warm in Switzerland.</span>
+        </div>
+      </div>
+    </footer>
     {% if mermaid %}
     <script src="/js/mermaid-11.12.2.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: true });</script>

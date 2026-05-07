@@ -1,0 +1,21 @@
+{
+  "footer": {
+    "listen": [
+      { "href": "/#whole-room", "label": "The experience" },
+      { "href": "/#live-demo", "label": "Live demo" },
+      { "href": "/#start", "label": "Get started" },
+      { "href": "https://www.home-assistant.io/voice-pe/", "label": "Voice PE" }
+    ],
+    "build": [
+      { "href": "/manufacturers/", "label": "For hardware makers" },
+      { "href": "/spec/", "label": "Spec" },
+      { "href": "/code/", "label": "Code & SDKs" },
+      { "href": "https://www.github.com/Sendspin", "label": "GitHub" }
+    ],
+    "community": [
+      { "href": "https://discord.gg/kaVm8hGpne", "label": "Discord" },
+      { "href": "https://www.openhomefoundation.org", "label": "Open Home Foundation" },
+      { "href": "mailto:sendspin@openhomefoundation.org", "label": "Contact" }
+    ]
+  }
+}

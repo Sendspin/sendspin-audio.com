@@ -1,296 +1,564 @@
 ---
 layout: base
-description: Open protocol for synchronized music experiences across devices.
+homepage: true
+description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /sendspin-demo.css?v=20260326-4
+  - /homepage.css?v=20260507-2
 module_scripts:
-  - /js/sendspin-demo-card.js?v=20260410-1
+  - /js/sendspin-demo-card.js?v=20260507-1
 demo_server_url: https://sendspin-demo.openhomefoundation.org
 demo_share_url: https://www.sendspin-audio.com/#live-demo
 ---
 
-<h2>
-  Listen, control and see your music in every room with Sendspin, an open
-  standard for the complete music listening experience.
-</h2>
+<section class="hero ground-paper" id="top">
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__left">
+        <span class="hero__beta">
+          <span class="hero__beta-dot" aria-hidden="true"></span>
+          Public preview · spec subject to change
+        </span>
 
-<p>
-  Sendspin is an open standard by the
-  <a href="https://www.openhomefoundation.org" target="_blank"
-    >Open Home Foundation</a
-  >
-  for a synchronized music experience across multiple devices and rooms. It
-  enables speakers, lights, and screens to work together to create a rich and
-  immersive audio environment:
-</p>
+        <h1 class="hero__title">
+          <span class="l1">Music in every room.</span>
+          <span class="l2">Art on every screen.</span>
+          <span class="l3">Lights on the beat.</span>
+        </h1>
 
-<ul>
-  <li>Play high quality audio in sync across speakers</li>
-  <li>Show album art and control music on tablets and screens</li>
-  <li>Visualize audio playback on connected lights</li>
-</ul>
+        <p class="hero__sub">
+          All in sync. All under your control. Sendspin is the open standard
+          for the complete music experience throughout your home, from the
+          <a href="https://www.openhomefoundation.org" target="_blank" rel="noreferrer">Open Home Foundation</a>.
+        </p>
 
-<p>
-  Sendspin enables low-power and low-cost streaming devices to provide a
-  high-quality and fully in sync music experience.
-</p>
-
-<p>
-  <i>Sendspin is in public preview. The specification is subject to change.</i>
-</p>
-
-<section
-  id="live-demo"
-  class="demo-showcase"
-  aria-labelledby="live-demo-heading"
->
-  <div class="demo-showcase__intro">
-    <p class="demo-showcase__eyebrow">Live Demo</p>
-    <h3 id="live-demo-heading">Try Sendspin in your browser</h3>
-    <p class="demo-showcase__copy">
-      Open it on multiple devices, press Start listening on each one, and hear
-      them lock together.
-    </p>
-  </div>
-
-  <div
-    id="sendspin-demo"
-    class="sendspin-demo"
-    data-server-url="{{ demo_server_url }}"
-    data-share-url="{{ demo_share_url }}"
-  >
-    <div id="sendspin-demo-surface" class="sendspin-demo__surface">
-      <div class="sendspin-demo__listen-row">
-        <button
-          id="sendspin-demo-listen-toggle-btn"
-          class="sendspin-demo__listen-btn"
-          aria-pressed="false"
-          type="button"
-        >
-          <span
-            class="sendspin-demo__listen-btn-icon"
-            aria-hidden="true"
-          ></span>
-          <span id="sendspin-demo-listen-toggle-label">Start listening</span>
-        </button>
-
-        <div class="sendspin-demo__attribution" aria-live="polite">
-          <span class="sendspin-demo__attribution-label">Now playing</span>
-          <p class="sendspin-demo__attribution-text">
-            <a
-              href="https://soundcloud.com/teetow/"
-              target="_blank"
-              rel="noreferrer"
-              ><strong>Pizza Hat</strong> by Johan Althoff</a
-            >
-          </p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#live-demo">
+            Try the live demo
+            {% include "icons/arrow.svg" %}
+          </a>
+          <a class="btn btn--ghost" href="#whole-room">See how it works</a>
         </div>
       </div>
 
-      <div
-        id="sendspin-demo-sync-panel"
-        class="sendspin-demo__sync-panel"
-        aria-hidden="true"
-      >
-        <div class="sendspin-demo__sync-header">
-          <span class="sendspin-demo__sync-title">Synchronization</span>
-          <span
-            id="sendspin-demo-sync-status"
-            class="sendspin-demo__sync-readout sync-idle"
-            >--.- ms</span
-          >
-        </div>
-        <div
-          id="sendspin-demo-sync-graph-shell"
-          class="sendspin-demo__sync-graph-shell sync-idle"
-        >
-          <canvas
-            id="sendspin-demo-sync-graph"
-            class="sendspin-demo__sync-graph"
-            aria-label="Synchronization graph"
-          ></canvas>
-        </div>
-      </div>
-
-      <div class="sendspin-demo__share-grid">
-        <div class="sendspin-demo__qr-panel">
-          <div class="sendspin-demo__share-actions">
-            <div class="sendspin-demo__qr-code">
-              <img
-                src="/images/sendspin-audio-qr.svg?v=20260326-3"
-                alt="QR code for the Sendspin live demo"
-              />
-            </div>
-            <button
-              id="sendspin-demo-share-btn"
-              class="sendspin-demo__share-btn"
-              type="button"
-              aria-label="Share the Sendspin live demo"
-            >
-              <svg
-                class="sendspin-demo__share-icon"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M12 4v9" />
-                <path d="M8.5 7.5 12 4l3.5 3.5" />
-                <path d="M6 12.5v5.5A2 2 0 0 0 8 20h8a2 2 0 0 0 2-2v-5.5" />
-              </svg>
-              <span class="sendspin-demo__share-btn-label">Share</span>
-            </button>
+      <div class="hero__right">
+        <div class="vinyl-stage">
+          <div class="vinyl" aria-hidden="true"></div>
+          <div class="vinyl-label">
+            <div class="vinyl-label__top">Sendspin</div>
+            <div class="vinyl-label__rule"></div>
+            <div class="vinyl-label__bot">Side A · 33⅓ rpm</div>
           </div>
-          <p class="sendspin-demo__qr-copy">
-            Scan to open the
-            <a href="{{ demo_share_url }}" target="_blank" rel="noreferrer"
-              >live demo</a
-            >
-            on another phone.
-          </p>
+          <div class="orbit" aria-hidden="true">
+            <div class="room-chip room-chip--1">
+              <span class="room-chip__icon">{% include "icons/speaker.svg" %}</span>
+              <span>
+                Living room
+                <div class="room-chip__meta">FLAC · 24/96</div>
+              </span>
+            </div>
+            <div class="room-chip room-chip--2">
+              <span class="room-chip__icon">{% include "icons/monitor.svg" %}</span>
+              <span>
+                Kitchen display
+                <div class="room-chip__meta">Now playing</div>
+              </span>
+            </div>
+            <div class="room-chip room-chip--3">
+              <span class="room-chip__icon">{% include "icons/light.svg" %}</span>
+              <span>
+                Hallway lights
+                <div class="room-chip__meta">On the beat</div>
+              </span>
+            </div>
+            <div class="room-chip room-chip--4">
+              <span class="room-chip__icon">{% include "icons/remote.svg" %}</span>
+              <span>
+                Any phone
+                <div class="room-chip__meta">Skip · Pause · Queue</div>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<h3>Use it today</h3>
-
-<p>
-  Sendspin has been implemented in various products and projects to help
-  validate the experience we want to deliver. We're actively working with the
-  Open Home community to test the implementation, get feedback, and help shape
-  the future of the protocol.
-</p>
-
-<p>To use Sendspin today:</p>
-
-<ul>
-  <li>
-    Stream music via Sendspin to any receiver using
-    <a href="https://www.music-assistant.io" target="_blank">Music Assistant</a>
-    and play the stream simultaneously in browsers and AirPlay or Google
-    Cast-enabled devices.
-  </li>
-  <li>
-    Play a Sendspin stream on the
-    <a href="https://www.home-assistant.io/voice-pe/" target="_blank"
-      >Home Assistant Voice Preview Edition</a
-    >
-    (or a speaker connected to it via the AUX port)
-  </li>
-  <li>
-    Turn your Linux machine into a Sendspin receiver using
-    <a
-      href="https://github.com/Sendspin/sendspin-cli?tab=readme-ov-file#install-as-daemon-systemd-linux"
-      target="_blank"
-      >Sendspin Daemon</a
-    >, or install
-    <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank"
-      >windowsSpin</a
-    >
-    on a Windows computer.
-  </li>
-  <li>
-    Turn an old phone into a Sendspin receiver with
-    <a
-      href="https://github.com/chrisuthe/SendspinDroid/releases"
-      target="_blank"
-      >SendspinDroid</a
-    >
-  </li>
-</ul>
-
-<p>Advanced usage:</p>
-
-<ul>
-  <li>
-    Start a Sendspin client from the command-line using
-    <a href="https://github.com/Sendspin/sendspin-cli" target="_blank"
-      >sendspin-cli</a
-    >
-  </li>
-  <li>
-    Show album art and control your music from ESPHome using
-    <a
-      href="https://gist.github.com/kahrendt/a86b20601f02df9f3861a48cedc98e17"
-      target="_blank"
-      >this example configuration</a
-    >
-  </li>
-</ul>
-
-<p>
-  If you have any feedback, please stop by at the #sendspin-beta-testing channel
-  on the
-  <a href="https://discord.gg/kaVm8hGpne" target="_blank"
-    >Music Assistant Discord.</a
-  >
-</p>
-
-<h3>Adopted by the following products and projects</h3>
-
-<div class="projects">
-  <a href="https://www.music-assistant.io" target="_blank" class="project">
-    <div class="logo">
-      <img src="/images/logo/music-assistant.png" alt="Music Assistant" />
+<section class="stats">
+  <div class="container">
+    <div class="stats__row">
+      <div class="stat">
+        <div class="stat__num">&lt;1<span class="unit">ms</span></div>
+        <div class="stat__lbl">Sync precision across rooms</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">0<span class="unit">$</span></div>
+        <div class="stat__lbl">Subscription · ever</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">100<span class="unit">%</span></div>
+        <div class="stat__lbl">Local-network audio</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">7</div>
+        <div class="stat__lbl">Open-source SDKs</div>
+      </div>
     </div>
-    <!-- <div class="name">Music Assistant</div> -->
-  </a>
-  <a href="https://esphome.io" target="_blank" class="project">
-    <div class="logo">
-      <img src="/images/logo/esphome.png" alt="ESPHome" />
+  </div>
+</section>
+
+<section class="ground-cream section-pad" id="whole-room">
+  <div class="container">
+    <div class="pillars__head">
+      <div>
+        <span class="eyebrow-line">The whole room, in sync</span>
+        <h2 class="pillars__title">
+          Other multi-room systems just play sound.<br />
+          Sendspin orchestrates the whole room.
+        </h2>
+      </div>
+      <p class="pillars__lede">
+        Artwork, metadata, controls, and visualization are built into the
+        protocol from day one. No other multi-room standard does this.
+      </p>
     </div>
-    <!-- <div class="name">ESPHome</div> -->
-  </a>
-  <a href="https://docs.ledfx.app/" target="_blank" class="project">
-    <div class="logo">
-      <img src="/images/logo/ledfx.png" alt="LedFx" />
+
+    <div class="pillars__grid">
+      <article class="pillar pillar--sound">
+        <div class="pillar__icon">{% include "icons/speaker.svg" %}</div>
+        <h3 class="pillar__h">Sound</h3>
+        <p class="pillar__p">
+          High-quality audio, in sync across every speaker. Each one gets
+          a stream matched to what it can play — lossless to your hi-fi,
+          efficient to the kitchen smart speaker — all locked to the same beat.
+        </p>
+        <div class="pillar__visual">
+          <div class="wave-mini" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar pillar--screens">
+        <div class="pillar__icon">{% include "icons/monitor.svg" %}</div>
+        <h3 class="pillar__h">Screens</h3>
+        <p class="pillar__p">
+          Album art and now-playing info on every tablet and display.
+          The hallway wall panel becomes a Now Playing screen. The kitchen
+          shows what's on without anyone reaching for a phone.
+        </p>
+        <div class="pillar__visual">
+          <div class="screen-mini" aria-hidden="true">
+            <div class="screen-mini__art"></div>
+            <div class="screen-mini__txt">
+              <div class="screen-mini__t1">Pizza Hat</div>
+              <div class="screen-mini__t2">Johan Althoff</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar pillar--controls">
+        <div class="pillar__icon">{% include "icons/remote.svg" %}</div>
+        <h3 class="pillar__h">Controls</h3>
+        <p class="pillar__p">
+          Any screen becomes a remote. Skip, pause, queue from anywhere
+          in the house — phone in your pocket or tablet on the wall, it's
+          the same set of controls.
+        </p>
+        <div class="pillar__visual">
+          <div class="controls-mini" aria-hidden="true">
+            <button type="button" tabindex="-1" aria-hidden="true" style="transform:scaleX(-1)">{% include "icons/skip.svg" %}</button>
+            <button type="button" class="play" tabindex="-1" aria-hidden="true">{% include "icons/play.svg" %}</button>
+            <button type="button" tabindex="-1" aria-hidden="true">{% include "icons/skip.svg" %}</button>
+            <div class="controls-mini__bar"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar pillar--lights">
+        <div class="pillar__icon">{% include "icons/light.svg" %}</div>
+        <h3 class="pillar__h">Lights</h3>
+        <p class="pillar__p">
+          LEDs and smart bulbs react to the music in real time. Bass on
+          the floor lamp, mids on the strip behind the TV — in sync with
+          what you're hearing.
+        </p>
+        <div class="pillar__visual">
+          <div class="lights-mini" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </article>
     </div>
-    <!-- <div class="name">LedFx</div> -->
-  </a>
-  <a
-    href="https://www.home-assistant.io/voice-pe/"
-    target="_blank"
-    class="project"
-  >
-    <div class="logo">
-      <img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE" />
+  </div>
+</section>
+
+<section class="ground-espresso section-pad demo-showcase" id="live-demo">
+  <div class="container">
+    <div class="demo__grid">
+      <div>
+        <span class="eyebrow-line on-dark">Live demo</span>
+        <h2 class="demo__title">Try Sendspin in your browser.</h2>
+        <p class="demo__copy">
+          No install. Open this page on multiple devices, press
+          Start listening on each one, and hear them lock together.
+        </p>
+        <div class="demo__steps">
+          <div class="demo__step">
+            <span class="demo__step-num">1</span>
+            <span>Open this page on a laptop, phone, and tablet — anything with a browser.</span>
+          </div>
+          <div class="demo__step">
+            <span class="demo__step-num">2</span>
+            <span>Press <strong>Start listening</strong> on each device.</span>
+          </div>
+          <div class="demo__step">
+            <span class="demo__step-num">3</span>
+            <span>Walk between them. One song. No echo.</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="sendspin-demo"
+        class="demo-card"
+        data-server-url="{{ demo_server_url }}"
+        data-share-url="{{ demo_share_url }}"
+      >
+        <div id="sendspin-demo-surface" class="demo-card__top">
+          <div class="demo-card__now" aria-live="polite">
+            <span class="demo-card__now-label">Now playing</span>
+            <span class="demo-card__now-track">
+              <a href="https://soundcloud.com/teetow/" target="_blank" rel="noreferrer">
+                <strong>Pizza Hat</strong> <span class="by">· Johan Althoff</span>
+              </a>
+            </span>
+          </div>
+          <button
+            id="sendspin-demo-listen-toggle-btn"
+            class="demo-card__listen"
+            aria-pressed="false"
+            type="button"
+          >
+            <span class="demo-card__listen-ico" aria-hidden="true"></span>
+            <span id="sendspin-demo-listen-toggle-label">Start listening</span>
+          </button>
+        </div>
+
+        <div
+          id="sendspin-demo-sync-panel"
+          class="demo-card__sync"
+          aria-hidden="true"
+        >
+          <div class="demo-card__sync-head">
+            <span class="demo-card__sync-title">Synchronization</span>
+            <span
+              id="sendspin-demo-sync-status"
+              class="demo-card__sync-readout sync-idle"
+              >--.- ms</span
+            >
+          </div>
+          <div
+            id="sendspin-demo-sync-graph-shell"
+            class="demo-card__sync-graph-shell sync-idle"
+          >
+            <canvas
+              id="sendspin-demo-sync-graph"
+              class="demo-card__sync-graph"
+              aria-label="Synchronization graph"
+            ></canvas>
+          </div>
+        </div>
+
+        <div class="demo-card__share-grid">
+          <div class="demo-card__qr-code">
+            <img
+              src="/images/sendspin-audio-qr.svg?v=20260326-3"
+              alt="QR code for the Sendspin live demo"
+            />
+          </div>
+          <p class="demo-card__share-text">
+            Scan to open the
+            <a href="{{ demo_share_url }}" target="_blank" rel="noreferrer">live demo</a>
+            on another phone.
+          </p>
+          <button
+            id="sendspin-demo-share-btn"
+            class="demo-card__share-btn"
+            type="button"
+            aria-label="Share the Sendspin live demo"
+          >
+            <svg
+              class="demo-card__share-btn-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 4v9" />
+              <path d="M8.5 7.5 12 4l3.5 3.5" />
+              <path d="M6 12.5v5.5A2 2 0 0 0 8 20h8a2 2 0 0 0 2-2v-5.5" />
+            </svg>
+            <span class="demo-card__share-btn-label">Share</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="name">Home Assistant Voice PE</div>
-  </a>
-</div>
+  </div>
+</section>
 
-<h3>Why (yet another) new protocol?</h3>
+<section class="ground-paper section-pad">
+  <div class="container">
+    <div class="sync-strip__grid">
+      <div>
+        <span class="eyebrow-line">Perfect sync · No echo</span>
+        <h2 class="sync-strip__title">
+          One song. <em>Every room.</em> Locked to the same beat.
+        </h2>
+        <p class="sync-strip__p">
+          Microsecond-precise timing keeps every speaker in step. Walk
+          between rooms and the music stays one song, not an echo chamber.
+        </p>
+        <p class="sync-strip__p">
+          Devices find each other automatically on your home network — no
+          IP addresses, no port forwarding. A quick pairing step keeps the
+          audio between them encrypted, so your music stays in your home.
+        </p>
+        <div class="hero__ctas" style="margin-top: var(--sp-5); margin-bottom: 0;">
+          <a class="btn btn--ghost" href="/spec/">
+            {% include "icons/note.svg" %}
+            Read the protocol
+          </a>
+        </div>
+      </div>
 
-<p>
-  <b>Major audio-playback standards like AirPlay and Cast are closed.</b>
-</p>
+      <div class="timing-viz">
+        <div class="timing-viz__head">
+          <h4>Live timing</h4>
+          <span class="timing-viz__readout">±0.5 ms · 4 rooms</span>
+        </div>
+        <div class="room-row room-row--1">
+          <div class="room-row__name">Living room</div>
+          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
+          <div class="room-row__meta">0.3 ms</div>
+        </div>
+        <div class="room-row room-row--2">
+          <div class="room-row__name">Kitchen</div>
+          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
+          <div class="room-row__meta">0.4 ms</div>
+        </div>
+        <div class="room-row room-row--3">
+          <div class="room-row__name">Bedroom</div>
+          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
+          <div class="room-row__meta">0.2 ms</div>
+        </div>
+        <div class="room-row room-row--4">
+          <div class="room-row__name">Hallway</div>
+          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
+          <div class="room-row__meta">0.5 ms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<p>
-  We believe users should control their devices, their data,
-  <i>and their music</i>. Open standards are essential to that vision. Existing
-  protocols for synchronized audio experiences are proprietary and closed. This
-  makes it impossible to have an open ecosystem of interoperable solutions that
-  unleashes the creativity of the community.
-</p>
+<section class="ground-espresso section-pad">
+  <div class="container">
+    <div class="open__head">
+      <div>
+        <span class="eyebrow-line on-dark">Open · Local · Yours</span>
+        <h2 class="open__title">
+          <em>Your</em> music,<br />in <em>your</em> home,<br />on <em>your</em> terms.
+        </h2>
+      </div>
+      <p class="open__lede">
+        Sendspin doesn't lock you into a brand or a cloud. It's an
+        open standard, run on your own network, governed by a
+        non-profit. Nothing about your music leaves the house.
+      </p>
+    </div>
 
-<p>
-  We also believe that existing standards are incomplete. They focus solely on
-  audio streaming, while the complete music experience includes per-speaker DSP,
-  controlling playback and visualizing the music. Sendspin aims to fill that
-  gap.
-</p>
+    <div class="open__grid">
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/branches.svg" %}</div>
+        <h3 class="open-card__h">Mix any brand.</h3>
+        <p class="open-card__p">Speakers, screens, and lights from different makers all work together. Buy what fits your home, your ears, and your budget — not what one ecosystem allows.</p>
+      </article>
 
-<h3>More Reading</h3>
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/handoff.svg" %}</div>
+        <h3 class="open-card__h">Keep what you have.</h3>
+        <p class="open-card__p">Sendspin runs alongside AirPlay and Cast, so your existing speakers don't have to go in the bin.</p>
+      </article>
 
-<ul>
-  <li>Read the <a href="/spec/">protocol specification</a></li>
-  <li>Learn about <a href="/code/">the SDKs and code samples</a></li>
-  <li>
-    Read the
-    <a href="/code/#sendspin-client-implementation-guide"
-      >client implementation guide</a
-    >
-  </li>
-  <li>Explore <a href="/manufacturers/">commercial usage</a></li>
-</ul>
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/lock.svg" %}</div>
+        <h3 class="open-card__h">No cloud account.</h3>
+        <p class="open-card__p">Everything stays on your home network. No login, no telemetry, no listening data sent off to Big Tech. Music keeps playing through internet outages.</p>
+      </article>
+
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/seed.svg" %}</div>
+        <h3 class="open-card__h">Built to last.</h3>
+        <p class="open-card__p">Backed by the Open Home Foundation, a Swiss non-profit. Sendspin can't be bought out, paywalled, or shut down on a corporate whim.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="ground-paper section-pad" id="start">
+  <div class="container">
+    <div class="start__head">
+      <div>
+        <span class="eyebrow-line">Start small · Grow as you go</span>
+        <h2 class="start__title">No subscriptions. No licensing. <br />Add rooms one at a time.</h2>
+      </div>
+      <p class="start__lede">
+        <strong>Sendspin itself is free.</strong> Pick a path and add a single room. Every new
+        device joins the existing setup automatically — no rewiring, no
+        re-pairing the rest of the house.
+      </p>
+    </div>
+
+    <div class="start__grid">
+      <article class="path-card path-card--ready">
+        <div class="path-card__num">01 · Buy ready-made</div>
+        <h3 class="path-card__h">Voice Preview Edition</h3>
+        <div class="path-card__price">$59<small>/ room</small></div>
+        <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box.</p>
+        <div class="path-card__visual">{% include "icons/speaker.svg" %}</div>
+      </article>
+
+      <article class="path-card path-card--stream">
+        <div class="path-card__num">02 · Stream from your computer</div>
+        <h3 class="path-card__h">Music Assistant</h3>
+        <div class="path-card__price">Free<small>/ room</small></div>
+        <p class="path-card__p">Run <a href="https://www.music-assistant.io" target="_blank" rel="noreferrer">Music Assistant</a> on a Raspberry Pi or any home computer. It sources the music and sends it to every Sendspin device on your network.</p>
+        <div class="path-card__visual">{% include "icons/rpi.svg" %}</div>
+      </article>
+
+      <article class="path-card path-card--receiver">
+        <div class="path-card__num">03 · Reuse what you own</div>
+        <h3 class="path-card__h">Sendspin Daemon</h3>
+        <div class="path-card__price">Free<small>/ room</small></div>
+        <p class="path-card__p">Run it on Linux, <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank" rel="noreferrer">Windows</a>, or an old Android phone with <a href="https://github.com/chrisuthe/SendspinDroid/releases" target="_blank" rel="noreferrer">SendspinDroid</a>.</p>
+        <div class="path-card__visual">{% include "icons/handoff.svg" %}</div>
+      </article>
+
+      <article class="path-card path-card--diy">
+        <div class="path-card__num">04 · Build your own</div>
+        <h3 class="path-card__h">ESP32-S3 + DAC</h3>
+        <div class="path-card__price">&lt;$20<small>/ room</small></div>
+        <p class="path-card__p">Comfortable with electronics? An ESP32-S3 with a DAC running <a href="https://esphome.io" target="_blank" rel="noreferrer">ESPHome</a> is a Sendspin speaker for under twenty bucks.</p>
+        <div class="path-card__visual">{% include "icons/circuit.svg" %}</div>
+      </article>
+    </div>
+
+    <p class="start__footnote">
+      Already have a Pi running Music Assistant?
+      <strong>You're already running Sendspin.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="ground-powder section-pad">
+  <div class="container">
+    <div class="partners__head">
+      <div class="partners__badge-strip">
+        <span class="works-with-badge">
+          <span class="works-with-badge__check">{% include "icons/check.svg" %}</span>
+          Works with Sendspin
+        </span>
+      </div>
+      <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
+      <p class="partners__lede">
+        A growing roster of software and hardware partners ships with
+        Sendspin support today. The protocol is open — anyone can join.
+      </p>
+    </div>
+
+    <div class="partners__grid">
+      <a class="partner-card" href="https://www.music-assistant.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/music-assistant.svg" alt="Music Assistant logo" /></div>
+        <div class="partner-card__name">Music Assistant</div>
+      </a>
+      <a class="partner-card" href="https://esphome.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/esphome.svg" alt="ESPHome logo" /></div>
+        <div class="partner-card__name">ESPHome</div>
+      </a>
+      <a class="partner-card" href="https://docs.ledfx.app/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/ledfx.png" alt="LedFx logo" /></div>
+        <div class="partner-card__name">LedFx</div>
+      </a>
+      <a class="partner-card" href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE logo" /></div>
+        <div class="partner-card__name">Home Assistant Voice PE</div>
+      </a>
+      <div class="partner-card partner-card--coming">
+        <div class="partner-card__logo">+</div>
+        <div class="partner-card__name">More coming</div>
+      </div>
+    </div>
+
+    <p class="partners__cta">
+      Building something with Sendspin?
+      <a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noreferrer">
+        Say hi in #sendspin-beta-testing
+      </a>
+      on the Music Assistant Discord.
+    </p>
+  </div>
+</section>
+
+<section class="ground-espresso section-pad" id="build">
+  <div class="container">
+    <div class="build__head">
+      <span class="eyebrow-line on-dark">Build with Sendspin</span>
+      <h2 class="build__title">The spec is open and free to implement.</h2>
+      <p class="build__lede">
+        Hardware or software, anyone can build with it. Certify once;
+        listeners hear the difference forever.
+      </p>
+    </div>
+
+    <div class="build__grid">
+      <article class="build-card build-card--dark">
+        <span class="build-card__eyebrow">For hardware makers</span>
+        <h3 class="build-card__h">Make your speaker part of the song.</h3>
+        <p class="build-card__p">
+          Wear the "Works with Sendspin" mark and join a growing
+          ecosystem of speakers, displays, and lights that listeners
+          can mix and match.
+        </p>
+        <div class="build-card__ctas">
+          <a class="btn btn--on-coral" href="/manufacturers/">
+            Become a partner
+            {% include "icons/arrow.svg" %}
+          </a>
+        </div>
+      </article>
+
+      <article class="build-card">
+        <span class="build-card__eyebrow">For software developers</span>
+        <h3 class="build-card__h">Add Sendspin to your app, server, or driver.</h3>
+        <p class="build-card__p">
+          Open spec, plus official SDKs in seven languages. The reference
+          client and server are MIT-licensed.
+        </p>
+        <div class="build-card__sdks">
+          <span class="sdk-chip">C#</span>
+          <span class="sdk-chip">C++</span>
+          <span class="sdk-chip">Go</span>
+          <span class="sdk-chip">JavaScript</span>
+          <span class="sdk-chip">Python</span>
+          <span class="sdk-chip">Rust</span>
+          <span class="sdk-chip">Swift</span>
+        </div>
+        <div class="build-card__ctas" style="margin-top: var(--sp-3);">
+          <a class="btn btn--ghost" href="/spec/">Read the spec</a>
+          <a class="btn btn--ghost" href="/code/">Browse the SDKs</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

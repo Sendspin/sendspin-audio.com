@@ -1,0 +1,6 @@
+<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <rect x="6" y="3" width="12" height="18" rx="3"/>
+  <circle cx="12" cy="9" r="0.6" fill="currentColor"/>
+  <path d="M9 14h6"/>
+  <path d="M9 17.5h6"/>
+</svg>
