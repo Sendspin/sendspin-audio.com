@@ -3,7 +3,7 @@
    Homepage-specific section styles live in homepage.css.
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
 
 :root {
   /* Brand colors */
@@ -50,15 +50,15 @@
   --line-on-dark:       rgba(231, 234, 221, 0.14);
 
   /* Typography */
-  --font-display:       "Nunito", ui-rounded, system-ui, sans-serif;
-  --font-body:          "Nunito", ui-rounded, system-ui, sans-serif;
-  --font-mono:          "DM Mono", ui-monospace, "JetBrains Mono", monospace;
+  --font-display:       "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body:          "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:          "Space Mono", ui-monospace, "JetBrains Mono", monospace;
 
   --fw-regular: 400;
   --fw-medium:  500;
   --fw-semibold:600;
   --fw-bold:    700;
-  --fw-heavy:   900;
+  --fw-heavy:   700;
 
   --fs-display:  clamp(48px, 6vw, 80px);
   --fs-h1:       clamp(36px, 4.2vw, 56px);
