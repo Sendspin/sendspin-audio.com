@@ -1,6 +1,0 @@
-TODO: Add Sendspin logo and favicon images here.
-
-Required images:
-- sendspin-logo.svg (or .png) - Main logo for header
-- sendspin-favicon.png - Favicon for browser tab
-- social.png - Social media preview image

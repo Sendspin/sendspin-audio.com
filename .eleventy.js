@@ -12,7 +12,9 @@ function githubSlugify(str) {
 }
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("public");
+  // Map every file in public/ to the dist root (e.g. public/style.css -> dist/style.css).
+  // Eleventy's --watch picks up edits automatically; no `cp -r public dist` needed in scripts.
+  eleventyConfig.addPassthroughCopy({ public: "/" });
 
   const md = markdownIt({ html: true }).use(markdownItAnchor, {
     slugify: githubSlugify,
