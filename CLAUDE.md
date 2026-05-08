@@ -2,3 +2,4 @@
 - Deploys automatically via GitHub Actions when pushed to main
 - Local development: `./script/develop` (runs on port 5005)
 - Production build: `./script/build`
+- When changing public/images/social.svg, re-render it with rsvg-convert.

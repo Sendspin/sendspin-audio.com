@@ -5,7 +5,8 @@
       "name": "website-dev",
       "runtimeExecutable": "./script/develop",
       "runtimeArgs": [],
-      "port": 5005
+      "port": 5005,
+      "autoPort": true
     }
   ]
 }
