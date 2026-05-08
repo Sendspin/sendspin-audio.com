@@ -88,12 +88,10 @@ if (!root) {
   }
 
   function scrollLiveDemoToTop() {
-    if (!elements.showcase) {
-      return;
-    }
-
+    const nav = document.querySelector(".nav");
+    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
     const targetTop = Math.max(
-      window.scrollY + elements.showcase.getBoundingClientRect().top,
+      window.scrollY + root.getBoundingClientRect().top - navHeight - 20,
       0,
     );
     const startTop = window.scrollY;
