@@ -2,18 +2,18 @@
   <defs>
     <style>
       .bg { fill: #F5F4EC; }
-      .h { font-family: 'Nunito', 'Avenir Next', sans-serif; font-weight: 900; font-size: 64px; letter-spacing: -1.6px; }
+      .h { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 64px; letter-spacing: -1.6px; }
       .h-espresso { fill: #231C18; }
       .h-coral { fill: #E66756; }
       .h-soft { fill: #4A3F39; }
-      .sub { font-family: 'Nunito', 'Avenir Next', sans-serif; font-size: 22px; fill: #4A3F39; font-weight: 500; }
-      .beta-text { fill: #C8503F; font-family: 'Nunito', 'Avenir Next', sans-serif; font-weight: 600; font-size: 17px; }
-      .label-text { font-family: 'Nunito', 'Avenir Next', sans-serif; font-weight: 800; font-size: 20px; fill: #fff; letter-spacing: -0.6px; }
-      .wordmark { font-family: 'Nunito', 'Avenir Next', sans-serif; font-weight: 900; font-size: 36px; fill: #231C18; letter-spacing: -0.72px; }
-      .label-meta { font-family: 'DM Mono', 'Menlo', monospace; font-size: 6.5px; fill: #fff; letter-spacing: 1.2px; opacity: 0.85; }
+      .sub { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-size: 22px; fill: #4A3F39; font-weight: 500; }
+      .beta-text { fill: #C8503F; font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 17px; }
+      .label-text { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 20px; fill: #fff; letter-spacing: -0.6px; }
+      .wordmark { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 36px; fill: #231C18; letter-spacing: -0.72px; }
+      .label-meta { font-family: 'Space Mono', ui-monospace, monospace; font-size: 6.5px; fill: #fff; letter-spacing: 1.2px; opacity: 0.85; }
       .chip-bg { fill: #FFFDF6; }
-      .chip-text { font-family: 'Nunito', 'Avenir Next', sans-serif; font-weight: 700; font-size: 13px; fill: #231C18; }
-      .chip-meta { font-family: 'DM Mono', 'Menlo', monospace; font-size: 9px; fill: #7C6F67; }
+      .chip-text { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 13px; fill: #231C18; }
+      .chip-meta { font-family: 'Space Mono', ui-monospace, monospace; font-size: 9px; fill: #7C6F67; }
       .chip-icon-bg-powder { fill: #B8CFE9; }
       .chip-icon-bg-wash { fill: #FBE4DF; }
       .chip-icon-bg-coral { fill: #E66756; }
@@ -29,13 +29,8 @@
   <rect class="bg" width="1200" height="630"/>
 
   <!-- Brand wordmark -->
-  <g transform="translate(80, 90)">
-    <circle cx="22" cy="22" r="22" fill="#231C18"/>
-    <circle cx="22" cy="22" r="16" fill="#4A3F39"/>
-    <circle cx="22" cy="22" r="10" fill="#231C18"/>
-    <circle cx="22" cy="22" r="6" fill="#E66756"/>
-    <circle cx="22" cy="22" r="1.6" fill="#231C18"/>
-    <text x="56" y="33" class="wordmark">Sendspin</text>
+  <g transform="translate(80, 70)">
+    <text x="0" y="33" class="wordmark">Sendspin</text>
   </g>
 
   <!-- Headline (3 lines) -->
