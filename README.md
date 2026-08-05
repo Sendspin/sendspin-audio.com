@@ -71,9 +71,7 @@ This site is configured to deploy automatically to Netlify when changes are push
 ├── script/                # Build scripts
 │   ├── build              # Production build
 │   └── develop            # Development server
-├── dist/                  # Built site (generated)
-└── .github/workflows/     # GitHub Actions
-    └── deploy.yml         # GitHub Pages deployment
+└── dist/                  # Built site (generated)
 ```
 
 ## Built With
