@@ -37,14 +37,7 @@ The built site will be in the `dist/` directory.
 
 ## Deployment
 
-This site is configured to deploy automatically to GitHub Pages when changes are pushed to the `main` branch.
-
-### GitHub Pages Setup
-
-1. Go to your repository Settings
-2. Navigate to Pages (under Code and automation)
-3. Under "Build and deployment", select "GitHub Actions" as the source
-4. Push to the main branch to trigger deployment
+This site is configured to deploy automatically to Netlify when changes are pushed to the `main` branch.
 
 ## TODO Items
 
