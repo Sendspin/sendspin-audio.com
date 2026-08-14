@@ -6,6 +6,8 @@ cd "$(dirname "$0")/.."
 
 rm -rf dist
 
+node script/fetch-allowed-referrers.js
+
 # Quit all background tasks when script exits
 trap "kill 0" EXIT
 

@@ -6,4 +6,6 @@ cd "$(dirname "$0")/.."
 
 rm -rf dist
 
+node script/fetch-allowed-referrers.js
+
 NODE_ENV=production npm exec -- eleventy

@@ -12,7 +12,7 @@ eleventyExcludeFromCollections: true
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    plausible('404');
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof window.plausible === "function") window.plausible("404");
   });
 </script>

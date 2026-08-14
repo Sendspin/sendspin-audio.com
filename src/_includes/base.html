@@ -47,8 +47,42 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
     />
     <script async src="https://plausible.openhomefoundation.org/js/pa-obCWzmtDxu9-S0vPtBpJu.js"></script>
     <script>
-      window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function (i) { plausible.o = i || {} };
-      plausible.init()
+      (function () {
+        // Fetched once per build by script/fetch-allowed-referrers.js. Visitors arriving
+        // from their own Home Assistant or ESPHome instance send that private URL as the
+        // referrer, so anything not on this list is replaced before Plausible sees it.
+        var allowedReferrers = {{ allowedReferrers | json }};
+
+        window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) };
+        window.plausible.init = window.plausible.init || function (i) { window.plausible.o = i || {} };
+
+        window.plausible.init({
+          transformRequest: function (payload) {
+            var ref = payload.r;
+            if (!ref) return payload;
+
+            var host = "";
+            try {
+              host = new URL(ref).hostname.replace(/\.$/, "");
+            } catch (e) {
+              // Unparseable referrer: falls through and gets replaced.
+            }
+
+            for (var i = 0; i < allowedReferrers.length; i++) {
+              var d = allowedReferrers[i];
+              if (host === d || (host.length > d.length && host.slice(-(d.length + 1)) === "." + d)) {
+                return payload;
+              }
+            }
+
+            // One aggregate bucket so we can see how much we filter without learning
+            // anything about individual visitors. .invalid is reserved by RFC 2606 and
+            // can never collide with a real domain.
+            payload.r = "https://unlisted.invalid/";
+            return payload;
+          },
+        });
+      })();
     </script>
   </head>
   <body>
@@ -123,7 +157,7 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
             <p class="site-footer__tagline">
               The open standard for music in every room — from the Open Home Foundation.
             </p>
-            <p class="site-footer__tagline">
+            <p class="site-footer__tagline site-footer__tagline--analytics">
               This website uses <a
                 href="https://www.openhomefoundation.org/blog/making-our-web-analytics-open-source-with-plausible/"
                 rel="noopener">privacy-first analytics</a> to help us improve the site. You can view all data in our <a
