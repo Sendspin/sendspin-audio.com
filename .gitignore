@@ -1,3 +1,6 @@
 node_modules/
 dist/
 .DS_Store
+
+# Fetched at build time by script/fetch-allowed-referrers.js
+/src/_data/allowed-referrers.json

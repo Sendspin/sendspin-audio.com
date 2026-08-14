@@ -484,6 +484,11 @@ section { position: relative; }
   max-width: 280px;
   margin: 0;
 }
+.site-footer__tagline--analytics {
+  max-width: 30rem;
+  text-wrap: balance;
+}
+.site-footer__tagline--analytics a { text-decoration: underline; }
 .site-footer__col h5 {
   font-family: var(--font-body);
   font-size: 11px;
