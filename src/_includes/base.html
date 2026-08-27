@@ -106,9 +106,8 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
           <a class="nav__link" href="#live-demo">Live demo</a>
           {% else %}
           <a class="nav__link {% if page.url == '/spec/' %}is-active{% endif %}" href="/spec/">Spec</a>
-          <a class="nav__link {% if page.url == '/code/' %}is-active{% endif %}" href="/code/">Code</a>
           {% endif %}
-          <a class="nav__cta {% if page.url == '/manufacturers/' %}is-active{% endif %}" href="/manufacturers/">Build with Sendspin</a>
+          <a class="nav__cta {% if page.url contains '/build/' %}is-active{% endif %}" href="/build/">Build with Sendspin</a>
         </div>
       </div>
     </nav>

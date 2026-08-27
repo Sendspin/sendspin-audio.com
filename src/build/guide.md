@@ -1,40 +1,14 @@
 ---
 layout: base
-title: Code
-description: SDKs, libraries, and code samples for Sendspin.
+title: Sendspin client implementation guide
+description: How to build a Sendspin client; the required components, the connection flow, and how the SDKs fit together.
 ---
-
-This page contains software development kits (SDK), libraries, and code samples to help you get started using Sendspin in your projects.
-
-- **C#/.NET** - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) -
-  [Nuget Package](https://www.nuget.org/packages/Sendspin.SDK)
-  - Used by [windowsSpin](https://github.com/chrisuthe/windowsSpin)
-
-- **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
-  - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933)
-
-- **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
-
-- **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
-  - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), [sendspin-audio.com live demo](https://www.sendspin-audio.com/#live-demo)
-
-- **Kotlin/JVM** - [sendspin-jvm](https://github.com/Sendspin/sendspin-jvm)
-
-- **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
-  - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
-
-- **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
-  - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app)
-
-- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
-
-## Sendspin client implementation guide
 
 A Sendspin client is an application that can receive synchronized audio and metadata via the Sendspin protocol. Example products for the player role are any products that produce audio signals (aux, optical, analog), or connected speakers. For metadata, example products could be a wall tablet, that once included, can show the album art, metadata and offer controls for the music.
 
 By default, the server will discover clients on the network. It is possible for clients to connect to servers directly without being discoverable. This is meant for scripts and other non-permanent processes, is not a recommended approach, and won't be covered by this guide.
 
-### Components of a Sendspin Client
+## Components of a Sendspin Client
 
 A client needs to contain the following components to participate in a Sendspin network.
 
@@ -50,7 +24,7 @@ The following components are optional, depending on the roles that the client wa
 
 <p><img src="/images/client-implementation-guide.jpg" alt="An image of the Sendspin connection flow" class="d-block mx-auto" /></p>
 
-### SDK architecture
+## SDK architecture
 
 All SDKs implement Sendspin core, to handle incoming and outgoing messages. Some SDKs will also include an mDNS server, HTTP WebSocket server and an audio sink to play the audio. These are all different modules, with seperated concerns, that are up to the client to consume as needed.
 
@@ -61,7 +35,6 @@ All SDKs implement Sendspin core, to handle incoming and outgoing messages. Some
   to use the mDNS server, but not the audio sink for example.
 -->
 
-## Contributing
+## Next steps
 
-Sendspin is open source and welcomes contributions. Visit [Sendspin on GitHub](https://github.com/Sendspin) and the <a href="https://discord.gg/kaVm8hGpne" target="_blank"
-    >Music Assistant Discord</a> to get involved.
+Grab an [SDK in your language](/build/sdks/) to get started, or dive into the message-level details in the [protocol specification](/spec/).

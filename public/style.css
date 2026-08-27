@@ -704,3 +704,55 @@ section { position: relative; }
   text-transform: uppercase;
   color: var(--accent);
 }
+
+/* ---------- /build/ hub cards ---------- */
+.hub-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-6) 0;
+}
+@media (max-width: 760px) { .hub-cards { grid-template-columns: 1fr; } }
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--t-base) var(--ease-out),
+              box-shadow var(--t-base) var(--ease-out),
+              border-color var(--t-base) var(--ease-out);
+}
+.hub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--ss-coral);
+}
+.page-content .hub-card h3 {
+  margin: 0 0 var(--sp-2);
+  color: var(--fg-1);
+}
+.page-content .hub-card p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-small);
+  color: var(--fg-2);
+}
+.hub-card__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: auto;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-small);
+  color: var(--accent-deep);
+}
+.hub-card__go .svg-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--t-base) var(--ease-spring);
+}
+.hub-card:hover .hub-card__go { color: var(--ss-coral); }
+.hub-card:hover .hub-card__go .svg-icon { transform: translateX(4px); }
