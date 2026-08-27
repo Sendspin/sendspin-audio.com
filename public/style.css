@@ -711,6 +711,11 @@ section { position: relative; }
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-4);
   margin: var(--sp-6) 0;
+  /* Break out of the 760px prose column so three cards get readable width;
+     stays centered because the prose container itself is centered. */
+  --hub-cards-w: min(1080px, calc(100vw - 2 * clamp(20px, 4vw, 40px)));
+  width: var(--hub-cards-w);
+  margin-inline: calc((100% - var(--hub-cards-w)) / 2);
 }
 @media (max-width: 760px) { .hub-cards { grid-template-columns: 1fr; } }
 .hub-card {

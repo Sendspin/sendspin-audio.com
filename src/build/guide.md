@@ -4,6 +4,8 @@ title: Sendspin client implementation guide
 description: How to build a Sendspin client; the required components, the connection flow, and how the SDKs fit together.
 ---
 
+Sendspin is the open standard for the complete music experience: synchronized audio in every room, album art on every screen, lights on the beat. It is free to implement, has no licensing fees, and connects your product to servers like [Music Assistant](https://www.music-assistant.io) and the wider Open Home Foundation ecosystem — read [the full case for building on Sendspin](/build/manufacturers/). A client is smaller than you might think; this guide shows what goes into one.
+
 A Sendspin client is an application that can receive synchronized audio and metadata via the Sendspin protocol. Example products for the player role are any products that produce audio signals (aux, optical, analog), or connected speakers. For metadata, example products could be a wall tablet, that once included, can show the album art, metadata and offer controls for the music.
 
 By default, the server will discover clients on the network. It is possible for clients to connect to servers directly without being discoverable. This is meant for scripts and other non-permanent processes, is not a recommended approach, and won't be covered by this guide.
