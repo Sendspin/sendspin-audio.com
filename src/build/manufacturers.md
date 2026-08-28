@@ -48,7 +48,7 @@ Sendspin acts as an "orchestration layer" between your hardware and the user's m
 - **Automatic discovery:** Devices identify each other instantly without complex manual pairing, creating a "plug-and-play" experience for the end user.
 - **Open implementation:** We provide the open specifications and reference code, allowing your engineers to integrate the protocol directly into your existing firmware.
 
-**Ready to build?** Check out the [specifications](/spec/) and [SDKs](/build/sdks/).
+**Ready to build?** Check out the [specifications](/spec/) and [code](/build/sdks/).
 
 ### Protected by the Open Home Foundation
 
@@ -66,8 +66,6 @@ We are looking for forward-thinking manufacturers to help us pioneer this exciti
 
 ### Start building today
 
-You don't need to wait for a conversation with us. The protocol is open:
-
-- Read the [client implementation guide](/build/guide/) to see what goes into a Sendspin client.
-- Grab one of the [SDKs](/build/sdks/) — eight languages, from C++ for microcontrollers to JavaScript for the browser.
-- Dive into the full [protocol specification](/spec/).
+- [Sendspin client implementation guide](/build/guide/)
+- [SDKs & libraries](/build/sdks/)
+- [Protocol specification](/spec/)
