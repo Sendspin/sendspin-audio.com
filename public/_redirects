@@ -1,0 +1,3 @@
+# Old URLs from before the /build/ restructure
+/manufacturers/ /build/manufacturers/ 301
+/code/ /build/sdks/ 301

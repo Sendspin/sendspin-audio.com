@@ -395,6 +395,18 @@ section { position: relative; }
 }
 .nav__cta:hover { background: #000; transform: translateY(-1px); color: var(--ss-paper); }
 
+/* Build-section nav: coral-washed so you can tell you're in the build part */
+.nav--build {
+  background: rgba(251, 228, 223, 0.82); /* --ss-coral-wash */
+  border-bottom-color: rgba(230, 103, 86, 0.28);
+}
+.nav--build .nav__cta { background: var(--ss-coral); box-shadow: var(--shadow-coral); }
+.nav--build .nav__cta:hover { background: var(--ss-coral-deep); }
+@media (max-width: 720px) {
+  .nav--build .nav__links { background: var(--ss-coral-wash); }
+  .nav--build .nav__link.is-active { background: rgba(255, 255, 255, 0.65); }
+}
+
 /* Hamburger toggle — hidden on desktop, shown on mobile via media query below */
 .nav__toggle {
   display: none;
@@ -704,3 +716,60 @@ section { position: relative; }
   text-transform: uppercase;
   color: var(--accent);
 }
+
+/* ---------- /build/ hub cards ---------- */
+.hub-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-6) 0;
+  /* Break out of the 760px prose column so three cards get readable width;
+     stays centered because the prose container itself is centered. */
+  --hub-cards-w: min(1080px, calc(100vw - 2 * clamp(20px, 4vw, 40px)));
+  width: var(--hub-cards-w);
+  margin-inline: calc((100% - var(--hub-cards-w)) / 2);
+}
+@media (max-width: 760px) { .hub-cards { grid-template-columns: 1fr; } }
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--t-base) var(--ease-out),
+              box-shadow var(--t-base) var(--ease-out),
+              border-color var(--t-base) var(--ease-out);
+}
+.hub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--ss-coral);
+}
+.page-content .hub-card h3 {
+  margin: 0 0 var(--sp-2);
+  color: var(--fg-1);
+}
+.page-content .hub-card p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-small);
+  color: var(--fg-2);
+}
+.hub-card__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: auto;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-small);
+  color: var(--accent-deep);
+}
+.hub-card__go .svg-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--t-base) var(--ease-spring);
+}
+.hub-card:hover .hub-card__go { color: var(--ss-coral); }
+.hub-card:hover .hub-card__go .svg-icon { transform: translateX(4px); }

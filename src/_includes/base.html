@@ -86,7 +86,7 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
     </script>
   </head>
   <body>
-    <nav class="nav">
+    <nav class="nav{% if page.url contains '/build/' %} nav--build{% endif %}">
       <div class="container nav__inner">
         {% include "brand.html" %}
         <button
@@ -104,11 +104,14 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
           {% if page.url == "/" %}
           <a class="nav__link" href="#whole-room">The experience</a>
           <a class="nav__link" href="#live-demo">Live demo</a>
+          {% elsif page.url contains "/build/" %}
+          <a class="nav__link {% if page.url == '/build/manufacturers/' %}is-active{% endif %}" href="/build/manufacturers/">Why Sendspin</a>
+          <a class="nav__link {% if page.url == '/build/guide/' %}is-active{% endif %}" href="/build/guide/">How to build</a>
+          <a class="nav__link {% if page.url == '/build/sdks/' %}is-active{% endif %}" href="/build/sdks/">SDKs</a>
           {% else %}
           <a class="nav__link {% if page.url == '/spec/' %}is-active{% endif %}" href="/spec/">Spec</a>
-          <a class="nav__link {% if page.url == '/code/' %}is-active{% endif %}" href="/code/">Code</a>
           {% endif %}
-          <a class="nav__cta {% if page.url == '/manufacturers/' %}is-active{% endif %}" href="/manufacturers/">Build with Sendspin</a>
+          <a class="nav__cta {% if page.url contains '/build/' %}is-active{% endif %}" href="/build/">Build with Sendspin</a>
         </div>
       </div>
     </nav>
