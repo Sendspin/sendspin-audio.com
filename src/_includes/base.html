@@ -86,7 +86,7 @@ Sendspin: Music in every room. Art on every screen. Lights on the beat.
     </script>
   </head>
   <body>
-    <nav class="nav">
+    <nav class="nav{% if page.url contains '/build/' %} nav--build{% endif %}">
       <div class="container nav__inner">
         {% include "brand.html" %}
         <button
