@@ -36,6 +36,12 @@ module.exports = function (eleventyConfig) {
     return defaultFence(tokens, idx, options, env, self);
   };
 
+  // Wrap tables in a scroll container. body has overflow-x: hidden, so a table
+  // wider than the viewport is clipped with no way to reach the rest of it.
+  md.renderer.rules.table_open = () =>
+    '<div class="table-scroll" tabindex="0">\n<table>\n';
+  md.renderer.rules.table_close = () => "</table>\n</div>\n";
+
   eleventyConfig.setLibrary("md", md);
 
   return {
