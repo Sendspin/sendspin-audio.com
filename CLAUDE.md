@@ -1,5 +1,7 @@
 - Site built with Eleventy 2.0.1
-- Deploys automatically via GitHub Actions when pushed to main
+- Deploys automatically to Netlify when pushed to main. Netlify's own Git integration builds the site; there is no GitHub Actions workflow and no netlify.toml, so the build command and publish directory are set in the Netlify dashboard.
+- Redirects go in `public/_redirects` (Netlify syntax). `.eleventy.js` copies `public/` to the dist root, so the file ships at the site root. Netlify serves an existing file in preference to a redirect rule, so a rule for a path that still builds a page will not fire.
+- Builder pages live under `src/build/` and serve at `/build/...`, the protocol spec included.
 - Local development: `./script/develop` (runs on port 5005)
 - Production build: `./script/build`
 - When changing public/images/social.svg, re-render it with rsvg-convert. Make sure the used fonts are installed.
