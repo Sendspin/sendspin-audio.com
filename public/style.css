@@ -648,13 +648,21 @@ section { position: relative; }
   font-size: 0.9em;
 }
 
-.page-content table {
-  width: 100%;
-  border-collapse: collapse;
+.page-content .table-scroll {
+  overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
-  overflow: hidden;
   margin: 0 0 var(--sp-5);
+}
+.page-content .table-scroll:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.page-content table {
+  /* Fill the scroll box when the columns fit, overflow it when they do not. */
+  min-width: 100%;
+  border-collapse: collapse;
+  margin: 0;
   font-size: 15px;
 }
 .page-content thead {
