@@ -199,29 +199,6 @@ section { position: relative; }
 .ground-espresso a { color: var(--ss-coral-soft); }
 .ground-espresso a:hover { color: var(--ss-coral); }
 
-/* ---------- Eyebrow ---------- */
-.eyebrow-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: var(--sp-4);
-}
-.eyebrow-line::before {
-  content: "";
-  width: 24px;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 2px;
-}
-.eyebrow-line.on-dark { color: var(--ss-coral-soft); }
-.eyebrow-line.on-dark::before { background: var(--ss-coral-soft); }
-
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
@@ -318,6 +295,30 @@ section { position: relative; }
   height: 72px;
   gap: var(--sp-5);
 }
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+/* On /build/ pages the wordmark is the way back out to the listener site, and
+   the crumb names where you are. */
+.nav__crumb-sep {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--line-strong);
+}
+.nav__crumb {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ss-coral-deep);
+  text-decoration: none;
+}
+.nav__crumb:hover { color: var(--ss-coral); }
+
 .nav__logo {
   display: flex;
   align-items: center;
@@ -400,8 +401,6 @@ section { position: relative; }
   background: rgba(251, 228, 223, 0.82); /* --ss-coral-wash */
   border-bottom-color: rgba(230, 103, 86, 0.28);
 }
-.nav--build .nav__cta { background: var(--ss-coral); box-shadow: var(--shadow-coral); }
-.nav--build .nav__cta:hover { background: var(--ss-coral-deep); }
 @media (max-width: 720px) {
   .nav--build .nav__links { background: var(--ss-coral-wash); }
   .nav--build .nav__link.is-active { background: rgba(255, 255, 255, 0.65); }
@@ -720,16 +719,17 @@ section { position: relative; }
 /* ---------- /build/ hub cards ---------- */
 .hub-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-4);
   margin: var(--sp-6) 0;
-  /* Break out of the 760px prose column so three cards get readable width;
+  /* Break out of the 760px prose column so the cards get readable width;
      stays centered because the prose container itself is centered. */
   --hub-cards-w: min(1080px, calc(100vw - 2 * clamp(20px, 4vw, 40px)));
   width: var(--hub-cards-w);
   margin-inline: calc((100% - var(--hub-cards-w)) / 2);
 }
-@media (max-width: 760px) { .hub-cards { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) { .hub-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .hub-cards { grid-template-columns: 1fr; } }
 .hub-card {
   display: flex;
   flex-direction: column;

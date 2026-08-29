@@ -1,3 +1,9 @@
-# Old URLs from before the /build/ restructure
-/manufacturers/ /build/manufacturers/ 301
-/code/ /build/sdks/ 301
+# Netlify redirects. Netlify serves an existing file in preference to a rule,
+# and takes the first rule that matches, so keep these ordered most-specific first.
+
+# /build/ restructure
+/manufacturers/  /build/manufacturers/  301
+/code/           /build/sdks/           301
+
+# Spec moved under the build section
+/spec/           /build/spec/           301

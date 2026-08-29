@@ -11,7 +11,7 @@
       { "href": "/build/manufacturers/", "label": "For hardware makers" },
       { "href": "/build/guide/", "label": "Implementation guide" },
       { "href": "/build/sdks/", "label": "SDKs & libraries" },
-      { "href": "/spec/", "label": "Spec" },
+      { "href": "/build/spec/", "label": "Spec" },
       { "href": "https://www.github.com/Sendspin", "label": "GitHub" }
     ],
     "community": [

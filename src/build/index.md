@@ -22,6 +22,11 @@ Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra con
     <p>Official SDKs in eight languages, from C++ for microcontrollers to JavaScript for the browser, plus a reference CLI player.</p>
     <span class="hub-card__go">Browse the SDKs {% include "icons/arrow.svg" %}</span>
   </a>
+  <a class="hub-card" href="/build/spec/">
+    <h3>Protocol specification</h3>
+    <p>The protocol itself, message by message: the handshake, stream negotiation, codecs, and the timing rules that keep rooms in sync.</p>
+    <span class="hub-card__go">Read the spec {% include "icons/arrow.svg" %}</span>
+  </a>
 </div>
 
-Prefer to read the protocol itself? The full [specification](/spec/) is open. Questions? Join the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>.
+Questions? Join the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>.
