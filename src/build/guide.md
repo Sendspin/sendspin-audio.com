@@ -41,4 +41,4 @@ All SDKs implement Sendspin core, to handle incoming and outgoing messages. Some
 
 ## Next steps
 
-Grab an [SDK in your language](/build/sdks/) to get started, or dive into the message-level details in the [protocol specification](/spec/).
+Grab an [SDK in your language](/build/sdks/) to get started, or dive into the message-level details in the [protocol specification](/build/spec/).

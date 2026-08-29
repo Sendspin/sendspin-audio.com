@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260507-2
+  - /homepage.css?v=20260830-2
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260507-1
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -52,7 +52,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
               <span class="room-chip__icon">{% include "icons/speaker.svg" %}</span>
               <span>
                 Living room
-                <div class="room-chip__meta">FLAC · 24/96</div>
+                <div class="room-chip__meta">Lossless</div>
               </span>
             </div>
             <div class="room-chip room-chip--2">
@@ -83,39 +83,13 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="stats">
-  <div class="container">
-    <div class="stats__row">
-      <div class="stat">
-        <div class="stat__num">&lt;1<span class="unit">ms</span></div>
-        <div class="stat__lbl">Sync precision across rooms</div>
-      </div>
-      <div class="stat">
-        <div class="stat__num">ANY <span class="unit">OS</span></div>
-        <div class="stat__lbl">Phone, tablet, or laptop</div>
-      </div>
-      <div class="stat">
-        <div class="stat__num">100<span class="unit">%</span></div>
-        <div class="stat__lbl">Local-network audio</div>
-      </div>
-      <div class="stat">
-        <div class="stat__num">8</div>
-        <div class="stat__lbl">Open-source SDKs</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="ground-cream section-pad" id="whole-room">
   <div class="container">
     <div class="pillars__head">
-      <div>
-        <span class="eyebrow-line">The whole room, in sync</span>
-        <h2 class="pillars__title">
-          Other multi-room systems just play sound.<br />
-          Sendspin orchestrates the whole room.
-        </h2>
-      </div>
+      <h2 class="pillars__title">
+        Other multi-room systems just play sound.<br />
+        Sendspin orchestrates the whole room.
+      </h2>
       <p class="pillars__lede">
         Artwork, metadata, controls, and visualization are built into the
         protocol from day one. No other multi-room standard does this.
@@ -131,11 +105,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           a stream matched to what it can play — lossless to your hi-fi,
           efficient to the kitchen smart speaker — all locked to the same beat.
         </p>
-        <div class="pillar__visual">
-          <div class="wave-mini" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-        </div>
       </article>
 
       <article class="pillar pillar--screens">
@@ -146,15 +115,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           The hallway wall panel becomes a Now Playing screen. The kitchen
           shows what's on without anyone reaching for a phone.
         </p>
-        <div class="pillar__visual">
-          <div class="screen-mini" aria-hidden="true">
-            <div class="screen-mini__art"></div>
-            <div class="screen-mini__txt">
-              <div class="screen-mini__t1">Pizza Hat</div>
-              <div class="screen-mini__t2">Johan Althoff</div>
-            </div>
-          </div>
-        </div>
       </article>
 
       <article class="pillar pillar--controls">
@@ -165,14 +125,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           in the house — phone in your pocket or tablet on the wall, it's
           the same set of controls.
         </p>
-        <div class="pillar__visual">
-          <div class="controls-mini" aria-hidden="true">
-            <button type="button" tabindex="-1" aria-hidden="true" style="transform:scaleX(-1)">{% include "icons/skip.svg" %}</button>
-            <button type="button" class="play" tabindex="-1" aria-hidden="true">{% include "icons/play.svg" %}</button>
-            <button type="button" tabindex="-1" aria-hidden="true">{% include "icons/skip.svg" %}</button>
-            <div class="controls-mini__bar"></div>
-          </div>
-        </div>
       </article>
 
       <article class="pillar pillar--lights">
@@ -183,11 +135,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           the floor lamp, mids on the strip behind the TV — in sync with
           what you're hearing.
         </p>
-        <div class="pillar__visual">
-          <div class="lights-mini" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
-        </div>
       </article>
     </div>
   </div>
@@ -197,7 +144,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   <div class="container">
     <div class="demo__grid">
       <div>
-        <span class="eyebrow-line on-dark">Live demo</span>
         <h2 class="demo__title">Try Sendspin in your browser.</h2>
         <p class="demo__copy">
           No install. Open this page on multiple devices, press
@@ -308,12 +254,11 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
 <section class="ground-paper section-pad">
   <div class="container">
-    <div class="sync-strip__grid">
-      <div>
-        <span class="eyebrow-line">Perfect sync · No echo</span>
-        <h2 class="sync-strip__title">
-          One song. <em>Every room.</em> Locked to the same beat.
-        </h2>
+    <div class="sync-strip">
+      <h2 class="sync-strip__title">
+        One song. <em>Every room.</em> Locked to the same beat.
+      </h2>
+      <div class="sync-strip__body">
         <p class="sync-strip__p">
           Microsecond-precise timing keeps every speaker in step. Walk
           between rooms and the music stays one song, not an echo chamber.
@@ -323,38 +268,11 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           pairing step keeps the audio between them encrypted, so your music
           stays in your home.
         </p>
-        <div class="hero__ctas" style="margin-top: var(--sp-5); margin-bottom: 0;">
-          <a class="btn btn--ghost" href="/spec/">
+        <div class="sync-strip__cta">
+          <a class="btn btn--ghost" href="/build/spec/">
             {% include "icons/note.svg" %}
             Read the protocol
           </a>
-        </div>
-      </div>
-
-      <div class="timing-viz">
-        <div class="timing-viz__head">
-          <h4>Live timing</h4>
-          <span class="timing-viz__readout">±0.5 ms · 4 rooms</span>
-        </div>
-        <div class="room-row room-row--1">
-          <div class="room-row__name">Living room</div>
-          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
-          <div class="room-row__meta">0.3 ms</div>
-        </div>
-        <div class="room-row room-row--2">
-          <div class="room-row__name">Kitchen</div>
-          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
-          <div class="room-row__meta">0.4 ms</div>
-        </div>
-        <div class="room-row room-row--3">
-          <div class="room-row__name">Bedroom</div>
-          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
-          <div class="room-row__meta">0.2 ms</div>
-        </div>
-        <div class="room-row room-row--4">
-          <div class="room-row__name">Hallway</div>
-          <div class="room-row__pulse"><span class="room-row__beat"></span></div>
-          <div class="room-row__meta">0.5 ms</div>
         </div>
       </div>
     </div>
@@ -364,12 +282,9 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 <section class="ground-espresso section-pad">
   <div class="container">
     <div class="open__head">
-      <div>
-        <span class="eyebrow-line on-dark">Open · Local · Yours</span>
-        <h2 class="open__title">
-          <em>Your</em> music,<br />in <em>your</em> home,<br />on <em>your</em> terms.
-        </h2>
-      </div>
+      <h2 class="open__title">
+        <em>Your</em> music,<br />in <em>your</em> home,<br />on <em>your</em> terms.
+      </h2>
       <p class="open__lede">
         Sendspin doesn't lock you into a brand or a cloud. It's an
         open standard, run on your own network, governed by a
@@ -408,10 +323,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 <section class="ground-paper section-pad" id="start">
   <div class="container">
     <div class="start__head">
-      <div>
-        <span class="eyebrow-line">Start small · Grow as you go</span>
-        <h2 class="start__title">Add rooms one at a time.</h2>
-      </div>
+      <h2 class="start__title">Add rooms one at a time.</h2>
       <p class="start__lede">
         <strong>You need two things: a speaker, and something to source the
         music.</strong> Pick a path and add a single room. A new device shows up
@@ -422,35 +334,31 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
     <div class="start__grid">
       <article class="path-card path-card--ready">
-        <div class="path-card__num">01 · Buy ready-made</div>
+        <div class="path-card__num">Buy ready-made</div>
         <h3 class="path-card__h">Voice Preview Edition</h3>
         <div class="path-card__price">$59<small>/ room</small></div>
         <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box.</p>
-        <div class="path-card__visual">{% include "icons/speaker.svg" %}</div>
       </article>
 
       <article class="path-card path-card--stream">
-        <div class="path-card__num">02 · Stream your music</div>
+        <div class="path-card__num">Stream your music</div>
         <h3 class="path-card__h">Music Assistant</h3>
         <div class="path-card__price">Free<small>/ house</small></div>
         <p class="path-card__p">Run <a href="https://www.music-assistant.io" target="_blank" rel="noreferrer">Music Assistant</a> on a Raspberry Pi or any home computer. It sources the music and sends it to every Sendspin device on your network.</p>
-        <div class="path-card__visual">{% include "icons/rpi.svg" %}</div>
       </article>
 
       <article class="path-card path-card--receiver">
-        <div class="path-card__num">03 · Reuse what you own</div>
+        <div class="path-card__num">Reuse what you own</div>
         <h3 class="path-card__h">Sendspin Daemon</h3>
         <div class="path-card__price">Free<small>/ room</small></div>
         <p class="path-card__p">Run it on <a href="https://github.com/Sendspin/sendspin-cli" target="_blank" rel="noreferrer">Linux</a>, <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank" rel="noreferrer">Windows</a>, or an old Android phone with <a href="https://github.com/chrisuthe/SendspinDroid/releases" target="_blank" rel="noreferrer">SendspinDroid</a>.</p>
-        <div class="path-card__visual">{% include "icons/handoff.svg" %}</div>
       </article>
 
       <article class="path-card path-card--diy">
-        <div class="path-card__num">04 · Build your own</div>
+        <div class="path-card__num">Build your own</div>
         <h3 class="path-card__h">ESP32-S3 + DAC</h3>
         <div class="path-card__price">&lt;$10<small>/ room</small></div>
         <p class="path-card__p">Comfortable with electronics? <a href="https://github.com/RealDeco/SendspinZero#minimalistic-sendspin-media-player-for-home-assistant" target="_blank" rel="noreferrer">SendspinZero</a> gets you a Sendspin speaker for under ten bucks powered by <a href="https://esphome.io" target="_blank" rel="noreferrer">ESPHome</a>.</p>
-        <div class="path-card__visual">{% include "icons/circuit.svg" %}</div>
       </article>
     </div>
 
@@ -513,7 +421,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 <section class="ground-espresso section-pad" id="build">
   <div class="container">
     <div class="build__head">
-      <span class="eyebrow-line on-dark">Build with Sendspin</span>
       <h2 class="build__title">The spec is open and free to implement.</h2>
       <p class="build__lede">
         Hardware or software, anyone can build with it. Certify once;
@@ -557,7 +464,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           <span class="sdk-chip">Swift</span>
         </div>
         <div class="build-card__ctas" style="margin-top: var(--sp-3);">
-          <a class="btn btn--ghost" href="/spec/">Read the spec</a>
+          <a class="btn btn--ghost" href="/build/spec/">Read the spec</a>
           <a class="btn btn--ghost" href="/build/sdks/">Browse the SDKs</a>
         </div>
       </article>

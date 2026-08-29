@@ -1,12 +1,12 @@
 # Sendspin Protocol Website
 
-Official website for the Sendspin music experience protocol.
+Official website for the Sendspin music experience protocol, built with [Eleventy](https://www.11ty.dev/).
 
 ## Development
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version pinned in `.nvmrc`)
 - npm
 
 ### Setup
@@ -37,47 +37,42 @@ The built site will be in the `dist/` directory.
 
 ## Deployment
 
-This site is configured to deploy automatically to Netlify when changes are pushed to the `main` branch.
+The site deploys automatically to Netlify when changes are pushed to the `main` branch. Netlify's Git integration runs the build; there is no workflow file or `netlify.toml` in the repo, so the build command and publish directory are set in the Netlify dashboard.
 
-## TODO Items
-
-### Content Updates Needed
-
-- [ ] Add Sendspin logo and favicon images to `public/images/`
-- [ ] Update frontpage content in `src/index.html`
-- [ ] Write protocol specification in `src/spec.md`
-- [ ] Add Music Assistant GitHub URL in `src/code.md`
-- [ ] Add example projects section
-
-### Image Assets Required
-
-- `public/images/sendspin-logo.svg` (or .png) - Main logo for header
-- `public/images/sendspin-favicon.png` - Favicon for browser tab
-- `public/images/social.png` - Social media preview image (1200x630px recommended)
+Redirects live in `public/_redirects`, which ships to the site root.
 
 ## Project Structure
 
 ```
 .
-├── src/                    # Source files
-│   ├── _includes/         # Template files
-│   │   └── base.html      # Main layout template
-│   ├── index.html         # Homepage
-│   ├── spec.md            # Protocol specification
-│   └── code.md            # Code and SDKs page
-├── public/                # Static assets
-│   ├── style.css          # Styles
-│   └── images/            # Images and logos
-├── script/                # Build scripts
-│   ├── build              # Production build
-│   └── develop            # Development server
-└── dist/                  # Built site (generated)
+├── src/                       # Source files
+│   ├── _data/                 # Footer links, allowed referrers
+│   ├── _includes/             # Layout, brand markup, SVG icons
+│   │   └── base.html          # Main layout template
+│   ├── build/                 # Builder section, served at /build/
+│   │   ├── index.md           # Section hub
+│   │   ├── manufacturers.md   # Why build on Sendspin
+│   │   ├── guide.md           # Client implementation guide
+│   │   ├── sdks.md            # SDKs and libraries
+│   │   └── spec.md            # Protocol specification
+│   ├── index.html             # Homepage
+│   └── 404.html
+├── public/                    # Static assets, copied to the site root
+│   ├── style.css              # Tokens, chrome, and shared primitives
+│   ├── homepage.css           # Homepage section styles
+│   ├── _redirects             # Netlify redirects
+│   ├── js/                    # Live demo card, mermaid
+│   └── images/                # Images and partner logos
+├── script/                    # Build scripts
+│   ├── build                  # Production build
+│   └── develop                # Development server
+└── dist/                      # Built site (generated)
 ```
 
 ## Built With
 
 - [Eleventy](https://www.11ty.dev/) - Static site generator
-- GitHub Pages - Hosting
+- Netlify - Hosting
 
 ## License
 
