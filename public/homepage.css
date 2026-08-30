@@ -68,143 +68,144 @@
   .hero__ctas .btn .arrow { display: none; }
 }
 
-/* Vinyl record visual */
-.vinyl-stage {
+/* Room illustration.
+   The box must keep the artwork's own 3:2 ratio: object-fit: contain would
+   otherwise letterbox it and every hotspot percentage would drift. */
+.hero__room {
   position: relative;
-  aspect-ratio: 1;
+  margin: 0;
   width: 100%;
-  max-width: 540px;
-  justify-self: center;
+  aspect-ratio: 3 / 2;
 }
-.vinyl {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%,
-      var(--ss-coral) 0 19%,
-      var(--ss-espresso) 19.4% 19.8%,
-      #1a1411 20% 33%,
-      #221a16 33.3% 33.6%,
-      #1a1411 33.9% 47%,
-      #221a16 47.3% 47.6%,
-      #1a1411 47.9% 60%,
-      #221a16 60.3% 60.6%,
-      #1a1411 60.9% 73%,
-      #221a16 73.3% 73.6%,
-      #1a1411 73.9% 88%,
-      #221a16 88.3% 88.6%,
-      #1a1411 88.9% 100%);
-  box-shadow:
-    0 30px 60px rgba(35, 28, 24, 0.25),
-    0 10px 20px rgba(35, 28, 24, 0.15),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  animation: spin 22s linear infinite;
+.hero__room-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-.vinyl::after {
-  content: "";
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 10px; height: 10px;
-  margin: -5px 0 0 -5px;
-  border-radius: 50%;
-  background: var(--ss-espresso);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.vinyl-label {
-  position: absolute;
-  inset: 31% 31% 31% 31%;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--ss-coral);
-  color: #fff;
-  text-align: center;
-  z-index: 2;
-  pointer-events: none;
-}
-.vinyl-label__top {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(20px, 2.4vw, 32px);
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-.vinyl-label__rule {
-  width: 40%;
-  height: 2px;
-  background: rgba(255,255,255,0.5);
-  margin: 8px 0;
-  border-radius: 1px;
-}
-.vinyl-label__bot {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .vinyl, .room-chip { animation: none; }
+/* In the two-column hero the right track is only ~420px, too small to read the
+   room or to keep the hotspots apart. Let the figure run out through the
+   container gutter to the viewport edge; .hero clips anything beyond. */
+@media (min-width: 961px) {
+  .hero__room {
+    width: calc(100% + clamp(20px, 4vw, 40px) + max(0px, (100vw - var(--container)) / 2));
+  }
 }
 
-/* Floating room cards orbiting */
-.orbit {
+/* Hotspots — placed as a percentage of the image box via --hx / --hy */
+.hotspots { position: absolute; inset: 0; }
+
+.hotspot {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.room-chip {
-  position: absolute;
-  background: var(--bg-elev);
-  border-radius: var(--r-pill);
-  padding: 10px 16px 10px 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: var(--shadow-2);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--fg-1);
-  white-space: nowrap;
-  animation: float 6s ease-in-out infinite;
-}
-.room-chip__icon {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--ss-powder);
+  left: var(--hx);
+  top: var(--hy);
+  transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  color: var(--ss-espresso);
+  /* 44px hit area around a 16px dot */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--font-body);
+  cursor: pointer;
+  z-index: 1;
 }
-.room-chip__icon svg { width: 16px; height: 16px; }
-.room-chip__meta {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--fg-3);
-  font-weight: 500;
-  letter-spacing: 0.04em;
+.hotspot.is-open,
+.hotspot:focus-visible { z-index: 3; }
+@media (hover: hover) {
+  .hotspot:hover { z-index: 2; }
 }
-.room-chip--1 { top: 6%; left: -4%; animation-delay: 0s; }
-.room-chip--2 { top: 18%; right: -8%; animation-delay: -2s; }
-.room-chip--3 { bottom: 18%; left: -10%; animation-delay: -4s; background: var(--ss-cream); }
-.room-chip--4 { bottom: 4%; right: -2%; animation-delay: -1s; }
-.room-chip--3 .room-chip__icon { background: var(--ss-coral-wash); color: var(--ss-coral-deep); }
-.room-chip--4 .room-chip__icon { background: var(--ss-coral); color: #fff; }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+.hotspot__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ss-paper-pure);
+  box-shadow:
+    0 0 0 3px var(--ss-coral),
+    0 0 0 4px rgba(35, 28, 24, 0.45),
+    0 2px 6px rgba(35, 28, 24, 0.35);
+  transition: transform var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out),
+              box-shadow var(--t-fast) var(--ease-out);
 }
-@media (max-width: 640px) {
-  .room-chip { font-size: 11px; padding: 8px 12px 8px 10px; }
-  .room-chip__icon { width: 22px; height: 22px; }
-  .room-chip__icon svg { width: 13px; height: 13px; }
+.hotspot.is-open .hotspot__dot,
+.hotspot:focus-visible .hotspot__dot {
+  transform: scale(1.2);
+  background: var(--ss-coral);
+  box-shadow:
+    0 0 0 3px var(--ss-coral-deep),
+    0 0 0 4px rgba(35, 28, 24, 0.45),
+    0 2px 6px rgba(35, 28, 24, 0.35);
+}
+@media (hover: hover) {
+  .hotspot:hover .hotspot__dot {
+    transform: scale(1.2);
+    background: var(--ss-coral);
+    box-shadow:
+      0 0 0 3px var(--ss-coral-deep),
+      0 0 0 4px rgba(35, 28, 24, 0.45),
+      0 2px 6px rgba(35, 28, 24, 0.35);
+  }
+}
+
+.hotspot__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hotspot__tip {
+  position: absolute;
+  top: 50%;
+  width: max-content;
+  max-width: 240px;
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-2);
+  color: var(--fg-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t-fast) var(--ease-out);
+}
+.hotspot__tip strong {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body);
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+.hotspot[data-place="right"] .hotspot__tip { left: 34px; transform: translateY(-50%); }
+.hotspot[data-place="left"]  .hotspot__tip { right: 34px; transform: translateY(-50%); }
+
+.hotspot.is-open .hotspot__tip,
+.hotspot:focus-visible .hotspot__tip { opacity: 1; visibility: visible; }
+@media (hover: hover) {
+  .hotspot:hover .hotspot__tip { opacity: 1; visibility: visible; }
+}
+
+/* Below this width the dots sit closer together than a fingertip and the
+   tooltips no longer fit beside them, so the illustration stands alone. */
+@media (max-width: 599px) {
+  .hotspots { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot__dot, .hotspot__tip { transition: none; }
 }
 
 /* =========================================================
@@ -938,7 +939,7 @@
 
 /* SVG icon defaults — viewBox is 24x24; width/height default to 24px so the
    SVG sizes properly when no surrounding rule overrides it. Specific contexts
-   (.pillar__icon svg, .room-chip__icon svg, .btn .svg-icon, etc.) override. */
+   (.pillar__icon svg, .btn .svg-icon, etc.) override. */
 .svg-icon {
   width: 24px;
   height: 24px;

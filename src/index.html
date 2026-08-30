@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260830-2
+  - /homepage.css?v=20260830-3
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260507-1
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -38,48 +38,109 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
       </div>
 
       <div class="hero__right">
-        <div class="vinyl-stage">
-          <div class="vinyl" aria-hidden="true"></div>
-          <div class="vinyl-label">
-            <div class="vinyl-label__top">Sendspin</div>
-            <div class="vinyl-label__rule"></div>
-            <div class="vinyl-label__bot">Side A · 33⅓ rpm</div>
+        <figure class="hero__room">
+          <picture>
+            <source srcset="/images/room-plate.webp" type="image/webp" />
+            <img
+              class="hero__room-img"
+              src="/images/room-plate.png"
+              fetchpriority="high"
+              decoding="async"
+              width="1536"
+              height="1024"
+              alt="A cutaway living room: a pair of floorstanding speakers and an amplifier on a console, a
+                   digital frame showing album art, a floor lamp washing the wall in the album's colour, and
+                   through the doorway a second room with a turntable and a different, smaller speaker."
+            />
+          </picture>
+
+          <div class="hotspots">
+
+            <button class="hotspot" type="button" aria-expanded="false"
+                    style="--hx:28.3%; --hy:48.8%" data-place="right">
+              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__label">Amplifier</span>
+              <span class="hotspot__tip" role="tooltip">
+                <strong>Your own amplifier</strong>
+                A small Sendspin device feeds analog or digital audio into the amplifier you already own. The speakers need nothing.
+              </span>
+            </button>
+
+            <button class="hotspot" type="button" aria-expanded="false"
+                    style="--hx:35.5%; --hy:40.8%" data-place="right">
+              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__label">Album art</span>
+              <span class="hotspot__tip" role="tooltip">
+                <strong>Artwork</strong>
+                Cover art and track info arrive with the audio and show on the frame.
+              </span>
+            </button>
+
+            <button class="hotspot" type="button" aria-expanded="false"
+                    style="--hx:47.3%; --hy:37.1%" data-place="left">
+              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__label">Light</span>
+              <span class="hotspot__tip" role="tooltip">
+                <strong>Light</strong>
+                The colour is derived from the album art, in time with the music.
+              </span>
+            </button>
+
+            <button class="hotspot" type="button" aria-expanded="false"
+                    style="--hx:65.1%; --hy:37.0%" data-place="left">
+              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__label">Turntable</span>
+              <span class="hotspot__tip" role="tooltip">
+                <strong>Source</strong>
+                This record plays in every room, in sync.
+              </span>
+            </button>
+
+            <button class="hotspot" type="button" aria-expanded="false"
+                    style="--hx:69.5%; --hy:35.4%" data-place="left">
+              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__label">Second room</span>
+              <span class="hotspot__tip" role="tooltip">
+                <strong>Another room, in sync</strong>
+                Different speakers, a different maker, playing the same moment.
+              </span>
+            </button>
           </div>
-          <div class="orbit" aria-hidden="true">
-            <div class="room-chip room-chip--1">
-              <span class="room-chip__icon">{% include "icons/speaker.svg" %}</span>
-              <span>
-                Living room
-                <div class="room-chip__meta">Lossless</div>
-              </span>
-            </div>
-            <div class="room-chip room-chip--2">
-              <span class="room-chip__icon">{% include "icons/monitor.svg" %}</span>
-              <span>
-                Kitchen display
-                <div class="room-chip__meta">Now playing</div>
-              </span>
-            </div>
-            <div class="room-chip room-chip--3">
-              <span class="room-chip__icon">{% include "icons/light.svg" %}</span>
-              <span>
-                Hallway lights
-                <div class="room-chip__meta">On the beat</div>
-              </span>
-            </div>
-            <div class="room-chip room-chip--4">
-              <span class="room-chip__icon">{% include "icons/remote.svg" %}</span>
-              <span>
-                Any phone
-                <div class="room-chip__meta">Skip · Pause · Volume</div>
-              </span>
-            </div>
-          </div>
-        </div>
+        </figure>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    var spots = Array.prototype.slice.call(document.querySelectorAll(".hotspot"));
+    if (!spots.length) return;
+
+    function closeAll(except) {
+      spots.forEach(function (spot) {
+        if (spot === except) return;
+        spot.classList.remove("is-open");
+        spot.setAttribute("aria-expanded", "false");
+      });
+    }
+
+    spots.forEach(function (spot) {
+      spot.addEventListener("click", function (event) {
+        event.stopPropagation();
+        var open = spot.classList.contains("is-open");
+        closeAll(spot);
+        spot.classList.toggle("is-open", !open);
+        spot.setAttribute("aria-expanded", String(!open));
+      });
+    });
+
+    document.addEventListener("click", function () { closeAll(null); });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeAll(null);
+    });
+  })();
+</script>
 
 <section class="ground-cream section-pad" id="whole-room">
   <div class="container">
