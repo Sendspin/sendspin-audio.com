@@ -99,7 +99,10 @@
   position: absolute;
   left: var(--hx);
   top: var(--hy);
-  transform: translate(-50%, -50%);
+  /* Centred with negative margins rather than a transform: a transformed
+     ancestor becomes the containing block for position:fixed descendants,
+     which would trap the mobile tooltip inside this 44px button. */
+  margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
   /* 44px hit area around a 16px dot */
