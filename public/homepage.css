@@ -88,7 +88,13 @@
    there rather than at the viewport edge, which leaves it flush and lopsided. */
 @media (min-width: 961px) {
   .hero__room {
-    width: calc(100% + clamp(20px, 4vw, 40px) + max(0px, (100vw - var(--container)) / 4));
+    /* Stop 5px short of the gutter: extending by the full gutter puts the
+       figure flush against the viewport edge between 961px and the container
+       width, where the second term is zero. */
+    width: calc(
+      100% + clamp(20px, 4vw, 40px) - 5px +
+        max(0px, (100vw - var(--container)) / 4)
+    );
   }
 }
 
