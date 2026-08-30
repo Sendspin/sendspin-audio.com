@@ -648,39 +648,6 @@
 #sendspin-demo.has-web-share + .demo-card__share-grid .demo-card__share-btn { display: inline-flex; }
 
 /* =========================================================
-   SYNC STRIP
-   ========================================================= */
-.sync-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 80px);
-  align-items: start;
-}
-@media (max-width: 860px) {
-  .sync-strip { grid-template-columns: 1fr; gap: var(--sp-5); }
-}
-.sync-strip__title {
-  font-size: clamp(36px, 4.5vw, 56px);
-  font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-.sync-strip__title em {
-  font-style: normal;
-  color: var(--ss-coral);
-}
-.sync-strip__p {
-  font-size: 17px;
-  color: var(--fg-2);
-  line-height: 1.55;
-  margin: 0 0 var(--sp-4);
-  max-width: 62ch;
-}
-.sync-strip__p:last-of-type { margin-bottom: 0; }
-.sync-strip__cta { margin-top: var(--sp-5); }
-
-/* =========================================================
    OPEN / LOCAL / YOURS
    ========================================================= */
 .open__grid {

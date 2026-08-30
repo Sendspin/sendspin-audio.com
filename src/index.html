@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260830-10
+  - /homepage.css?v=20260830-15
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260830-2
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -166,7 +166,8 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
       </h2>
       <p class="pillars__lede">
         Sendspin carries the artwork, the controls, and the beat alongside
-        the audio. A speaker, a tablet, and a lamp all act as one room.
+        the audio. A speaker, a tablet, and a lamp all act as one room. It's an
+        open standard, so anything can join &mdash; including what you already own.
       </p>
     </div>
 
@@ -331,30 +332,53 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="ground-paper section-pad">
+<section class="ground-powder section-pad">
   <div class="container">
-    <div class="sync-strip">
-      <h2 class="sync-strip__title">
-        One song. <em>Every room.</em> Locked to the same beat.
-      </h2>
-      <div class="sync-strip__body">
-        <p class="sync-strip__p">
-          Microsecond-precise timing keeps every speaker in step. Walk
-          between rooms and the music stays one song, not an echo chamber.
-        </p>
-        <p class="sync-strip__p">
-          Devices find each other automatically on your home network. A quick
-          pairing step keeps the audio between them encrypted, so your music
-          stays in your home.
-        </p>
-        <div class="sync-strip__cta">
-          <a class="btn btn--ghost" href="/build/spec/">
-            {% include "icons/note.svg" %}
-            Read the protocol
-          </a>
-        </div>
+    <div class="partners__head">
+      <div class="partners__badge-strip">
+        <span class="works-with-badge">
+          <span class="works-with-badge__check">{% include "icons/check.svg" %}</span>
+          Works with Sendspin
+        </span>
+      </div>
+      <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
+      <p class="partners__lede">
+        Four software and hardware partners ship Sendspin support today. The
+        protocol is open, so the aim is a catalogue you pick from on how it
+        sounds, not on the badge.
+      </p>
+    </div>
+
+    <div class="partners__grid">
+      <a class="partner-card" href="https://www.music-assistant.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/music-assistant.svg" alt="Music Assistant logo" /></div>
+        <div class="partner-card__name">Music Assistant</div>
+      </a>
+      <a class="partner-card" href="https://esphome.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/esphome.svg" alt="ESPHome logo" /></div>
+        <div class="partner-card__name">ESPHome</div>
+      </a>
+      <a class="partner-card" href="https://docs.ledfx.app/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/ledfx.png" alt="LedFx logo" /></div>
+        <div class="partner-card__name">LedFx</div>
+      </a>
+      <a class="partner-card" href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE logo" /></div>
+        <div class="partner-card__name">Home Assistant Voice PE</div>
+      </a>
+      <div class="partner-card partner-card--coming">
+        <div class="partner-card__logo">+</div>
+        <div class="partner-card__name">More coming</div>
       </div>
     </div>
+
+    <p class="partners__cta">
+      Building something with Sendspin?
+      <a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noreferrer">
+        Say hi in #sendspin-beta-testing
+      </a>
+      on the Music Assistant Discord.
+    </p>
   </div>
 </section>
 
@@ -374,8 +398,8 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     <div class="open__grid">
       <article class="open-card">
         <div class="open-card__icon">{% include "icons/branches.svg" %}</div>
-        <h3 class="open-card__h">No brand lock-in.</h3>
-        <p class="open-card__p">The spec is public, so any maker can implement it: speakers, screens, or lights. The aim is a catalogue you pick from on how it sounds, not on the badge.</p>
+        <h3 class="open-card__h">Nobody decides for you.</h3>
+        <p class="open-card__p">One company deciding which speaker you may add next, which app you must use, and when your hardware stops being supported. Sendspin has no such company. The spec is public and the governance is a non-profit.</p>
       </article>
 
       <article class="open-card">
@@ -387,7 +411,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
       <article class="open-card">
         <div class="open-card__icon">{% include "icons/lock.svg" %}</div>
         <h3 class="open-card__h">No cloud account.</h3>
-        <p class="open-card__p">Everything stays on your home network. You never sign up for an account, and what you play stays between your own devices instead of going back to Big Tech.</p>
+        <p class="open-card__p">Everything stays on your home network. You never sign up for an account, and a one-time approval keeps the audio between your devices encrypted, so what you play stays in the house instead of going back to Big Tech.</p>
       </article>
 
       <article class="open-card">
@@ -444,55 +468,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     <p class="start__footnote">
       Already have a Pi running Music Assistant?
       <strong>You're already running Sendspin.</strong>
-    </p>
-  </div>
-</section>
-
-<section class="ground-powder section-pad">
-  <div class="container">
-    <div class="partners__head">
-      <div class="partners__badge-strip">
-        <span class="works-with-badge">
-          <span class="works-with-badge__check">{% include "icons/check.svg" %}</span>
-          Works with Sendspin
-        </span>
-      </div>
-      <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
-      <p class="partners__lede">
-        Four software and hardware partners ship Sendspin support today.
-        The protocol is open. Anyone can join.
-      </p>
-    </div>
-
-    <div class="partners__grid">
-      <a class="partner-card" href="https://www.music-assistant.io" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/music-assistant.svg" alt="Music Assistant logo" /></div>
-        <div class="partner-card__name">Music Assistant</div>
-      </a>
-      <a class="partner-card" href="https://esphome.io" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/esphome.svg" alt="ESPHome logo" /></div>
-        <div class="partner-card__name">ESPHome</div>
-      </a>
-      <a class="partner-card" href="https://docs.ledfx.app/" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/ledfx.png" alt="LedFx logo" /></div>
-        <div class="partner-card__name">LedFx</div>
-      </a>
-      <a class="partner-card" href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE logo" /></div>
-        <div class="partner-card__name">Home Assistant Voice PE</div>
-      </a>
-      <div class="partner-card partner-card--coming">
-        <div class="partner-card__logo">+</div>
-        <div class="partner-card__name">More coming</div>
-      </div>
-    </div>
-
-    <p class="partners__cta">
-      Building something with Sendspin?
-      <a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noreferrer">
-        Say hi in #sendspin-beta-testing
-      </a>
-      on the Music Assistant Discord.
     </p>
   </div>
 </section>
