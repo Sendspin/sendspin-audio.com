@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260830-4
+  - /homepage.css?v=20260830-5
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260507-1
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -139,6 +139,21 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") closeAll(null);
     });
+
+    // On narrow screens the tooltip is a viewport-pinned sheet, so it would hang
+    // around after the illustration has scrolled away. Dismiss it once the figure
+    // is clear of the viewport by a margin.
+    var figure = document.querySelector(".hero__room");
+    if (figure && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) return;
+        closeAll(null);
+        var active = document.activeElement;
+        if (active && active.classList && active.classList.contains("hotspot")) {
+          active.blur();
+        }
+      }, { rootMargin: "140px" }).observe(figure);
+    }
   })();
 </script>
 
