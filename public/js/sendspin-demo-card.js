@@ -90,10 +90,25 @@ if (!root) {
   function scrollLiveDemoToTop() {
     const nav = document.querySelector(".nav");
     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-    const targetTop = Math.max(
-      window.scrollY + root.getBoundingClientRect().top - navHeight - 20,
-      0,
-    );
+    // Side by side, the card is centred against a taller copy column, so its top
+    // sits below the heading and anchoring on it scrolls the heading off screen.
+    // Stacked, the card sits below the copy and anchoring on the section scrolls
+    // away from the card that was just started. Prefer the section, and fall back
+    // to the card when the section anchor would push the card out of view. This
+    // reads the layout rather than restating the CSS breakpoint.
+    const section = root.closest("section");
+    const cardTop = window.scrollY + root.getBoundingClientRect().top;
+    let anchorTop = cardTop;
+
+    if (section) {
+      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+      const cardTopInView = cardTop - sectionTop + navHeight + 20;
+      if (cardTopInView + 80 <= window.innerHeight) {
+        anchorTop = sectionTop;
+      }
+    }
+
+    const targetTop = Math.max(anchorTop - navHeight - 20, 0);
     const startTop = window.scrollY;
     const distance = targetTop - startTop;
 
