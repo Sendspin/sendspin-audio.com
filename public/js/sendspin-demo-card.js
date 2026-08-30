@@ -90,8 +90,23 @@ if (!root) {
   function scrollLiveDemoToTop() {
     const nav = document.querySelector(".nav");
     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+    // Side by side, the card is centred against a taller copy column, so its top
+    // sits below the section heading; anchoring on the card would scroll the
+    // heading off screen, so anchor on the section. Stacked, the card sits below
+    // the copy and the card itself is what should come to the top.
+    //
+    // Detect which by geometry rather than by restating the CSS breakpoint:
+    // stacked means the panel begins below where the copy column ends.
+    const panel = root.closest(".demo__panel") || root;
+    const copy = panel.previousElementSibling;
+    const stacked =
+      !copy ||
+      panel.getBoundingClientRect().top >=
+        copy.getBoundingClientRect().bottom - 4;
+
+    const anchor = stacked ? root : root.closest("section") || root;
     const targetTop = Math.max(
-      window.scrollY + root.getBoundingClientRect().top - navHeight - 20,
+      window.scrollY + anchor.getBoundingClientRect().top - navHeight - 20,
       0,
     );
     const startTop = window.scrollY;
