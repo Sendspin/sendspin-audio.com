@@ -212,8 +212,8 @@
   .hero { padding-block: clamp(28px, 6vw, 48px) clamp(20px, 5vw, 36px); }
   .hero__grid { gap: 28px; }
   .hero__room {
-    width: calc(100% + 2 * clamp(20px, 4vw, 40px));
-    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+    width: calc(100% + 2 * clamp(20px, 4vw, 40px) - 12px);
+    margin-inline: calc(6px - clamp(20px, 4vw, 40px));
   }
 }
 
