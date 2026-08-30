@@ -75,7 +75,7 @@
   position: relative;
   margin: 0;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 1298 / 1006;  /* the artwork's own ratio, cropped to its bounds */
 }
 .hero__room-img {
   display: block;
@@ -83,12 +83,12 @@
   height: 100%;
   object-fit: contain;
 }
-/* In the two-column hero the right track is only ~420px, too small to read the
-   room or to keep the hotspots apart. Let the figure run out through the
-   container gutter to the viewport edge; .hero clips anything beyond. */
+/* In the two-column hero the right track is only ~420px. Let the figure run out
+   through the container gutter so the room reads at a useful size, but stop
+   there rather than at the viewport edge, which leaves it flush and lopsided. */
 @media (min-width: 961px) {
   .hero__room {
-    width: calc(100% + clamp(20px, 4vw, 40px) + max(0px, (100vw - var(--container)) / 2));
+    width: calc(100% + clamp(20px, 4vw, 40px) + max(0px, (100vw - var(--container)) / 4));
   }
 }
 
@@ -206,6 +206,17 @@
 /* Narrow screens: the dots stay, but a 240px card will not fit beside a dot on a
    ~350px image, so the tooltip becomes a bottom sheet anchored to the viewport
    instead of to its dot. */
+/* The container gutter is sized for text; a picture wants the full width, and
+   the stacked hero does not need 56px of air around it on a phone. */
+@media (max-width: 599px) {
+  .hero { padding-block: clamp(28px, 6vw, 48px) clamp(20px, 5vw, 36px); }
+  .hero__grid { gap: 28px; }
+  .hero__room {
+    width: calc(100% + 2 * clamp(20px, 4vw, 40px));
+    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+  }
+}
+
 @media (max-width: 599px) {
   /* The dot is a fixed size while the image shrinks, so at ~350px it swamps the
      device it points at. Shrink the visible dot; the 44px hit area is unchanged. */
