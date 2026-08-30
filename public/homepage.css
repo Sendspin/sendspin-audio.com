@@ -200,8 +200,33 @@
 
 /* Below this width the dots sit closer together than a fingertip and the
    tooltips no longer fit beside them, so the illustration stands alone. */
+/* Narrow screens: the dots stay, but a 240px card will not fit beside a dot on a
+   ~350px image, so the tooltip becomes a bottom sheet anchored to the viewport
+   instead of to its dot. */
 @media (max-width: 599px) {
-  .hotspots { display: none; }
+  /* The dot is a fixed size while the image shrinks, so at ~350px it swamps the
+     device it points at. Shrink the visible dot; the 44px hit area is unchanged. */
+  .hotspot__dot {
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      0 0 0 2px var(--ss-coral),
+      0 0 0 3px rgba(35, 28, 24, 0.45),
+      0 1px 4px rgba(35, 28, 24, 0.35);
+  }
+
+  .hotspot[data-place="right"] .hotspot__tip,
+  .hotspot[data-place="left"] .hotspot__tip {
+    position: fixed;
+    left: var(--sp-4);
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+    top: auto;
+    width: auto;
+    max-width: none;
+    transform: none;
+    z-index: 40;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
