@@ -91,24 +91,24 @@ if (!root) {
     const nav = document.querySelector(".nav");
     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
     // Side by side, the card is centred against a taller copy column, so its top
-    // sits below the heading and anchoring on it scrolls the heading off screen.
-    // Stacked, the card sits below the copy and anchoring on the section scrolls
-    // away from the card that was just started. Prefer the section, and fall back
-    // to the card when the section anchor would push the card out of view. This
-    // reads the layout rather than restating the CSS breakpoint.
-    const section = root.closest("section");
-    const cardTop = window.scrollY + root.getBoundingClientRect().top;
-    let anchorTop = cardTop;
+    // sits below the section heading; anchoring on the card would scroll the
+    // heading off screen, so anchor on the section. Stacked, the card sits below
+    // the copy and the card itself is what should come to the top.
+    //
+    // Detect which by geometry rather than by restating the CSS breakpoint:
+    // stacked means the panel begins below where the copy column ends.
+    const panel = root.closest(".demo__panel") || root;
+    const copy = panel.previousElementSibling;
+    const stacked =
+      !copy ||
+      panel.getBoundingClientRect().top >=
+        copy.getBoundingClientRect().bottom - 4;
 
-    if (section) {
-      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-      const cardTopInView = cardTop - sectionTop + navHeight + 20;
-      if (cardTopInView + 80 <= window.innerHeight) {
-        anchorTop = sectionTop;
-      }
-    }
-
-    const targetTop = Math.max(anchorTop - navHeight - 20, 0);
+    const anchor = stacked ? root : root.closest("section") || root;
+    const targetTop = Math.max(
+      window.scrollY + anchor.getBoundingClientRect().top - navHeight - 20,
+      0,
+    );
     const startTop = window.scrollY;
     const distance = targetTop - startTop;
 
