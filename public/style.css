@@ -186,6 +186,8 @@ code {
 }
 
 section { position: relative; }
+/* The nav is sticky, so anchor targets need to clear it when jumped to. */
+section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
 .section-pad { padding-block: clamp(64px, 9vw, 128px); }
 
 /* ---------- Section grounds ---------- */

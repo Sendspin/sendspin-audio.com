@@ -35,16 +35,15 @@
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(44px, 6.4vw, 88px);
+  font-size: clamp(34px, 4.6vw, 58px);
   font-weight: 900;
-  line-height: 0.98;
+  line-height: 1.04;
   letter-spacing: -0.025em;
   margin: 0 0 var(--sp-5);
   color: var(--fg-1);
 }
 .hero__title .l1 { color: var(--fg-1); }
 .hero__title .l2 { color: var(--ss-coral); }
-.hero__title .l3 { color: var(--ss-espresso-soft); }
 
 .hero__sub {
   font-size: clamp(17px, 1.4vw, 19px);
@@ -61,6 +60,12 @@
   gap: var(--sp-4);
   flex-wrap: wrap;
   margin-bottom: var(--sp-5);
+}
+/* Both CTAs stay on one row down to 360px; the arrow is the cheapest 28px to drop. */
+@media (max-width: 540px) {
+  .hero__ctas { gap: 10px; flex-wrap: nowrap; }
+  .hero__ctas .btn { padding: 13px 14px; font-size: 14px; }
+  .hero__ctas .btn .arrow { display: none; }
 }
 
 /* Vinyl record visual */
