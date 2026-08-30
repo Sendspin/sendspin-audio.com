@@ -141,8 +141,8 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     });
 
     // On narrow screens the tooltip is a viewport-pinned sheet, so it would hang
-    // around after the illustration has scrolled away. Dismiss it once the figure
-    // is clear of the viewport by a margin.
+    // around after the illustration has scrolled away. Dismiss it the moment the
+    // figure leaves the viewport; by then it has already passed behind the header.
     var figure = document.querySelector(".hero__room");
     if (figure && "IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
@@ -152,7 +152,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
         if (active && active.classList && active.classList.contains("hotspot")) {
           active.blur();
         }
-      }, { rootMargin: "140px" }).observe(figure);
+      }).observe(figure);
     }
   })();
 </script>
