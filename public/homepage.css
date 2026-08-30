@@ -75,7 +75,7 @@
   position: relative;
   margin: 0;
   width: 100%;
-  aspect-ratio: 1298 / 1006;  /* the artwork's own ratio, cropped to its bounds */
+  aspect-ratio: 1177 / 981;  /* the artwork's own ratio, cropped to its bounds */
 }
 .hero__room-img {
   display: block;
