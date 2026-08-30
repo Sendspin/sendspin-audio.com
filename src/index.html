@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260830-7
+  - /homepage.css?v=20260830-9
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260507-1
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -239,6 +239,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
         </div>
       </div>
 
+      <div class="demo__panel">
       <div
         id="sendspin-demo"
         class="demo-card"
@@ -270,6 +271,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
           class="demo-card__sync"
           aria-hidden="true"
         >
+          <div class="demo-card__sync-inner">
           <div class="demo-card__sync-head">
             <span class="demo-card__sync-title">Synchronization</span>
             <span
@@ -288,39 +290,42 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
               aria-label="Synchronization graph"
             ></canvas>
           </div>
+          </div>
         </div>
 
-        <div class="demo-card__share-grid">
-          <div class="demo-card__qr-code">
-            <img
-              src="/images/sendspin-audio-qr.svg?v=20260326-3"
-              alt="QR code for the Sendspin live demo"
-            />
-          </div>
-          <p class="demo-card__share-text">
-            Scan to open the
-            <a href="{{ demo_share_url }}" target="_blank" rel="noreferrer">live demo</a>
-            on another phone.
-          </p>
-          <button
-            id="sendspin-demo-share-btn"
-            class="demo-card__share-btn"
-            type="button"
-            aria-label="Share the Sendspin live demo"
-          >
-            <svg
-              class="demo-card__share-btn-icon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M12 4v9" />
-              <path d="M8.5 7.5 12 4l3.5 3.5" />
-              <path d="M6 12.5v5.5A2 2 0 0 0 8 20h8a2 2 0 0 0 2-2v-5.5" />
-            </svg>
-            <span class="demo-card__share-btn-label">Share</span>
-          </button>
+      </div>
+
+      <div class="demo-card__share-grid">
+        <div class="demo-card__qr-code">
+          <img
+            src="/images/sendspin-audio-qr.svg?v=20260326-3"
+            alt="QR code for the Sendspin live demo"
+          />
         </div>
+        <p class="demo-card__share-text">
+          Scan to open the
+          <a href="{{ demo_share_url }}" target="_blank" rel="noreferrer">live demo</a>
+          on another phone.
+        </p>
+        <button
+          id="sendspin-demo-share-btn"
+          class="demo-card__share-btn"
+          type="button"
+          aria-label="Share the Sendspin live demo"
+        >
+          <svg
+            class="demo-card__share-btn-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M12 4v9" />
+            <path d="M8.5 7.5 12 4l3.5 3.5" />
+            <path d="M6 12.5v5.5A2 2 0 0 0 8 20h8a2 2 0 0 0 2-2v-5.5" />
+          </svg>
+          <span class="demo-card__share-btn-label">Share</span>
+        </button>
+      </div>
       </div>
     </div>
   </div>

@@ -467,15 +467,75 @@
   margin: 0;
 }
 
+/* The share row sits below the card rather than inside it, so it stays available
+   before you start listening. It is a third item in the two-column demo grid, so
+   pin it under the card instead of letting it wrap into the copy column. */
+.demo__panel { display: flex; flex-direction: column; }
+
+/* The sync panel stays closed until listening actually begins. The demo script
+   toggles .is-expanded on the surface for exactly this; the rules that acted on
+   it were lost when the demo moved into this stylesheet, leaving the class and a
+   transition on a max-height nothing ever set. The panel is a sibling of the
+   surface, not a descendant as it was before the move, hence the adjacent
+   selector. Padding lives on the inner wrapper so the collapsed panel is truly
+   zero height. grid-template-rows would be the tidier animation but Chrome
+   leaves it stuck at its opened length on the way back, so height it is. */
 .demo-card__sync {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.28s var(--ease-out);
+}
+.demo-card__sync-inner {
   background: rgba(255,255,255,0.04);
   border-radius: var(--r-md);
   padding: var(--sp-4);
   margin-bottom: var(--sp-4);
-  transition: opacity var(--t-base) var(--ease-out), max-height var(--t-base) var(--ease-out);
 }
-.demo-card__sync[aria-hidden="true"] {
-  opacity: 0.5;
+.demo-card__top.is-expanded + .demo-card__sync {
+  max-height: 420px;
+  opacity: 1;
+}
+
+/* Contents arrive just after the container, as they did before. */
+.demo-card__sync-head,
+.demo-card__sync-graph-shell {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.26s var(--ease-out),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.demo-card__top.is-expanded + .demo-card__sync .demo-card__sync-head,
+.demo-card__top.is-expanded + .demo-card__sync .demo-card__sync-graph-shell {
+  opacity: 1;
+  transform: translateY(0);
+}
+.demo-card__top.is-expanded + .demo-card__sync .demo-card__sync-head {
+  transition-delay: 0.08s;
+}
+.demo-card__top.is-expanded + .demo-card__sync .demo-card__sync-graph-shell {
+  transition-delay: 0.14s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-card__sync,
+  .demo-card__sync-head,
+  .demo-card__sync-graph-shell {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-card__sync,
+  .demo-card__sync-head,
+  .demo-card__sync-graph-shell {
+    transition: none;
+    transform: none;
+  }
 }
 .demo-card__sync-head {
   display: flex;
@@ -529,9 +589,13 @@
 .demo-card__share-grid {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--sp-4);
   padding-top: var(--sp-4);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  /* Sits under the card rather than inside it, so it centres on the card's
+     width instead of stretching to the column. */
+  width: fit-content;
+  margin-inline: auto;
   flex-wrap: wrap;
 }
 .demo-card__qr-code {
@@ -580,7 +644,8 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-#sendspin-demo.has-web-share .demo-card__share-btn { display: inline-flex; }
+/* has-web-share is set on the card; the share row is now its sibling. */
+#sendspin-demo.has-web-share + .demo-card__share-grid .demo-card__share-btn { display: inline-flex; }
 
 /* =========================================================
    SYNC STRIP
