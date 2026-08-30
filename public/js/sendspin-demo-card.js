@@ -257,12 +257,14 @@ if (!root) {
     function getGridLines() {
       const max = SYNC_GRAPH.rangeMs;
       const half = max / 2;
+      // The range extremes keep their labels but draw no line: a rule 6px from
+      // the plot edge reads as a border rather than a gridline.
       return [
-        { value: max, label: String(max), alpha: 0.16, dash: [] },
-        { value: half, label: null, alpha: 0.08, dash: [4, 6] },
-        { value: 0, label: "0", alpha: 0.22, dash: [] },
-        { value: -half, label: null, alpha: 0.08, dash: [4, 6] },
-        { value: -max, label: String(-max), alpha: 0.16, dash: [] },
+        { value: max, label: String(max), line: false },
+        { value: half, label: null, line: true, alpha: 0.08, dash: [4, 6] },
+        { value: 0, label: "0", line: true, alpha: 0.22, dash: [] },
+        { value: -half, label: null, line: true, alpha: 0.08, dash: [4, 6] },
+        { value: -max, label: String(-max), line: false },
       ];
     }
 
@@ -286,13 +288,16 @@ if (!root) {
 
       for (const line of lines) {
         const y = getY(line.value, metrics);
-        ctx.beginPath();
-        ctx.setLineDash(line.dash);
-        ctx.moveTo(metrics.left, y);
-        ctx.lineTo(metrics.width - metrics.right, y);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${line.alpha})`;
-        ctx.lineWidth = line.value === 0 ? 1.2 : 1;
-        ctx.stroke();
+
+        if (line.line) {
+          ctx.beginPath();
+          ctx.setLineDash(line.dash);
+          ctx.moveTo(metrics.left, y);
+          ctx.lineTo(metrics.width - metrics.right, y);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${line.alpha})`;
+          ctx.lineWidth = line.value === 0 ? 1.2 : 1;
+          ctx.stroke();
+        }
 
         if (line.label !== null) {
           const labelY = clamp(
