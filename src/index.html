@@ -161,7 +161,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   <div class="container">
     <div class="pillars__head">
       <h2 class="pillars__title">
-        Most standards stop
+        Most systems stop
         at the sound.
       </h2>
       <p class="pillars__lede">
@@ -332,52 +332,51 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="ground-powder section-pad">
+<section class="ground-paper section-pad" id="start">
   <div class="container">
-    <div class="partners__head">
-      <div class="partners__badge-strip">
-        <span class="works-with-badge">
-          <span class="works-with-badge__check">{% include "icons/check.svg" %}</span>
-          Works with Sendspin
-        </span>
-      </div>
-      <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
-      <p class="partners__lede">
-        Four software and hardware partners ship Sendspin support today. The
-        protocol is open, so the aim is a catalogue you pick from on how it
-        sounds, not on the badge.
+    <div class="start__head">
+      <h2 class="start__title">Anything can be a speaker.</h2>
+      <p class="start__lede">
+        Sendspin is a standard, so any maker can build a speaker for it &mdash;
+        and so can you. Whatever you use plays the same music at the same moment
+        as everything else. <strong>You need two things: a speaker, and
+        something to source the music.</strong>
       </p>
     </div>
 
-    <div class="partners__grid">
-      <a class="partner-card" href="https://www.music-assistant.io" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/music-assistant.svg" alt="Music Assistant logo" /></div>
-        <div class="partner-card__name">Music Assistant</div>
-      </a>
-      <a class="partner-card" href="https://esphome.io" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/esphome.svg" alt="ESPHome logo" /></div>
-        <div class="partner-card__name">ESPHome</div>
-      </a>
-      <a class="partner-card" href="https://docs.ledfx.app/" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/ledfx.png" alt="LedFx logo" /></div>
-        <div class="partner-card__name">LedFx</div>
-      </a>
-      <a class="partner-card" href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">
-        <div class="partner-card__logo"><img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE logo" /></div>
-        <div class="partner-card__name">Home Assistant Voice PE</div>
-      </a>
-      <div class="partner-card partner-card--coming">
-        <div class="partner-card__logo">+</div>
-        <div class="partner-card__name">More coming</div>
-      </div>
+    <div class="start__grid">
+      <article class="path-card path-card--ready">
+        <div class="path-card__num">Buy ready-made</div>
+        <h3 class="path-card__h">Voice Preview Edition</h3>
+        <div class="path-card__price">$59<small>/ room</small></div>
+        <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box.</p>
+      </article>
+
+      <article class="path-card path-card--stream">
+        <div class="path-card__num">Stream your music</div>
+        <h3 class="path-card__h">Music Assistant</h3>
+        <div class="path-card__price">Free<small>/ house</small></div>
+        <p class="path-card__p">Run <a href="https://www.music-assistant.io" target="_blank" rel="noreferrer">Music Assistant</a> on a Raspberry Pi or any home computer. It sources the music and sends it to every Sendspin device on your network.</p>
+      </article>
+
+      <article class="path-card path-card--receiver">
+        <div class="path-card__num">Reuse what you own</div>
+        <h3 class="path-card__h">Sendspin Daemon</h3>
+        <div class="path-card__price">Free<small>/ room</small></div>
+        <p class="path-card__p">Run it on <a href="https://github.com/Sendspin/sendspin-cli" target="_blank" rel="noreferrer">Linux</a>, <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank" rel="noreferrer">Windows</a>, or an old Android phone with <a href="https://github.com/chrisuthe/SendspinDroid/releases" target="_blank" rel="noreferrer">SendspinDroid</a>.</p>
+      </article>
+
+      <article class="path-card path-card--diy">
+        <div class="path-card__num">Build your own</div>
+        <h3 class="path-card__h">ESP32-S3 + DAC</h3>
+        <div class="path-card__price">&lt;$10<small>/ room</small></div>
+        <p class="path-card__p">Comfortable with electronics? <a href="https://github.com/RealDeco/SendspinZero#minimalistic-sendspin-media-player-for-home-assistant" target="_blank" rel="noreferrer">SendspinZero</a> gets you a Sendspin speaker for under ten bucks powered by <a href="https://esphome.io" target="_blank" rel="noreferrer">ESPHome</a>.</p>
+      </article>
     </div>
 
-    <p class="partners__cta">
-      Building something with Sendspin?
-      <a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noreferrer">
-        Say hi in #sendspin-beta-testing
-      </a>
-      on the Music Assistant Discord.
+    <p class="start__footnote">
+      Already have a Pi running Music Assistant?
+      <strong>You're already running Sendspin.</strong>
     </p>
   </div>
 </section>
@@ -423,51 +422,52 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="ground-paper section-pad" id="start">
+<section class="ground-cream section-pad">
   <div class="container">
-    <div class="start__head">
-      <h2 class="start__title">Add rooms one at a time.</h2>
-      <p class="start__lede">
-        <strong>You need two things: a speaker, and something to source the
-        music.</strong> Pick a path and add a single room. A new device shows up
-        on your network, you approve it once, and it joins the rooms you already
-        have. The rooms you set up earlier keep playing while you do it.
+    <div class="partners__head">
+      <div class="partners__badge-strip">
+        <span class="works-with-badge">
+          <span class="works-with-badge__check">{% include "icons/check.svg" %}</span>
+          Works with Sendspin
+        </span>
+      </div>
+      <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
+      <p class="partners__lede">
+        Four software and hardware partners ship Sendspin support today. The
+        protocol is open, so the aim is a catalogue you pick from on how it
+        sounds, not on the badge.
       </p>
     </div>
 
-    <div class="start__grid">
-      <article class="path-card path-card--ready">
-        <div class="path-card__num">Buy ready-made</div>
-        <h3 class="path-card__h">Voice Preview Edition</h3>
-        <div class="path-card__price">$59<small>/ room</small></div>
-        <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box.</p>
-      </article>
-
-      <article class="path-card path-card--stream">
-        <div class="path-card__num">Stream your music</div>
-        <h3 class="path-card__h">Music Assistant</h3>
-        <div class="path-card__price">Free<small>/ house</small></div>
-        <p class="path-card__p">Run <a href="https://www.music-assistant.io" target="_blank" rel="noreferrer">Music Assistant</a> on a Raspberry Pi or any home computer. It sources the music and sends it to every Sendspin device on your network.</p>
-      </article>
-
-      <article class="path-card path-card--receiver">
-        <div class="path-card__num">Reuse what you own</div>
-        <h3 class="path-card__h">Sendspin Daemon</h3>
-        <div class="path-card__price">Free<small>/ room</small></div>
-        <p class="path-card__p">Run it on <a href="https://github.com/Sendspin/sendspin-cli" target="_blank" rel="noreferrer">Linux</a>, <a href="https://github.com/chrisuthe/windowsSpin/releases" target="_blank" rel="noreferrer">Windows</a>, or an old Android phone with <a href="https://github.com/chrisuthe/SendspinDroid/releases" target="_blank" rel="noreferrer">SendspinDroid</a>.</p>
-      </article>
-
-      <article class="path-card path-card--diy">
-        <div class="path-card__num">Build your own</div>
-        <h3 class="path-card__h">ESP32-S3 + DAC</h3>
-        <div class="path-card__price">&lt;$10<small>/ room</small></div>
-        <p class="path-card__p">Comfortable with electronics? <a href="https://github.com/RealDeco/SendspinZero#minimalistic-sendspin-media-player-for-home-assistant" target="_blank" rel="noreferrer">SendspinZero</a> gets you a Sendspin speaker for under ten bucks powered by <a href="https://esphome.io" target="_blank" rel="noreferrer">ESPHome</a>.</p>
-      </article>
+    <div class="partners__grid">
+      <a class="partner-card" href="https://www.music-assistant.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/music-assistant.svg" alt="Music Assistant logo" /></div>
+        <div class="partner-card__name">Music Assistant</div>
+      </a>
+      <a class="partner-card" href="https://esphome.io" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/esphome.svg" alt="ESPHome logo" /></div>
+        <div class="partner-card__name">ESPHome</div>
+      </a>
+      <a class="partner-card" href="https://docs.ledfx.app/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/ledfx.png" alt="LedFx logo" /></div>
+        <div class="partner-card__name">LedFx</div>
+      </a>
+      <a class="partner-card" href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">
+        <div class="partner-card__logo"><img src="/images/logo/voice-pe.png" alt="Home Assistant Voice PE logo" /></div>
+        <div class="partner-card__name">Home Assistant Voice PE</div>
+      </a>
+      <div class="partner-card partner-card--coming">
+        <div class="partner-card__logo">+</div>
+        <div class="partner-card__name">More coming</div>
+      </div>
     </div>
 
-    <p class="start__footnote">
-      Already have a Pi running Music Assistant?
-      <strong>You're already running Sendspin.</strong>
+    <p class="partners__cta">
+      Building something with Sendspin?
+      <a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noreferrer">
+        Say hi in #sendspin-beta-testing
+      </a>
+      on the Music Assistant Discord.
     </p>
   </div>
 </section>

@@ -400,11 +400,11 @@ section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
 
 /* Build-section nav: coral-washed so you can tell you're in the build part */
 .nav--build {
-  background: rgba(251, 228, 223, 0.82); /* --ss-coral-wash */
-  border-bottom-color: rgba(230, 103, 86, 0.28);
+  background: rgba(231, 234, 221, 0.82); /* --ss-cream */
+  border-bottom-color: rgba(212, 216, 199, 0.9); /* --ss-cream-deep */
 }
 @media (max-width: 720px) {
-  .nav--build .nav__links { background: var(--ss-coral-wash); }
+  .nav--build .nav__links { background: var(--ss-cream); }
   .nav--build .nav__link.is-active { background: rgba(255, 255, 255, 0.65); }
 }
 
