@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: The open standard for synchronized music, art, controls, and lights across your home. From the Open Home Foundation.
 stylesheets:
-  - /homepage.css?v=20260830-10
+  - /homepage.css?v=20260830-15
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260830-2
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -161,12 +161,13 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   <div class="container">
     <div class="pillars__head">
       <h2 class="pillars__title">
-        Most standards stop
+        Most systems stop
         at the sound.
       </h2>
       <p class="pillars__lede">
         Sendspin carries the artwork, the controls, and the beat alongside
-        the audio. A speaker, a tablet, and a lamp all act as one room.
+        the audio. A speaker, a tablet, and a lamp all act as one room. It's an
+        open standard, so anything can join &mdash; including what you already own.
       </p>
     </div>
 
@@ -331,83 +332,15 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="ground-paper section-pad">
-  <div class="container">
-    <div class="sync-strip">
-      <h2 class="sync-strip__title">
-        One song. <em>Every room.</em> Locked to the same beat.
-      </h2>
-      <div class="sync-strip__body">
-        <p class="sync-strip__p">
-          Microsecond-precise timing keeps every speaker in step. Walk
-          between rooms and the music stays one song, not an echo chamber.
-        </p>
-        <p class="sync-strip__p">
-          Devices find each other automatically on your home network. A quick
-          pairing step keeps the audio between them encrypted, so your music
-          stays in your home.
-        </p>
-        <div class="sync-strip__cta">
-          <a class="btn btn--ghost" href="/build/spec/">
-            {% include "icons/note.svg" %}
-            Read the protocol
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="ground-espresso section-pad">
-  <div class="container">
-    <div class="open__head">
-      <h2 class="open__title">
-        <em>Your</em> music,<br />in <em>your</em> home,<br />on <em>your</em> terms.
-      </h2>
-      <p class="open__lede">
-        Sendspin doesn't lock you into a brand or a cloud. It's an
-        open standard, run on your own network, governed by a
-        non-profit. Nothing about your music leaves the house.
-      </p>
-    </div>
-
-    <div class="open__grid">
-      <article class="open-card">
-        <div class="open-card__icon">{% include "icons/branches.svg" %}</div>
-        <h3 class="open-card__h">No brand lock-in.</h3>
-        <p class="open-card__p">The spec is public, so any maker can implement it: speakers, screens, or lights. The aim is a catalogue you pick from on how it sounds, not on the badge.</p>
-      </article>
-
-      <article class="open-card">
-        <div class="open-card__icon">{% include "icons/handoff.svg" %}</div>
-        <h3 class="open-card__h">Keep what you have.</h3>
-        <p class="open-card__p">Sendspin runs alongside AirPlay, so your existing speakers don't have to go in the bin. An old phone or a ten-dollar board brings the hi-fi in the attic back as another room.</p>
-      </article>
-
-      <article class="open-card">
-        <div class="open-card__icon">{% include "icons/lock.svg" %}</div>
-        <h3 class="open-card__h">No cloud account.</h3>
-        <p class="open-card__p">Everything stays on your home network. You never sign up for an account, and what you play stays between your own devices instead of going back to Big Tech.</p>
-      </article>
-
-      <article class="open-card">
-        <div class="open-card__icon">{% include "icons/seed.svg" %}</div>
-        <h3 class="open-card__h">Built to last.</h3>
-        <p class="open-card__p">Backed by the Open Home Foundation, a Swiss non-profit. Sendspin can't be bought out, paywalled, or shut down on a corporate whim.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <section class="ground-paper section-pad" id="start">
   <div class="container">
     <div class="start__head">
-      <h2 class="start__title">Add rooms one at a time.</h2>
+      <h2 class="start__title">Anything can be a speaker.</h2>
       <p class="start__lede">
-        <strong>You need two things: a speaker, and something to source the
-        music.</strong> Pick a path and add a single room. A new device shows up
-        on your network, you approve it once, and it joins the rooms you already
-        have. The rooms you set up earlier keep playing while you do it.
+        Sendspin is a standard, so any maker can build a speaker for it &mdash;
+        and so can you. Whatever you use plays the same music at the same moment
+        as everything else. <strong>You need two things: a speaker, and
+        something to source the music.</strong>
       </p>
     </div>
 
@@ -416,7 +349,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
         <div class="path-card__num">Buy ready-made</div>
         <h3 class="path-card__h">Voice Preview Edition</h3>
         <div class="path-card__price">$59<small>/ room</small></div>
-        <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box.</p>
+        <p class="path-card__p">The <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant Voice PE</a> ships with Sendspin out of the box. Its 3.5mm output plugs into the receiver or powered speakers you already own.</p>
       </article>
 
       <article class="path-card path-card--stream">
@@ -448,7 +381,48 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
   </div>
 </section>
 
-<section class="ground-powder section-pad">
+<section class="ground-espresso section-pad">
+  <div class="container">
+    <div class="open__head">
+      <h2 class="open__title">
+        <em>Your</em> music,<br />in <em>your</em> home,<br />on <em>your</em> terms.
+      </h2>
+      <p class="open__lede">
+        Sendspin doesn't lock you into a brand or a cloud. It's an
+        open standard, run on your own network, governed by a
+        non-profit. Nothing about your music leaves the house.
+      </p>
+    </div>
+
+    <div class="open__grid">
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/branches.svg" %}</div>
+        <h3 class="open-card__h">Nobody decides for you.</h3>
+        <p class="open-card__p">Which speaker you add next, which app you use, and how long your hardware keeps working are all your call. The spec is public, so no single company is in a position to make those choices for you.</p>
+      </article>
+
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/handoff.svg" %}</div>
+        <h3 class="open-card__h">Keep what you have.</h3>
+        <p class="open-card__p">The amplifier you've had for years, the speakers on the shelf, the hi-fi in the attic. An old phone or a ten-dollar board brings any of them in. With <a href="https://www.music-assistant.io" target="_blank" rel="noreferrer">Music Assistant</a>, AirPlay speakers you already own join the group too.</p>
+      </article>
+
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/lock.svg" %}</div>
+        <h3 class="open-card__h">No cloud account.</h3>
+        <p class="open-card__p">Everything stays on your home network. You never sign up for an account, and a one-time approval keeps the audio between your devices encrypted, so what you play stays in the house instead of going back to Big Tech.</p>
+      </article>
+
+      <article class="open-card">
+        <div class="open-card__icon">{% include "icons/seed.svg" %}</div>
+        <h3 class="open-card__h">Built to last.</h3>
+        <p class="open-card__p">Backed by the Open Home Foundation, a Swiss non-profit. Sendspin can't be bought out, paywalled, or shut down on a corporate whim.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="ground-cream section-pad">
   <div class="container">
     <div class="partners__head">
       <div class="partners__badge-strip">
@@ -459,8 +433,9 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
       </div>
       <h2 class="partners__title">Built by partners. <br />Open to anyone.</h2>
       <p class="partners__lede">
-        Four software and hardware partners ship Sendspin support today.
-        The protocol is open. Anyone can join.
+        Four software and hardware partners ship Sendspin support today. The
+        protocol is open, so the aim is a catalogue you pick from on how it
+        sounds, not on the badge.
       </p>
     </div>
 
