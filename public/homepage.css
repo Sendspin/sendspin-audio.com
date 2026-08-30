@@ -224,28 +224,80 @@
 }
 
 @media (max-width: 599px) {
-  /* The dot is a fixed size while the image shrinks, so at ~350px it swamps the
-     device it points at. Shrink the visible dot; the 44px hit area is unchanged. */
+  /* Move the positioning off the button and onto the dot. The button was the
+     tooltip's containing block, which forced the card to be fixed to the
+     viewport; with the button static the card resolves against the figure and
+     can sit just inside the picture's bottom edge instead. */
+  .hotspot {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+
+  /* The dot carries the 44px hit area; the visible circle is its ::after, so a
+     fixed-size marker does not swamp the device at ~350px wide. */
   .hotspot__dot {
+    position: absolute;
+    left: var(--hx);
+    top: var(--hy);
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .hotspot__dot::after {
+    content: "";
     width: 10px;
     height: 10px;
+    border-radius: 50%;
+    background: var(--ss-paper-pure);
     box-shadow:
       0 0 0 2px var(--ss-coral),
+      0 0 0 3px rgba(35, 28, 24, 0.45),
+      0 1px 4px rgba(35, 28, 24, 0.35);
+    transition: transform var(--t-fast) var(--ease-out);
+  }
+  /* The active styles target the dot, which is now the 44px hit area; move them
+     to the visible marker or they paint a 44px coral square. */
+  .hotspot.is-open .hotspot__dot,
+  .hotspot:focus-visible .hotspot__dot,
+  .hotspot:hover .hotspot__dot {
+    transform: none;
+    background: none;
+    box-shadow: none;
+  }
+  .hotspot.is-open .hotspot__dot::after,
+  .hotspot:focus-visible .hotspot__dot::after,
+  .hotspot:hover .hotspot__dot::after {
+    transform: scale(1.2);
+    background: var(--ss-coral);
+    box-shadow:
+      0 0 0 2px var(--ss-coral-deep),
       0 0 0 3px rgba(35, 28, 24, 0.45),
       0 1px 4px rgba(35, 28, 24, 0.35);
   }
 
   .hotspot[data-place="right"] .hotspot__tip,
   .hotspot[data-place="left"] .hotspot__tip {
-    position: fixed;
-    left: var(--sp-4);
-    right: var(--sp-4);
-    bottom: var(--sp-4);
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    bottom: 8px;
     top: auto;
     width: auto;
     max-width: none;
     transform: none;
     z-index: 40;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hotspot__dot::after { transition: none; }
   }
 }
 
