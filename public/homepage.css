@@ -385,9 +385,9 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-4);
-  margin-bottom: var(--sp-5);
-  padding-bottom: var(--sp-4);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  /* The divider and the gap below it belong to the sync panel, not to this row:
+     they only make sense once the panel is open, so they live inside the
+     clipped area and appear with it. */
 }
 .demo-card__now {
   display: flex;
@@ -489,11 +489,11 @@
     opacity 0.28s var(--ease-out);
 }
 .demo-card__sync-inner {
-  background: rgba(255,255,255,0.04);
-  border-radius: var(--r-md);
-  padding: var(--sp-4);
-  margin-bottom: var(--sp-4);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
+.demo-card__sync-inner > .demo-card__sync-head { margin-top: var(--sp-1); }
 .demo-card__top.is-expanded + .demo-card__sync {
   max-height: 420px;
   opacity: 1;
