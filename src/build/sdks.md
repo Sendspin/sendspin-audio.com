@@ -18,7 +18,7 @@ Want to try Sendspin from the command line? [sendspin-cpp-cli](https://github.co
 
 - **C#/.NET** - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) -
   [Nuget Package](https://www.nuget.org/packages/Sendspin.SDK)
-  - Used by [windowsSpin](https://github.com/chrisuthe/windowsSpin)
+  - Used by [Sendspin for Windows](https://github.com/chrisuthe/windowsSpin)
 
 - **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
   - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933), [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)
