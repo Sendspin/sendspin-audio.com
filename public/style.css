@@ -3,7 +3,53 @@
    Homepage-specific section styles live in homepage.css.
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+
+/* Sendspin Display — self-hosted display face. Each weight ships as its own
+   file, so font-weight is declared explicitly per @font-face under one shared
+   family name. */
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sendspin Display";
+  src: url("/fonts/SendspinDisplay-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Brand colors */
@@ -50,8 +96,8 @@
   --line-on-dark:       rgba(231, 234, 221, 0.14);
 
   /* Typography */
-  --font-display:       "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body:          "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display:       "Sendspin Display", ui-sans-serif, system-ui, sans-serif;
+  --font-body:          "Figtree", ui-sans-serif, system-ui, sans-serif;
   --font-mono:          "Space Mono", ui-monospace, "JetBrains Mono", monospace;
 
   --fw-regular: 400;
