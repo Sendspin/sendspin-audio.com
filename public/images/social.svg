@@ -2,12 +2,12 @@
   <defs>
     <style>
       .bg { fill: #F5F4EC; }
-      .wordmark { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 36px; fill: #231C18; letter-spacing: -0.72px; }
-      .beta { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 16px; fill: #C8503F; }
-      .h { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 60px; letter-spacing: -1.5px; }
+      .wordmark { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 36px; fill: #231C18; letter-spacing: -0.72px; }
+      .beta { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 16px; fill: #C8503F; }
+      .h { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 60px; letter-spacing: -1.5px; }
       .h-espresso { fill: #231C18; }
       .h-coral { fill: #E66756; }
-      .sub { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 500; font-size: 22px; fill: #4A3F39; }
+      .sub { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 500; font-size: 22px; fill: #4A3F39; }
     </style>
   </defs>
 
