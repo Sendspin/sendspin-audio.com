@@ -124,6 +124,7 @@
 }
 .hotspot.is-open,
 .hotspot:focus-visible { z-index: 3; }
+.hotspot.is-auto { z-index: 2; }
 @media (hover: hover) {
   .hotspot:hover { z-index: 2; }
 }
@@ -142,6 +143,7 @@
               box-shadow var(--t-fast) var(--ease-out);
 }
 .hotspot.is-open .hotspot__dot,
+.hotspot.is-auto .hotspot__dot,
 .hotspot:focus-visible .hotspot__dot {
   transform: scale(1.2);
   background: var(--ss-coral);
@@ -189,7 +191,8 @@
   text-align: left;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--t-fast) var(--ease-out);
+  transition: opacity var(--t-fast) var(--ease-out),
+              visibility var(--t-fast) var(--ease-out);
 }
 .hotspot__tip strong {
   font-family: var(--font-display);
@@ -202,7 +205,10 @@
 .hotspot[data-place="left"]  .hotspot__tip { right: 34px; transform: translateY(-50%); }
 
 .hotspot.is-open .hotspot__tip,
+.hotspot.is-auto .hotspot__tip,
 .hotspot:focus-visible .hotspot__tip { opacity: 1; visibility: visible; }
+/* The idle cycle breathes; the hover reveal must still feel instant. */
+.hotspots.is-cycling .hotspot__tip { transition-duration: var(--t-slow); }
 @media (hover: hover) {
   .hotspot:hover .hotspot__tip { opacity: 1; visibility: visible; }
 }
@@ -266,6 +272,7 @@
   /* The active styles target the dot, which is now the 44px hit area; move them
      to the visible marker or they paint a 44px coral square. */
   .hotspot.is-open .hotspot__dot,
+  .hotspot.is-auto .hotspot__dot,
   .hotspot:focus-visible .hotspot__dot,
   .hotspot:hover .hotspot__dot {
     transform: none;
@@ -273,6 +280,7 @@
     box-shadow: none;
   }
   .hotspot.is-open .hotspot__dot::after,
+  .hotspot.is-auto .hotspot__dot::after,
   .hotspot:focus-visible .hotspot__dot::after,
   .hotspot:hover .hotspot__dot::after {
     transform: scale(1.2);
