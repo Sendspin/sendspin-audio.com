@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: Open standard for whole-house music. Your hi-fi, a ready-made speaker and an old phone in a drawer can all play the same song, in sync.
 stylesheets:
-  - /homepage.css?v=20260830-11
+  - /homepage.css?v=20260905-1
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260830-2
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -132,13 +132,55 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
         closeAll(spot);
         spot.classList.toggle("is-open", !open);
         spot.setAttribute("aria-expanded", String(!open));
+        if (!open) canCycle = false;
+        syncCycle();
       });
     });
 
-    document.addEventListener("click", function () { closeAll(null); });
+    document.addEventListener("click", function () { closeAll(null); syncCycle(); });
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") closeAll(null);
+      if (event.key === "Escape") { closeAll(null); syncCycle(); }
     });
+
+    // With nobody on the illustration, the hotspots take turns showing their
+    // tip so the labels are found without hunting for them. A pointer or a focus
+    // hands control straight back to the visitor; opening a tooltip ends the
+    // cycle for good, since by then the dots have introduced themselves.
+    var hotspots = document.querySelector(".hotspots");
+    var canCycle = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var timer = null;
+    var cursor = -1;
+    var engaged = false;
+    var onScreen = true;
+
+    function clearAuto() {
+      spots.forEach(function (spot) { spot.classList.remove("is-auto"); });
+    }
+
+    function step() {
+      clearAuto();
+      cursor = (cursor + 1) % spots.length;
+      spots[cursor].classList.add("is-auto");
+      timer = setTimeout(function () {
+        clearAuto();
+        // Let the card fade out before the next one starts to fade in.
+        timer = setTimeout(step, 600);
+      }, 3400);
+    }
+
+    function syncCycle() {
+      var run = canCycle && onScreen && !engaged;
+      if (run === (timer !== null)) return;
+      if (run) {
+        hotspots.classList.add("is-cycling");
+        timer = setTimeout(step, 600);
+      } else {
+        clearTimeout(timer);
+        timer = null;
+        clearAuto();
+        hotspots.classList.remove("is-cycling");
+      }
+    }
 
     // On narrow screens the tooltip is a viewport-pinned sheet, so it would hang
     // around after the illustration has scrolled away. Dismiss it the moment the
@@ -146,14 +188,26 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     var figure = document.querySelector(".hero__room");
     if (figure && "IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) return;
-        closeAll(null);
-        var active = document.activeElement;
-        if (active && active.classList && active.classList.contains("hotspot")) {
-          active.blur();
+        onScreen = entries[0].isIntersecting;
+        if (!onScreen) {
+          closeAll(null);
+          var active = document.activeElement;
+          if (active && active.classList && active.classList.contains("hotspot")) {
+            active.blur();
+          }
         }
+        syncCycle();
       }).observe(figure);
     }
+
+    if (figure) {
+      figure.addEventListener("pointerenter", function () { engaged = true; syncCycle(); });
+      figure.addEventListener("pointerleave", function () { engaged = false; syncCycle(); });
+    }
+    hotspots.addEventListener("focusin", function () { engaged = true; syncCycle(); });
+    hotspots.addEventListener("focusout", function () { engaged = false; syncCycle(); });
+
+    syncCycle();
   })();
 </script>
 
