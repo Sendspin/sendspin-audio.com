@@ -132,6 +132,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
         closeAll(spot);
         spot.classList.toggle("is-open", !open);
         spot.setAttribute("aria-expanded", String(!open));
+        if (!open) canCycle = false;
         syncCycle();
       });
     });
@@ -142,12 +143,11 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     });
 
     // With nobody on the illustration, the hotspots take turns showing their
-    // tip so the labels are found without hunting for them. A pointer, a focus
-    // or an opened tooltip hands control straight back to the visitor.
+    // tip so the labels are found without hunting for them. A pointer or a focus
+    // hands control straight back to the visitor; opening a tooltip ends the
+    // cycle for good, since by then the dots have introduced themselves.
     var hotspots = document.querySelector(".hotspots");
-    var canCycle =
-      window.matchMedia("(hover: hover)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var canCycle = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var timer = null;
     var cursor = -1;
     var engaged = false;
@@ -155,10 +155,6 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
     function clearAuto() {
       spots.forEach(function (spot) { spot.classList.remove("is-auto"); });
-    }
-
-    function anyOpen() {
-      return spots.some(function (spot) { return spot.classList.contains("is-open"); });
     }
 
     function step() {
@@ -173,7 +169,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     }
 
     function syncCycle() {
-      var run = canCycle && onScreen && !engaged && !anyOpen();
+      var run = canCycle && onScreen && !engaged;
       if (run === (timer !== null)) return;
       if (run) {
         hotspots.classList.add("is-cycling");
