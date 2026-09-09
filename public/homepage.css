@@ -345,7 +345,9 @@
   grid-template-columns: repeat(5, 1fr);
   gap: var(--sp-4);
 }
-@media (max-width: 1080px) {
+/* The container stops growing at 1200px, so five across is only ever one
+   size. Anything narrower squeezes the copy into a sliver. */
+@media (max-width: 1200px) {
   .pillars__grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 980px) {
