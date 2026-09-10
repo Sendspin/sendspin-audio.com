@@ -340,9 +340,11 @@
   margin: 0;
 }
 
+/* Three across, so the five cards always wrap. Five in a row leaves each
+   card too narrow for the copy. */
 .pillars__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-4);
 }
 @media (max-width: 980px) {
@@ -373,6 +375,7 @@
 .pillar--screens .pillar__icon { background: var(--ss-powder); color: var(--ss-espresso); }
 .pillar--controls .pillar__icon { background: var(--ss-cream); color: var(--ss-espresso); }
 .pillar--lights .pillar__icon { background: var(--ss-espresso); color: var(--ss-coral-soft); }
+.pillar--inputs .pillar__icon { background: var(--ss-coral-soft); color: var(--ss-espresso); }
 .pillar__h {
   font-family: var(--font-display);
   font-size: 24px;
