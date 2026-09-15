@@ -111,7 +111,7 @@
   margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
-  /* 44px hit area around a 16px dot */
+  /* 44px hit area around a 28px logo badge */
   width: 44px;
   height: 44px;
   padding: 0;
@@ -130,10 +130,10 @@
 }
 
 .hotspot__dot {
-  width: 16px;
-  height: 16px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: var(--ss-paper-pure);
+  background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") center / 20px auto no-repeat;
   box-shadow:
     0 0 0 3px var(--ss-coral),
     0 0 0 4px rgba(32, 26, 23, 0.45),
@@ -146,7 +146,7 @@
 .hotspot.is-auto .hotspot__dot,
 .hotspot:focus-visible .hotspot__dot {
   transform: scale(1.2);
-  background: var(--ss-coral);
+  background-color: var(--ss-paper-pure);
   box-shadow:
     0 0 0 3px var(--ss-coral-deep),
     0 0 0 4px rgba(32, 26, 23, 0.45),
@@ -155,7 +155,7 @@
 @media (hover: hover) {
   .hotspot:hover .hotspot__dot {
     transform: scale(1.2);
-    background: var(--ss-coral);
+    background-color: var(--ss-paper-pure);
     box-shadow:
       0 0 0 3px var(--ss-coral-deep),
       0 0 0 4px rgba(32, 26, 23, 0.45),
@@ -201,8 +201,8 @@
   letter-spacing: -0.01em;
   color: var(--fg-1);
 }
-.hotspot[data-place="right"] .hotspot__tip { left: 34px; transform: translateY(-50%); }
-.hotspot[data-place="left"]  .hotspot__tip { right: 34px; transform: translateY(-50%); }
+.hotspot[data-place="right"] .hotspot__tip { left: 46px; transform: translateY(-50%); }
+.hotspot[data-place="left"]  .hotspot__tip { right: 46px; transform: translateY(-50%); }
 
 .hotspot.is-open .hotspot__tip,
 .hotspot.is-auto .hotspot__tip,
@@ -259,10 +259,10 @@
   }
   .hotspot__dot::after {
     content: "";
-    width: 10px;
-    height: 10px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: var(--ss-paper-pure);
+    background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") center / 18px auto no-repeat;
     box-shadow:
       0 0 0 2px var(--ss-coral),
       0 0 0 3px rgba(32, 26, 23, 0.45),
@@ -284,7 +284,7 @@
   .hotspot:focus-visible .hotspot__dot::after,
   .hotspot:hover .hotspot__dot::after {
     transform: scale(1.2);
-    background: var(--ss-coral);
+    background-color: var(--ss-paper-pure);
     box-shadow:
       0 0 0 2px var(--ss-coral-deep),
       0 0 0 3px rgba(32, 26, 23, 0.45),

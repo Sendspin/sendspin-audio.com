@@ -379,31 +379,10 @@ section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
 }
 .nav__logo:hover { color: var(--fg-1); }
 .nav__logo-mark {
+  display: block;
   width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--ss-espresso);
-  position: relative;
+  height: auto;
   flex-shrink: 0;
-  overflow: hidden;
-}
-.nav__logo-mark::before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, var(--ss-coral) 0 28%, transparent 28% 100%),
-    repeating-radial-gradient(circle, var(--ss-espresso-soft) 0 1px, var(--ss-espresso) 1px 3px);
-}
-.nav__logo-mark::after {
-  content: "";
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 4px; height: 4px;
-  margin: -2px 0 0 -2px;
-  border-radius: 50%;
-  background: var(--ss-espresso);
 }
 .nav__wordmark {
   font-family: var(--font-display);
