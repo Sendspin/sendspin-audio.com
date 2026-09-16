@@ -2,7 +2,6 @@
   <defs>
     <style>
       .bg { fill: #F5F4EC; }
-      .wordmark { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 36px; fill: #201A17; letter-spacing: -0.72px; }
       .beta { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 16px; fill: #BF493A; }
       .h { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 60px; letter-spacing: -1.5px; }
       .h-espresso { fill: #201A17; }
@@ -14,8 +13,7 @@
   <rect class="bg" width="1200" height="630"/>
 
   <!-- Brand wordmark -->
-  <image href="sendspin-logo.svg" x="80" y="88" width="40" height="33"/>
-  <text x="132" y="118" class="wordmark">Sendspin</text>
+  <image href="sendspin-lockup.svg" x="80" y="78" width="224" height="53"/>
 
   <!-- Release status -->
   <g transform="translate(80, 186)">

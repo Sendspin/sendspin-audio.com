@@ -378,17 +378,11 @@ section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
   color: var(--fg-1);
 }
 .nav__logo:hover { color: var(--fg-1); }
-.nav__logo-mark {
+.nav__logo-image {
   display: block;
-  width: 32px;
+  width: 148px;
   height: auto;
   flex-shrink: 0;
-}
-.nav__wordmark {
-  font-family: var(--font-display);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  font-size: 22px;
 }
 .nav__links {
   display: flex;

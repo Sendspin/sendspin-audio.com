@@ -129,11 +129,12 @@
   .hotspot:hover { z-index: 2; }
 }
 
+/* Optical alignment compensates for the diagonal mark at small badge sizes. */
 .hotspot__dot {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") center / 20px auto no-repeat;
+  background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") calc(50% - 0.5px) calc(50% + 1px) / 20px auto no-repeat;
   box-shadow:
     0 0 0 3px var(--ss-coral),
     0 0 0 4px rgba(32, 26, 23, 0.45),
@@ -262,7 +263,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") center / 18px auto no-repeat;
+    background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") calc(50% - 0.5px) calc(50% + 1px) / 18px auto no-repeat;
     box-shadow:
       0 0 0 2px var(--ss-coral),
       0 0 0 3px rgba(32, 26, 23, 0.45),
