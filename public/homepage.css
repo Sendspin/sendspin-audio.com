@@ -111,7 +111,7 @@
   margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
-  /* 44px hit area around a 34px logo badge */
+  /* Keep a generous hit area around the small device marker. */
   width: 44px;
   height: 44px;
   padding: 0;
@@ -129,8 +129,7 @@
   .hotspot:hover { z-index: 2; }
 }
 
-/* Draw the ring and logo in one coordinate system so fractional hotspot
-   positions cannot round their placement independently. */
+/* Quiet dots at rest; only the highlighted device expands into a logo badge. */
 .hotspot__dot {
   display: grid;
   place-items: center;
@@ -142,31 +141,44 @@
   width: 34px;
   height: 34px;
   overflow: visible;
+  transform: scale(0.412);
   border-radius: 50%;
   box-shadow:
-    0 0 0 1px rgba(32, 26, 23, 0.45),
-    0 2px 6px rgba(32, 26, 23, 0.35);
-  transition: transform var(--t-fast) var(--ease-out);
+    0 0 0 1px rgba(32, 26, 23, 0.25),
+    0 2px 5px rgba(32, 26, 23, 0.3);
+  transition: transform var(--t-base) var(--ease-out);
 }
 .hotspot__badge-circle {
+  fill: var(--ss-coral);
+  stroke: var(--ss-paper-pure);
+  stroke-width: 4px;
+  transition: fill var(--t-base) var(--ease-out),
+              stroke var(--t-base) var(--ease-out),
+              stroke-width var(--t-base) var(--ease-out);
+}
+.hotspot__badge-logo {
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease-out);
+}
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge {
+  transform: scale(1);
+}
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge-circle {
   fill: var(--ss-paper-pure);
   stroke: var(--ss-coral);
-  stroke-width: 3px;
-  transition: stroke var(--t-fast) var(--ease-out);
+  stroke-width: 1.25px;
 }
-.hotspot.is-open .hotspot__badge,
-.hotspot.is-auto .hotspot__badge,
-.hotspot:focus-visible .hotspot__badge {
-  transform: scale(1.2);
-}
-.hotspot.is-open .hotspot__badge-circle,
-.hotspot.is-auto .hotspot__badge-circle,
-.hotspot:focus-visible .hotspot__badge-circle {
-  stroke: var(--ss-coral-deep);
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge-logo {
+  opacity: 1;
 }
 @media (hover: hover) {
-  .hotspot:hover .hotspot__badge { transform: scale(1.2); }
-  .hotspot:hover .hotspot__badge-circle { stroke: var(--ss-coral-deep); }
+  .hotspot:hover .hotspot__badge { transform: scale(1); }
+  .hotspot:hover .hotspot__badge-circle {
+    fill: var(--ss-paper-pure);
+    stroke: var(--ss-coral);
+    stroke-width: 1.25px;
+  }
+  .hotspot:hover .hotspot__badge-logo { opacity: 1; }
 }
 
 .hotspot__label {
@@ -219,11 +231,6 @@
   .hotspot:hover .hotspot__tip { opacity: 1; visibility: visible; }
 }
 
-/* Below this width the dots sit closer together than a fingertip and the
-   tooltips no longer fit beside them, so the illustration stands alone. */
-/* Narrow screens: the dots stay, but a 240px card will not fit beside a dot on a
-   ~350px image, so the tooltip becomes a bottom sheet anchored to the viewport
-   instead of to its dot. */
 /* The container gutter is sized for text; a picture wants the full width, and
    the stacked hero does not need 56px of air around it on a phone. */
 @media (max-width: 599px) {
@@ -248,19 +255,12 @@
     margin: 0;
   }
 
-  /* Keep the 44px hit area around the smaller mobile badge. */
+  /* Keep the 44px hit area around each device marker on mobile, too. */
   .hotspot__dot {
     position: absolute;
     left: var(--hx);
     top: var(--hy);
     margin: -22px 0 0 -22px;
-  }
-  .hotspot__badge {
-    width: 28px;
-    height: 28px;
-    box-shadow:
-      0 0 0 1px rgba(32, 26, 23, 0.45),
-      0 1px 4px rgba(32, 26, 23, 0.35);
   }
 
   .hotspot[data-place="right"] .hotspot__tip,
@@ -279,7 +279,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hotspot__badge, .hotspot__badge-circle, .hotspot__tip { transition: none; }
+  .hotspot__badge, .hotspot__badge-circle, .hotspot__badge-logo, .hotspot__tip { transition: none; }
 }
 
 /* =========================================================

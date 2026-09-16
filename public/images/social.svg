@@ -2,33 +2,23 @@
   <defs>
     <style>
       .bg { fill: #F5F4EC; }
-      .beta { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 16px; fill: #BF493A; }
-      .h { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 60px; letter-spacing: -1.5px; }
+      .h { font-family: 'Sendspin Display', ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 104px; letter-spacing: -2.6px; }
       .h-espresso { fill: #201A17; }
       .h-coral { fill: #E25C4C; }
-      .sub { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 500; font-size: 22px; fill: #463D39; }
+      .sub { font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-weight: 500; font-size: 34px; fill: #463D39; }
     </style>
   </defs>
 
   <rect class="bg" width="1200" height="630"/>
 
   <!-- Brand wordmark -->
-  <image href="sendspin-lockup.svg" x="80" y="78" width="224" height="53"/>
-
-  <!-- Release status -->
-  <g transform="translate(80, 186)">
-    <rect width="378" height="36" rx="18" fill="#F9D9D3"/>
-    <text x="18" y="24" class="beta">Release Candidate 1 · spec being finalized</text>
-  </g>
+  <image href="sendspin-lockup.svg" x="80" y="60" width="380" height="90"/>
 
   <!-- Headline -->
-  <text x="80" y="318" class="h h-espresso">Whole-home audio,</text>
-  <text x="80" y="380" class="h h-coral">without the lock-in.</text>
+  <text x="80" y="302" class="h h-espresso">Whole-home audio,</text>
+  <text x="80" y="410" class="h h-coral">without the lock-in.</text>
 
   <!-- Subtext -->
-  <text x="80" y="458" class="sub">Music, art and light in microsecond sync.</text>
-  <text x="80" y="490" class="sub">An open standard from the Open Home Foundation.</text>
-
-  <!-- Official Sendspin logomark -->
-  <image href="sendspin-logo.svg" x="780" y="168" width="320" height="262"/>
+  <text x="80" y="504" class="sub">Music, art and light in microsecond sync.</text>
+  <text x="80" y="550" class="sub">An open standard from the Open Home Foundation.</text>
 </svg>
