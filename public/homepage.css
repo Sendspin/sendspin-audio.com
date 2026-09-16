@@ -111,7 +111,7 @@
   margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
-  /* 44px hit area around a 28px logo badge */
+  /* 44px hit area around a 34px logo badge */
   width: 44px;
   height: 44px;
   padding: 0;
@@ -129,39 +129,44 @@
   .hotspot:hover { z-index: 2; }
 }
 
-/* Optical alignment compensates for the diagonal mark at small badge sizes. */
+/* Draw the ring and logo in one coordinate system so fractional hotspot
+   positions cannot round their placement independently. */
 .hotspot__dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") calc(50% - 0.5px) calc(50% + 1px) / 20px auto no-repeat;
-  box-shadow:
-    0 0 0 3px var(--ss-coral),
-    0 0 0 4px rgba(32, 26, 23, 0.45),
-    0 2px 6px rgba(32, 26, 23, 0.35);
-  transition: transform var(--t-fast) var(--ease-out),
-              background-color var(--t-fast) var(--ease-out),
-              box-shadow var(--t-fast) var(--ease-out);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
 }
-.hotspot.is-open .hotspot__dot,
-.hotspot.is-auto .hotspot__dot,
-.hotspot:focus-visible .hotspot__dot {
-  transform: scale(1.2);
-  background-color: var(--ss-paper-pure);
+.hotspot__badge {
+  display: block;
+  width: 34px;
+  height: 34px;
+  overflow: visible;
+  border-radius: 50%;
   box-shadow:
-    0 0 0 3px var(--ss-coral-deep),
-    0 0 0 4px rgba(32, 26, 23, 0.45),
+    0 0 0 1px rgba(32, 26, 23, 0.45),
     0 2px 6px rgba(32, 26, 23, 0.35);
+  transition: transform var(--t-fast) var(--ease-out);
+}
+.hotspot__badge-circle {
+  fill: var(--ss-paper-pure);
+  stroke: var(--ss-coral);
+  stroke-width: 3px;
+  transition: stroke var(--t-fast) var(--ease-out);
+}
+.hotspot.is-open .hotspot__badge,
+.hotspot.is-auto .hotspot__badge,
+.hotspot:focus-visible .hotspot__badge {
+  transform: scale(1.2);
+}
+.hotspot.is-open .hotspot__badge-circle,
+.hotspot.is-auto .hotspot__badge-circle,
+.hotspot:focus-visible .hotspot__badge-circle {
+  stroke: var(--ss-coral-deep);
 }
 @media (hover: hover) {
-  .hotspot:hover .hotspot__dot {
-    transform: scale(1.2);
-    background-color: var(--ss-paper-pure);
-    box-shadow:
-      0 0 0 3px var(--ss-coral-deep),
-      0 0 0 4px rgba(32, 26, 23, 0.45),
-      0 2px 6px rgba(32, 26, 23, 0.35);
-  }
+  .hotspot:hover .hotspot__badge { transform: scale(1.2); }
+  .hotspot:hover .hotspot__badge-circle { stroke: var(--ss-coral-deep); }
 }
 
 .hotspot__label {
@@ -243,52 +248,18 @@
     margin: 0;
   }
 
-  /* The dot carries the 44px hit area; the visible circle is its ::after, so a
-     fixed-size marker does not swamp the device at ~350px wide. */
+  /* Keep the 44px hit area around the smaller mobile badge. */
   .hotspot__dot {
     position: absolute;
     left: var(--hx);
     top: var(--hy);
-    width: 44px;
-    height: 44px;
     margin: -22px 0 0 -22px;
-    display: grid;
-    place-items: center;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
   }
-  .hotspot__dot::after {
-    content: "";
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--ss-paper-pure) url("/images/sendspin-logo.svg") calc(50% - 0.5px) calc(50% + 1px) / 18px auto no-repeat;
+  .hotspot__badge {
+    width: 28px;
+    height: 28px;
     box-shadow:
-      0 0 0 2px var(--ss-coral),
-      0 0 0 3px rgba(32, 26, 23, 0.45),
-      0 1px 4px rgba(32, 26, 23, 0.35);
-    transition: transform var(--t-fast) var(--ease-out);
-  }
-  /* The active styles target the dot, which is now the 44px hit area; move them
-     to the visible marker or they paint a 44px coral square. */
-  .hotspot.is-open .hotspot__dot,
-  .hotspot.is-auto .hotspot__dot,
-  .hotspot:focus-visible .hotspot__dot,
-  .hotspot:hover .hotspot__dot {
-    transform: none;
-    background: none;
-    box-shadow: none;
-  }
-  .hotspot.is-open .hotspot__dot::after,
-  .hotspot.is-auto .hotspot__dot::after,
-  .hotspot:focus-visible .hotspot__dot::after,
-  .hotspot:hover .hotspot__dot::after {
-    transform: scale(1.2);
-    background-color: var(--ss-paper-pure);
-    box-shadow:
-      0 0 0 2px var(--ss-coral-deep),
-      0 0 0 3px rgba(32, 26, 23, 0.45),
+      0 0 0 1px rgba(32, 26, 23, 0.45),
       0 1px 4px rgba(32, 26, 23, 0.35);
   }
 
@@ -305,13 +276,10 @@
     z-index: 40;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hotspot__dot::after { transition: none; }
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hotspot__dot, .hotspot__tip { transition: none; }
+  .hotspot__badge, .hotspot__badge-circle, .hotspot__tip { transition: none; }
 }
 
 /* =========================================================
