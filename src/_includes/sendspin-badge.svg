@@ -1,0 +1,4 @@
+<svg class="hotspot__badge" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+  <circle class="hotspot__badge-circle" cx="17" cy="17" r="15.5" />
+  <image class="hotspot__badge-logo" href="/images/sendspin-logo.svg" x="7" y="8.83" width="20" height="16.35" />
+</svg>

@@ -3,7 +3,7 @@ layout: base
 homepage: true
 description: Open standard for whole-house music. Your hi-fi, a ready-made speaker and an old phone in a drawer can all play the same song, in sync.
 stylesheets:
-  - /homepage.css?v=20260909-1
+  - /homepage.css?v=20260916-3
 module_scripts:
   - /js/sendspin-demo-card.js?v=20260830-2
 demo_server_url: https://sendspin-demo.openhomefoundation.org
@@ -15,7 +15,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
     <div class="hero__grid">
       <div class="hero__left">
         <span class="hero__beta">
-          Public preview · spec subject to change
+          Release Candidate 1 · spec being finalized
         </span>
 
         <h1 class="hero__title">
@@ -58,7 +58,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
             <button class="hotspot" type="button" aria-expanded="false"
                     style="--hx:25%; --hy:43.8%" data-place="right">
-              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__dot" aria-hidden="true">{% include "sendspin-badge.svg" %}</span>
               <span class="hotspot__label">Amplifier</span>
               <span class="hotspot__tip" role="tooltip">
                 <strong>Your own amplifier</strong>
@@ -68,7 +68,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
             <button class="hotspot" type="button" aria-expanded="false"
                     style="--hx:36.8%; --hy:38.8%" data-place="right">
-              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__dot" aria-hidden="true">{% include "sendspin-badge.svg" %}</span>
               <span class="hotspot__label">Album art</span>
               <span class="hotspot__tip" role="tooltip">
                 <strong>Artwork</strong>
@@ -78,7 +78,7 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
             <button class="hotspot" type="button" aria-expanded="false"
                     style="--hx:47.7%; --hy:28.5%" data-place="left">
-              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__dot" aria-hidden="true">{% include "sendspin-badge.svg" %}</span>
               <span class="hotspot__label">Light</span>
               <span class="hotspot__tip" role="tooltip">
                 <strong>Light</strong>
@@ -88,21 +88,21 @@ demo_share_url: https://www.sendspin-audio.com/#live-demo
 
             <button class="hotspot" type="button" aria-expanded="false"
                     style="--hx:69.0%; --hy:37.6%" data-place="left">
-              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__dot" aria-hidden="true">{% include "sendspin-badge.svg" %}</span>
               <span class="hotspot__label">Turntable</span>
               <span class="hotspot__tip" role="tooltip">
                 <strong>Input</strong>
-                This record plays in every room, in sync. A Sendspin device at the turntable puts the audio on the network, and every speaker in the house picks it up.
+                Connect your turntable to a Sendspin device. Put on a record, and your speakers play it together throughout the house.
               </span>
             </button>
 
             <button class="hotspot" type="button" aria-expanded="false"
                     style="--hx:72.8%; --hy:25.4%" data-place="left">
-              <span class="hotspot__dot" aria-hidden="true"></span>
+              <span class="hotspot__dot" aria-hidden="true">{% include "sendspin-badge.svg" %}</span>
               <span class="hotspot__label">Second room</span>
               <span class="hotspot__tip" role="tooltip">
                 <strong>Another room, in sync</strong>
-                Different speakers, a different maker, playing the same moment.
+                Add a Sendspin speaker in another room. It plays the same music in sync with the rest, even if it’s from a different brand.
               </span>
             </button>
           </div>

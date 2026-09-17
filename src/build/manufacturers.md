@@ -60,7 +60,7 @@ When you use Sendspin, you join the world's largest open source smart home commu
 
 ### Join us as we build the future of open audio
 
-We are looking for forward-thinking manufacturers to help us pioneer this exciting new standard during the public preview stage. This is your opportunity to engage directly with our team, influence the protocol's development, and ensure your hardware is ready to deliver the truly open, multisensory experience that modern consumers demand.
+We are looking for forward-thinking manufacturers to help us pioneer this exciting new standard during Release Candidate 1, as the spec is being finalized. This is your opportunity to engage directly with our team, influence the protocol's development, and ensure your hardware is ready to deliver the truly open, multisensory experience that modern consumers demand.
 
 <p><a href="mailto:sendspin@openhomefoundation.org" class="cta-button">Contact us</a></p>
 

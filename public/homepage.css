@@ -111,7 +111,7 @@
   margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
-  /* 44px hit area around a 16px dot */
+  /* Keep a generous hit area around the small device marker. */
   width: 44px;
   height: 44px;
   padding: 0;
@@ -129,38 +129,56 @@
   .hotspot:hover { z-index: 2; }
 }
 
+/* Quiet dots at rest; only the highlighted device expands into a logo badge. */
 .hotspot__dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--ss-paper-pure);
-  box-shadow:
-    0 0 0 3px var(--ss-coral),
-    0 0 0 4px rgba(32, 26, 23, 0.45),
-    0 2px 6px rgba(32, 26, 23, 0.35);
-  transition: transform var(--t-fast) var(--ease-out),
-              background-color var(--t-fast) var(--ease-out),
-              box-shadow var(--t-fast) var(--ease-out);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
 }
-.hotspot.is-open .hotspot__dot,
-.hotspot.is-auto .hotspot__dot,
-.hotspot:focus-visible .hotspot__dot {
-  transform: scale(1.2);
-  background: var(--ss-coral);
+.hotspot__badge {
+  display: block;
+  width: 34px;
+  height: 34px;
+  overflow: visible;
+  transform: scale(0.412);
+  border-radius: 50%;
   box-shadow:
-    0 0 0 3px var(--ss-coral-deep),
-    0 0 0 4px rgba(32, 26, 23, 0.45),
-    0 2px 6px rgba(32, 26, 23, 0.35);
+    0 0 0 1px rgba(32, 26, 23, 0.25),
+    0 2px 5px rgba(32, 26, 23, 0.3);
+  transition: transform var(--t-base) var(--ease-out);
+}
+.hotspot__badge-circle {
+  fill: var(--ss-coral);
+  stroke: var(--ss-paper-pure);
+  stroke-width: 4px;
+  transition: fill var(--t-base) var(--ease-out),
+              stroke var(--t-base) var(--ease-out),
+              stroke-width var(--t-base) var(--ease-out);
+}
+.hotspot__badge-logo {
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease-out);
+}
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge {
+  transform: scale(1);
+}
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge-circle {
+  fill: var(--ss-paper-pure);
+  stroke: var(--ss-coral);
+  stroke-width: 1.25px;
+}
+.hotspot:is(.is-open, .is-auto, :focus-visible) .hotspot__badge-logo {
+  opacity: 1;
 }
 @media (hover: hover) {
-  .hotspot:hover .hotspot__dot {
-    transform: scale(1.2);
-    background: var(--ss-coral);
-    box-shadow:
-      0 0 0 3px var(--ss-coral-deep),
-      0 0 0 4px rgba(32, 26, 23, 0.45),
-      0 2px 6px rgba(32, 26, 23, 0.35);
+  .hotspot:hover .hotspot__badge { transform: scale(1); }
+  .hotspot:hover .hotspot__badge-circle {
+    fill: var(--ss-paper-pure);
+    stroke: var(--ss-coral);
+    stroke-width: 1.25px;
   }
+  .hotspot:hover .hotspot__badge-logo { opacity: 1; }
 }
 
 .hotspot__label {
@@ -201,8 +219,8 @@
   letter-spacing: -0.01em;
   color: var(--fg-1);
 }
-.hotspot[data-place="right"] .hotspot__tip { left: 34px; transform: translateY(-50%); }
-.hotspot[data-place="left"]  .hotspot__tip { right: 34px; transform: translateY(-50%); }
+.hotspot[data-place="right"] .hotspot__tip { left: 46px; transform: translateY(-50%); }
+.hotspot[data-place="left"]  .hotspot__tip { right: 46px; transform: translateY(-50%); }
 
 .hotspot.is-open .hotspot__tip,
 .hotspot.is-auto .hotspot__tip,
@@ -213,11 +231,6 @@
   .hotspot:hover .hotspot__tip { opacity: 1; visibility: visible; }
 }
 
-/* Below this width the dots sit closer together than a fingertip and the
-   tooltips no longer fit beside them, so the illustration stands alone. */
-/* Narrow screens: the dots stay, but a 240px card will not fit beside a dot on a
-   ~350px image, so the tooltip becomes a bottom sheet anchored to the viewport
-   instead of to its dot. */
 /* The container gutter is sized for text; a picture wants the full width, and
    the stacked hero does not need 56px of air around it on a phone. */
 @media (max-width: 599px) {
@@ -242,53 +255,12 @@
     margin: 0;
   }
 
-  /* The dot carries the 44px hit area; the visible circle is its ::after, so a
-     fixed-size marker does not swamp the device at ~350px wide. */
+  /* Keep the 44px hit area around each device marker on mobile, too. */
   .hotspot__dot {
     position: absolute;
     left: var(--hx);
     top: var(--hy);
-    width: 44px;
-    height: 44px;
     margin: -22px 0 0 -22px;
-    display: grid;
-    place-items: center;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  .hotspot__dot::after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--ss-paper-pure);
-    box-shadow:
-      0 0 0 2px var(--ss-coral),
-      0 0 0 3px rgba(32, 26, 23, 0.45),
-      0 1px 4px rgba(32, 26, 23, 0.35);
-    transition: transform var(--t-fast) var(--ease-out);
-  }
-  /* The active styles target the dot, which is now the 44px hit area; move them
-     to the visible marker or they paint a 44px coral square. */
-  .hotspot.is-open .hotspot__dot,
-  .hotspot.is-auto .hotspot__dot,
-  .hotspot:focus-visible .hotspot__dot,
-  .hotspot:hover .hotspot__dot {
-    transform: none;
-    background: none;
-    box-shadow: none;
-  }
-  .hotspot.is-open .hotspot__dot::after,
-  .hotspot.is-auto .hotspot__dot::after,
-  .hotspot:focus-visible .hotspot__dot::after,
-  .hotspot:hover .hotspot__dot::after {
-    transform: scale(1.2);
-    background: var(--ss-coral);
-    box-shadow:
-      0 0 0 2px var(--ss-coral-deep),
-      0 0 0 3px rgba(32, 26, 23, 0.45),
-      0 1px 4px rgba(32, 26, 23, 0.35);
   }
 
   .hotspot[data-place="right"] .hotspot__tip,
@@ -304,13 +276,10 @@
     z-index: 40;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hotspot__dot::after { transition: none; }
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hotspot__dot, .hotspot__tip { transition: none; }
+  .hotspot__badge, .hotspot__badge-circle, .hotspot__badge-logo, .hotspot__tip { transition: none; }
 }
 
 /* =========================================================
