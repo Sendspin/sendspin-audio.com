@@ -17,7 +17,21 @@ async function main() {
     throw new Error(USAGE);
   }
   const ref = refs[0];
-  const sourceUrl = `https://raw.githubusercontent.com/Sendspin/spec/${encodeURIComponent(ref)}/README.md`;
+
+  // Resolve tags and abbreviated commits first, then fetch that exact revision
+  // so the recorded commit always identifies the content we copied.
+  const commitResponse = await fetch(`https://api.github.com/repos/Sendspin/spec/commits/${encodeURIComponent(ref)}`, {
+    headers: { Accept: "application/vnd.github+json" },
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!commitResponse.ok) {
+    throw new Error(`Could not resolve the spec revision: ${commitResponse.status} ${commitResponse.statusText}`);
+  }
+  const { sha } = await commitResponse.json();
+  if (typeof sha !== "string" || !/^[a-f0-9]{40}$/.test(sha)) {
+    throw new Error("Unexpected upstream commit ID; the website spec was not changed.");
+  }
+  const sourceUrl = `https://raw.githubusercontent.com/Sendspin/spec/${sha}/README.md`;
 
   const response = await fetch(sourceUrl, {
     signal: AbortSignal.timeout(30_000),
@@ -43,7 +57,8 @@ async function main() {
   if (!frontmatter) {
     throw new Error("Unexpected website front matter; the website spec was not changed.");
   }
-  const expected = frontmatter[0] + body;
+  const sourceComment = `<!-- Synced from https://github.com/Sendspin/spec/commit/${sha} -->\n\n`;
+  const expected = frontmatter[0] + sourceComment + body;
   if (current === expected) {
     console.log(`Website spec matches Sendspin/spec at ${ref} exactly.`);
     return;

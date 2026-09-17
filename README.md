@@ -47,8 +47,11 @@ Choose a release tag or commit explicitly when syncing the website. For example:
 
 The script preserves the page's front matter and copies the specification body
 exactly, omitting only the upstream generated-file notice and top-level title
-(the website supplies its own title). Edit the specification in the upstream
-repository, then run this script to update the website copy.
+(the website supplies its own title). It resolves the chosen revision to a full
+commit ID and records a link to that commit in an HTML comment immediately after
+the front matter. Check mode verifies both this comment and the specification
+body. Edit the specification in the upstream repository, then run this script
+to update the website copy.
 
 To verify that the page matches that same release without changing any files:
 

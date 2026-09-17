@@ -5,6 +5,8 @@ description: Technical specification for the Sendspin music experience protocol.
 mermaid: true
 ---
 
+<!-- Synced from https://github.com/Sendspin/spec/commit/671a34d408581fc25ea56b3528a4a3f13e3be901 -->
+
 Sendspin is a multi-room music experience protocol. The goal of the protocol is to orchestrate all devices that make up the music listening experience. This includes outputting audio on multiple speakers simultaneously, screens and lights visualizing the audio or album art, and wall tablets providing media controls.
 
 ## Licensing and Trademarks
