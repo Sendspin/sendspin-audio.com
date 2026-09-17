@@ -35,6 +35,35 @@ To build the site for production:
 
 The built site will be in the `dist/` directory.
 
+### Updating the specification
+
+The website publishes a stable specification, while
+[Sendspin/spec](https://github.com/Sendspin/spec) also contains development work.
+Choose a release tag or commit explicitly when syncing the website. For example:
+
+```bash
+./script/sync-spec 1.0.0-rc1
+```
+
+The script preserves the page's front matter and copies the specification body
+exactly, omitting only the upstream generated-file notice and top-level title
+(the website supplies its own title). It resolves the chosen revision to a full
+commit ID and records a link to that commit in an HTML comment immediately after
+the front matter. Check mode verifies both this comment and the specification
+body. Edit the specification in the upstream repository, then run this script
+to update the website copy.
+
+To verify that the page matches that same release without changing any files:
+
+```bash
+./script/sync-spec 1.0.0-rc1 --check
+```
+
+Both commands require network access. Check mode exits nonzero on a mismatch or
+a fetch error. Neither command runs in CI or during the production build; the
+build uses the checked-in specification. Syncing is an explicit step before
+committing a release update.
+
 ## Deployment
 
 The site deploys automatically to Netlify when changes are pushed to the `main` branch. Netlify's Git integration runs the build; there is no workflow file or `netlify.toml` in the repo, so the build command and publish directory are set in the Netlify dashboard.
@@ -65,7 +94,8 @@ Redirects live in `public/_redirects`, which ships to the site root.
 │   └── images/                # Images and partner logos
 ├── script/                    # Build scripts
 │   ├── build                  # Production build
-│   └── develop                # Development server
+│   ├── develop                # Development server
+│   └── sync-spec              # Sync or check the upstream specification
 └── dist/                      # Built site (generated)
 ```
 
