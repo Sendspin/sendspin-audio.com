@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+const { readFile, writeFile } = require("node:fs/promises");
+const path = require("node:path");
+
+const OUTPUT = path.join(__dirname, "..", "src", "build", "spec.md");
+const USAGE = "Usage: ./script/sync-spec <tag-or-commit> [--check]";
+
+async function main() {
+  const args = process.argv.slice(2);
+  if (args.length === 1 && args[0] === "--help") {
+    console.log(`${USAGE}\n\nSync the website spec with a chosen Sendspin/spec release.\n--check reports drift without changing the page and exits nonzero on a mismatch.`);
+    return;
+  }
+  const refs = args.filter((arg) => arg !== "--check");
+  if (refs.length !== 1 || args.length > 2 || !/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(refs[0])) {
+    throw new Error(USAGE);
+  }
+  const ref = refs[0];
+  const sourceUrl = `https://raw.githubusercontent.com/Sendspin/spec/${encodeURIComponent(ref)}/README.md`;
+
+  const response = await fetch(sourceUrl, {
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!response.ok) {
+    throw new Error(`Could not fetch the spec: ${response.status} ${response.statusText}`);
+  }
+  const source = await response.text();
+
+  // The website supplies its own title. Remove only the upstream generated-file
+  // notice and title; preserve every character of the specification body.
+  const prefix = source.match(/^(?:<!--[\s\S]*?-->\n\n)?# The Sendspin Protocol\n\n/);
+  if (!prefix) {
+    throw new Error("Unexpected upstream README format; the website spec was not changed.");
+  }
+  const body = source.slice(prefix[0].length);
+  if (!body.trim()) {
+    throw new Error("The upstream specification is empty; the website spec was not changed.");
+  }
+
+  const current = await readFile(OUTPUT, "utf8");
+  const frontmatter = current.match(/^---\n[\s\S]*?\n---\n\n/);
+  if (!frontmatter) {
+    throw new Error("Unexpected website front matter; the website spec was not changed.");
+  }
+  const expected = frontmatter[0] + body;
+  if (current === expected) {
+    console.log(`Website spec matches Sendspin/spec at ${ref} exactly.`);
+    return;
+  }
+  if (args.includes("--check")) {
+    throw new Error(`Website spec differs from Sendspin/spec at ${ref}. Run ./script/sync-spec ${ref} to update it.`);
+  }
+
+  await writeFile(OUTPUT, expected);
+  console.log(`Updated src/build/spec.md from Sendspin/spec at ${ref}.`);
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});
