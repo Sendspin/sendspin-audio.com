@@ -16,27 +16,29 @@ Want to try Sendspin from the command line? [sendspin-cpp-cli](https://github.co
   ones are non-conformant.
 -->
 
-- **C#/.NET** - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) -
+Each SDK shows the specification version it implements. **Spec RC1** matches the [current specification](/build/spec/). **Pre-RC1** implements an earlier draft and will still change.
+
+- **C#/.NET** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [Sendspin.SDK](https://github.com/Sendspin/sendspin-dotnet) -
   [Nuget Package](https://www.nuget.org/packages/Sendspin.SDK)
   - Used by [Sendspin for Windows](https://github.com/chrisuthe/windowsSpin)
 
-- **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
+- **C++** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
   - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933), [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)
 
-- **Go** - [sendspin-go](https://github.com/Sendspin/sendspin-go)
+- **Go** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-go](https://github.com/Sendspin/sendspin-go)
 
-- **JavaScript** - [sendspin-js](https://github.com/Sendspin/sendspin-js)
+- **JavaScript** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-js](https://github.com/Sendspin/sendspin-js)
   - Used by Music Assistant's web interface, [Google Cast receiver for Sendspin](https://github.com/Sendspin/cast), [sendspin-audio.com live demo](https://www.sendspin-audio.com/#live-demo)
 
-- **Kotlin/JVM** - [sendspin-jvm](https://github.com/Sendspin/sendspin-jvm)
+- **Kotlin/JVM** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-jvm](https://github.com/Sendspin/sendspin-jvm)
 
-- **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
+- **Python** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [aiosendspin](https://github.com/Sendspin/aiosendspin)
   - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
 
-- **Rust** - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
+- **Rust** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-rs](https://github.com/Sendspin/sendspin-rs)
   - Used by [Music Assistant Desktop App](https://github.com/music-assistant/desktop-app)
 
-- **Swift** - [SendspinKit](https://github.com/Sendspin/SendspinKit)
+- **Swift** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [SendspinKit](https://github.com/Sendspin/SendspinKit)
 
 ## Contributing
 
