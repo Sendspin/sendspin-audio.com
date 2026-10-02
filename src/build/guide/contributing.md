@@ -61,7 +61,7 @@ The protocol gives you a way to do this without stepping on anyone: [application
 
 Keep in mind what belongs where. The specification says what goes on the wire; this guide says how to build well. A pull request to the specification that reads like a tutorial will be asked to move here, and a guide chapter that starts to define behavior will be asked to point at the specification instead.
 
-Discussion happens in two places. The `#sendspin` channel on the [Music Assistant Discord](https://discord.gg/kaVm8hGpne) is for questions, design conversations and anything that is not yet a concrete change. Issues and pull requests in the [spec repository](https://github.com/Sendspin/spec/issues) are for concrete changes, and the thread on a pull request is kept for developers discussing that change.
+Discussion happens in two places. The `#sendspin-protocol` channel on the [Music Assistant Discord](https://discord.gg/kaVm8hGpne) is for developers and implementors: questions, design conversations and anything that is not yet a concrete change. Issues and pull requests in the [spec repository](https://github.com/Sendspin/spec/issues) are for concrete changes, and the thread on a pull request is kept for developers discussing that change.
 
 ## Role versioning for implementors
 

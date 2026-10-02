@@ -81,4 +81,4 @@ Prefer one long page? [Read the whole guide on one page](/build/guide/all/) or s
 
 ## Getting help
 
-The quickest way to reach the people building Sendspin is the `#sendspin` channel on the [Music Assistant Discord](https://discord.gg/kaVm8hGpne). For partnership and certification questions, email [sendspin@openhomefoundation.org](mailto:sendspin@openhomefoundation.org). Issues with the specification itself go to the [spec repository](https://github.com/Sendspin/spec/issues).
+The quickest way to reach the people building Sendspin is the `#sendspin-protocol` channel on the [Music Assistant Discord](https://discord.gg/kaVm8hGpne), which is where developers and implementors meet. For partnership and certification questions, email [sendspin@openhomefoundation.org](mailto:sendspin@openhomefoundation.org). Issues with the specification itself go to the [spec repository](https://github.com/Sendspin/spec/issues).
