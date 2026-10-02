@@ -58,6 +58,12 @@ When you use Sendspin, you join the world's largest open source smart home commu
 
 **Sendspin certification (coming soon):** We are developing a Sendspin Certified program. Similar to our [Works with Home Assistant](https://works-with.home-assistant.io/) program, this will allow manufacturers to display a trusted quality badge on compatible products (subject to testing and a nominal fee). This badge would signal premium interoperability and build trust with our community.
 
+### Licensing and trademarks
+
+Sendspin is, and will always be, free and open source: anyone can implement it, with no royalties or patent fees. The specification is published under the <a href="https://github.com/Sendspin/spec/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">Community Specification License 1.0</a>, which includes a royalty-free patent license from every contributor, and is governed by the Open Home Foundation.
+
+The Sendspin name and logo are trademarks of the Open Home Foundation. You may state that your product implements or is compatible with Sendspin, but using the name or logo on a commercial product – such as "Sendspin Certified" or "Sendspin built-in" – requires permission, granted through the partner and certification program described above. See [Licensing and trademarks](/licensing/) for the full picture, including the SDK licenses.
+
 ### Join us as we build the future of open audio
 
 We are looking for forward-thinking manufacturers to help us pioneer this exciting new standard during Release Candidate 1, as the spec is being finalized. This is your opportunity to engage directly with our team, influence the protocol's development, and ensure your hardware is ready to deliver the truly open, multisensory experience that modern consumers demand.

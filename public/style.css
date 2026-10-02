@@ -571,6 +571,8 @@ section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
   flex-wrap: wrap;
   gap: var(--sp-3);
 }
+.site-footer__legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.site-footer__legal a:hover { color: var(--ss-coral-deep); }
 
 /* ============================================================
    PAGE CONTENT (sub-pages: /spec, /code, /manufacturers)
