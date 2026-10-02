@@ -62,7 +62,7 @@ When you use Sendspin, you join the world's largest open source smart home commu
 
 Sendspin is, and will always be, free and open source: anyone can implement it, with no royalties or patent fees. The specification is published under the <a href="https://github.com/Sendspin/spec/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">Community Specification License 1.0</a>, which includes a royalty-free patent license from every contributor, and is governed by the Open Home Foundation.
 
-The Sendspin name and logo are registered trademarks of the Open Home Foundation. You may state that your product implements or is compatible with Sendspin, but using the name or logo on a commercial product – such as "Sendspin Certified" or "Sendspin built-in" – requires permission, granted through the partner and certification program described above. See the <a href="https://github.com/Sendspin/spec/blob/main/TRADEMARKS.md" target="_blank" rel="noopener noreferrer">trademark policy</a> and the [licensing section of the specification](/build/spec/#licensing-and-trademarks) for details.
+The Sendspin name and logo are trademarks of the Open Home Foundation. You may state that your product implements or is compatible with Sendspin, but using the name or logo on a commercial product – such as "Sendspin Certified" or "Sendspin built-in" – requires permission, granted through the partner and certification program described above. See [Licensing and trademarks](/licensing/) for the full picture, including the SDK licenses.
 
 ### Join us as we build the future of open audio
 

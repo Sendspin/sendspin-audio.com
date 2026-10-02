@@ -44,3 +44,5 @@ Each SDK shows the specification version it implements. **Spec RC1** matches the
 
 Sendspin is open source and welcomes contributions. Visit [Sendspin on GitHub](https://github.com/Sendspin) and the <a href="https://discord.gg/kaVm8hGpne" target="_blank"
     >Music Assistant Discord</a> to get involved.
+
+Publishing your own Sendspin project? The protocol is free to implement; see [Licensing and trademarks](/licensing/) for the SDK licenses and how the Sendspin name may be used in your project's name.
