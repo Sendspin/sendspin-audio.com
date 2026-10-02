@@ -24,7 +24,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <h3>Streamer, output only</h3>
     <p><strong>Roles:</strong> player, plus controller when there is a remote or an app.</p>
     <ul>
-      <li>A WiiM-class streamer or a Sonocotta-style DIY board: no speaker of its own, feeding a DAC, an amplifier or an optical input.</li>
+      <li>A network streamer or a DIY board: no speaker of its own, feeding a DAC, an amplifier or an optical input.</li>
       <li>The DAC, DSP and amplifier behind the port add delay the device cannot see. Measure it once and ship it as the default output delay; expose it in settings.</li>
       <li>Pairing: a dynamic code shown in your app if you have one, otherwise a static code printed on the device, entered while a button press opens the pairing window. Most users will simply use guest mode.</li>
       <li>Report hardware volume knobs as read-only when they cannot be set remotely.</li>
@@ -59,7 +59,6 @@ Each case names the roles involved, how the device connects, which pairing metho
       <li>Visualizer frames are timestamped like audio. Run the time filter and render each frame at its time, not on arrival.</li>
       <li>Ask only for the data types you use, at the rate you can render. Beat events may be absent on servers without beat detection; peaks are always there.</li>
       <li>Colors come with contrast guarantees, so the same palette drives both the lamp and any text overlay.</li>
-      <li>LedFx is an existing visualizer client to look at.</li>
     </ul>
   </div>
   <div class="hub-card">
@@ -97,7 +96,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <h3>Software player or music server</h3>
     <p><strong>Roles:</strong> server, client, or both.</p>
     <ul>
-      <li>A Volumio-class player, a Linux audio box, a home-automation hub: add the server side to send its output to Sendspin devices, add the client side to be a target for other servers, or do both.</li>
+      <li>A software music player, a Linux audio box, a home-automation hub: add the server side to send its output to Sendspin devices, add the client side to be a target for other servers, or do both.</li>
       <li>Reuse <a href="https://github.com/Sendspin/aiosendspin">aiosendspin</a> if you are in Python; it is the server inside Music Assistant.</li>
       <li>Your server identity key must survive backups and migrations, or every device will treat the restored server as a stranger.</li>
       <li>Read the <a href="/build/guide/server/ux/">server UX chapter</a>: discovery, approval and pairing are where users decide whether the integration feels finished.</li>

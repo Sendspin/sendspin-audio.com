@@ -141,4 +141,4 @@ You keep the same library, the same hooks and the same behavior on the wire. The
 
 ## Hardware that already runs it
 
-The [Home Assistant Voice Preview Edition](https://www.home-assistant.io/voice-pe/) ships Sendspin through this component, so there is a production device to compare against. Community boards such as [SendspinZero](https://github.com/RealDeco/SendspinZero) show what a minimal design looks like. Both are useful references for pin maps, PSRAM configuration and speaker pipelines before you lay out your own board.
+The [Home Assistant Voice Preview Edition](https://www.home-assistant.io/voice-pe/) ships Sendspin through this component, so there is a production device to compare against, and its published configuration is a useful reference for pin maps, PSRAM configuration and speaker pipelines before you lay out your own board.
