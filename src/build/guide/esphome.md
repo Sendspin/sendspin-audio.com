@@ -27,7 +27,7 @@ The [ESPHome documentation](https://esphome.io/components/sendspin/) has the ful
 
 The experience for the user is the normal ESPHome one. They power the device, add it to Home Assistant through Improv or by adopting it in the ESPHome dashboard, and from then on they get OTA updates and a device page with its entities.
 
-The Sendspin part comes for free. Home Assistant hands the device's pairing PSK to Music Assistant, so the device shows up in Music Assistant already paired, with no code to type and no QR to scan. The manual pairing methods stay available for other servers in the home: a phone app or a second music server still pairs the way the [pairing chapter](/build/guide/client/pairing/) describes.
+The Sendspin part comes for free. Home Assistant hands the device's pairing PSK to Music Assistant, so the device shows up in Music Assistant already paired, with no code to type and no QR to scan. This is what the pairing PSK method is for: pairing between systems, so the user never sees it. The manual pairing methods stay available for other servers in the home: a phone app or a second music server still pairs the way the [pairing chapter](/build/guide/client/pairing/) describes.
 
 The guest-mode switch controls unpaired access from Home Assistant, so the user decides from the dashboard whether a server that is not paired may play on the device. For products that need an EN 18031 compliant default, an action lets your firmware enable Sendspin only once a per-device key has been set, so a device never listens with a shared or empty secret.
 

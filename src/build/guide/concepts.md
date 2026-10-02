@@ -74,16 +74,16 @@ Each client and each server has a long-lived keypair. The public key, encoded as
 The handshake mixes in a pre-shared key. Which key is used tells both sides how much they trust each other:
 
 - A **long-term PSK** from a previous pairing: both sides know exactly who the other is. This is a *paired* session.
-- The device's **pairing PSK**: the operator has entered the device's pairing token, so the server is trusted; used once to complete pairing.
+- The device's **pairing PSK**: the server was handed the device's secret out of band, typically by an automated flow such as Home Assistant passing it to Music Assistant, so the two can pair without anyone typing a code.
 - The published **Sentinel PSK**: nobody has proven anything yet. This is an *unpaired* session, good enough to play music on a speaker if the manufacturer allows it, and the starting point for code-based pairing.
 
 Spec: [Encryption](/build/spec/#encryption), [Pre-Shared Key](/build/spec/#pre-shared-key).
 
 ## Pairing and unpaired access
 
-Pairing is the one-time step that turns an unpaired session into a paired one. There are three methods: a **pairing PSK** printed on the device or shown in an app, a **dynamic pairing code** the device displays or speaks during the attempt, and a **static pairing code** printed on devices that have no display or speaker to show one. Servers implement all three; clients implement the pairing PSK and add the method that fits their hardware.
+Pairing is the one-time step that turns an unpaired session into a paired one. A user meets two methods: a **dynamic pairing code** the device displays or speaks during the attempt, and a **static pairing code** printed on devices that have no display or speaker to show one. The third method, the **pairing PSK**, is not meant for people. It is for automated hand-offs between systems, such as Home Assistant passing an ESPHome device's secret to Music Assistant, or one server provisioning another. Servers implement all three; clients implement the pairing PSK and add the one code method that fits their hardware.
 
-Pairing is not required to play music. A client can admit **unpaired access**: any server the operator approves may play on it, exactly like a cast target in the home today. Whether a device ships with unpaired access on is the manufacturer's call. Devices with a microphone or another privacy-sensitive input should ship with it off, and the source role always needs explicit approval from the operator before anything leaves the device.
+Pairing is not required to play music. A client can admit **unpaired access**, which users know as guest mode: any server the operator approves may play on it, exactly like a cast target in the home today. Whether a device ships with unpaired access on is the manufacturer's call. Devices with a microphone or another privacy-sensitive input should ship with it off, and the source role always needs explicit approval from the operator before anything leaves the device.
 
 The [trust model chapter](/build/guide/pairing-and-encryption/) explains the security properties. The [client pairing](/build/guide/client/pairing/) and [server UX](/build/guide/server/ux/) chapters cover what to build.
 
@@ -127,8 +127,8 @@ Spec: [Role Versioning](/build/spec/#role-versioning), [Protocol evolution](/bui
 |---|---|
 | `client_id`, `server_id` | The public half of a device's identity keypair, as text. Stable for the life of the device. |
 | Pairing record | A long-term PSK stored with the peer's id after a successful pairing. Clients hold at least five. |
-| Pairing PSK | A secret the device is manufactured with (or generates on first boot), distributed together with its `client_id` as a pairing token. |
-| Pairing token | The text or QR form of the pairing PSK, starting with `SP:`. |
+| Pairing PSK | A secret the device is manufactured with (or generates on first boot), distributed together with its `client_id` as a pairing token. Used by automated pairing flows, not by people. |
+| Pairing token | The text or QR form of the pairing PSK, starting with `SP:`, as one system hands it to another. |
 | Sentinel PSK | A published constant used when no trust exists yet. Marks a session as unpaired. |
 | Out-channel | The way a device shows a dynamic pairing code to the person standing next to it: a display or a speaker. |
 | Activity | What a server declares it wants from a connection: `playback`, `pairing`, or nothing yet. Decides priority between servers. |

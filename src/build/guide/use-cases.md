@@ -14,7 +14,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <p><strong>Roles:</strong> player, controller; source if it has a line input.</p>
     <ul>
       <li>Server-initiated connection; the device advertises itself and any server in the home can use it.</li>
-      <li>Pairing: a dynamic code spoken through the speaker if it has no display, otherwise shown on the display. Ship a printed pairing token as the fallback.</li>
+      <li>Pairing: a dynamic code spoken through the speaker if it has no display, otherwise shown on the display.</li>
       <li>Decide whether unpaired access is on by default. For a plain speaker it usually is: the user expects to pick it in the app and hear music.</li>
       <li>Set the output delay for anything after the port, such as an external amplifier, and let the user adjust it.</li>
       <li>Fast lane: <a href="/build/guide/esphome/">ESPHome</a> for ESP32 designs, <a href="https://github.com/Sendspin/sendspin-cpp">sendspin-cpp</a> for anything else.</li>
@@ -26,7 +26,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>A WiiM-class streamer or a Sonocotta-style DIY board: no speaker of its own, feeding a DAC, an amplifier or an optical input.</li>
       <li>The DAC, DSP and amplifier behind the port add delay the device cannot see. Measure it once and ship it as the default output delay; expose it in settings.</li>
-      <li>Pairing: a static code behind a button press, or a printed pairing token as a QR code, since there is no display or speaker to show a code.</li>
+      <li>Pairing: a static code on a label, entered while a button press opens the pairing window, since there is no display or speaker to show a dynamic code. Most users will simply use guest mode.</li>
       <li>Report hardware volume knobs as read-only when they cannot be set remotely.</li>
       <li>Sendspin can run next to AirPlay and Cast on the same box. Report the device unavailable while another protocol owns the output.</li>
     </ul>
@@ -125,8 +125,7 @@ Use server-initiated connections unless you have a reason not to. The client adv
 |---|---|
 | A display | Dynamic pairing code, as digits and as a QR code |
 | A speaker but no display | Dynamic pairing code, spoken |
-| Neither, but a button | Static pairing code on a label, entered while the button opens a pairing window |
-| Neither and no button | Pairing token on a label as a QR code |
-| An app of its own | Pairing token shown in the app, also for devices that gained Sendspin in a firmware update |
+| Neither | Static pairing code on a label, entered while a button, a pinhole or a power-cycle pattern opens the pairing window |
+| A platform or app that already knows the device | No code at all: the platform hands the device's pairing PSK to the server, the way Home Assistant does for ESPHome devices |
 
-Offer one code-based method, not both, so the user never has to choose between them. The pairing PSK method is always there in addition. The [client pairing chapter](/build/guide/client/pairing/) has the details.
+Offer one code-based method, not both, so the user never has to choose between them. Every client also implements the pairing PSK method, but that one is for automated hand-offs between systems, not for users. And remember that many users will never pair at all: a speaker with guest mode on plays for any server the operator approves. The [client pairing chapter](/build/guide/client/pairing/) has the details.

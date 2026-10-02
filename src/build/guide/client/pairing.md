@@ -5,23 +5,29 @@ description: How a client offers pairing; choosing the method for your hardware,
 order: 21
 ---
 
-Pairing is the one-time step that turns an unpaired connection into one where both sides know exactly who the other is. It is optional for playback: a speaker can admit [unpaired access](#unpaired-access-is-your-default-to-choose) and play music for any server the operator approves. It is required before a server will activate the source role on an unauthenticated device, and it is what lets a server trust your device after the setup phase. This chapter covers the client side; the [trust model](/build/guide/pairing-and-encryption/) explains why it is built this way, and the [server UX chapter](/build/guide/server/ux/) covers what the operator sees.
+Pairing is the one-time step that turns an unpaired connection into one where both sides know exactly who the other is. It is optional for playback: a speaker can admit [unpaired access](#unpaired-access-is-your-default-to-choose), which users know as guest mode, and play music for any server the operator approves. It is required before a server will activate the source role on an unauthenticated device, and it is what lets a server trust your device after the setup phase. This chapter covers the client side; the [trust model](/build/guide/pairing-and-encryption/) explains why it is built this way, and the [server UX chapter](/build/guide/server/ux/) covers what the operator sees.
 
-## Choose the method for your hardware
+From the user's point of view there are three ways a device joins a server: guest mode, a dynamic PIN the device shows or speaks, or a static PIN printed on it. That is the whole menu a person should ever see.
 
-Every client implements the pairing PSK method. On top of that you offer exactly one code-based method, chosen by what the device can show or say.
+## Choose the code method for your hardware
+
+You offer exactly one code-based method, chosen by what the device can show or say.
 
 | Your device has | Offer |
 |---|---|
 | A display | Dynamic pairing code, as digits and as a QR code |
 | A speaker but no display | Dynamic pairing code, spoken |
-| Neither, but a button | Static pairing code on a label, behind a pairing window |
-| Neither and no button | Pairing token on a label as a QR code |
-| A vendor app | Pairing token shown in the app, also for devices that gained Sendspin in a firmware update after shipping |
+| Neither | Static pairing code on a label, behind a pairing window opened by a button, a pinhole or a power-cycle pattern |
 
-Never list both code methods. The server would have to ask the operator which one to use, and the operator has no way to know.
+Never list both code methods. The server would have to ask the operator which one to use, and the operator has no way to know. A device that gained Sendspin in a firmware update and has no label can still offer a dynamic code if it has a display or speaker; if it has neither, let your app hand the pairing PSK over as described next.
 
 Spec: [Methods](/build/spec/#methods), [pair-method descriptor](/build/spec/#client--server-clienthello-pair-method-descriptor).
+
+## The pairing PSK is for automation
+
+Every client also implements the pairing PSK method, but it is not a user-facing option. It exists for pairing that happens between systems: Home Assistant handing an ESPHome device's secret to Music Assistant so the device shows up already paired, a vendor cloud or app provisioning a server it manages, one server enrolling devices on behalf of another. The device exposes the secret as a pairing token (text or QR, starting with `SP:`) to the system that is allowed to read it; the user never types it. Treat the token like a Wi-Fi password: available to the owner's own platform, never printed where a visitor can photograph it.
+
+Spec: [Pairing PSK Flow](/build/spec/#pairing-psk-flow), [Pairing Token](/build/spec/#pairing-token).
 
 ## Showing and speaking the code
 
@@ -87,6 +93,6 @@ Spec: [Unpaired Access](/build/spec/#unpaired-access), [Encryption](/build/spec/
 <div class="callout callout--example">
 <p class="callout__title">sendspin-cpp does it like this</p>
 
-You declare `pairing_code_out_channels` and `pairing_code_formats`, and implement `on_display_pairing_code` and `on_clear_pairing_code` to drive your display or speaker. For the static flow you set `static_pairing_code` and `pairing_window_supported`, receive `on_open_pairing_window` when the server asks, and call `confirm_pairing_window` when the user makes the gesture. A factory-provisioned PSK goes in `pairing_psk`, and the library produces the `SP:` pairing token for your label or app. The round counter and cooldown state go through your persistence provider.
+You declare `pairing_code_out_channels` and `pairing_code_formats`, and implement `on_display_pairing_code` and `on_clear_pairing_code` to drive your display or speaker. For the static flow you set `static_pairing_code` and `pairing_window_supported`, receive `on_open_pairing_window` when the server asks, and call `confirm_pairing_window` when the user makes the gesture. A factory-provisioned PSK goes in `pairing_psk`, and the library produces the `SP:` pairing token for the platform that pairs on the user's behalf. The round counter and cooldown state go through your persistence provider.
 
 </div>

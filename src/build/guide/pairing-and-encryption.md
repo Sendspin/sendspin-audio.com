@@ -28,7 +28,7 @@ Spec: [Encryption](/build/spec/#encryption), [Pattern](/build/spec/#pattern).
 **The PSK slot** carries one of three kinds of key, and which kind tells both sides how much they trust each other:
 
 - The **Sentinel PSK** is a published constant. It means no trust has been established; the session is unpaired.
-- The **pairing PSK** is a secret the device was manufactured with or generated on first boot, handed to the server out of band as a pairing token. It is used once per server to pair.
+- The **pairing PSK** is a secret the device was manufactured with or generated on first boot, handed to a server out of band as a pairing token by a system that already knows the device. It is used once per server to pair, without any code for a person to enter.
 - A **long-term PSK** is the output of a successful pairing, stored on both sides as a pairing record. It means both sides have proven who they are before.
 
 **The prologue** mixes the cleartext opening messages into the handshake, so tampering with them breaks it. **Re-handshake** reruns the pattern inside a live connection with a different PSK, which promotes a session from unpaired to paired without dropping the stream.
@@ -37,7 +37,7 @@ Spec: [Cipher Suites](/build/spec/#cipher-suites), [Identities](/build/spec/#ide
 
 ## Three ways to pair
 
-**Pairing PSK.** The operator copies or scans the device's pairing token into the server. The token carries the `client_id` and the pairing PSK together, so the server knows which device it is talking to and holds a secret only that device has. The handshake with that PSK authenticates both sides from the first byte. The flip side: whoever can read the label can pair. Protect it the way you protect the Wi-Fi password printed on a router, and when an app shows the token, show it to the signed-in owner only.
+**Pairing PSK.** A system that already knows the device hands its pairing token to the server: Home Assistant passing an ESPHome device's secret to Music Assistant, or a platform provisioning its own servers. The token carries the `client_id` and the pairing PSK together, so the server knows which device it is talking to and holds a secret only that device has. The handshake with that PSK authenticates both sides from the first byte, and no person enters anything. The flip side: whoever holds the token can pair. Keep it inside the owner's own platform, protect it the way you protect a Wi-Fi password, and never print it where a visitor can photograph it.
 
 **Dynamic pairing code.** The device shows or speaks a six-digit code that exists only for this attempt. It is derived from the handshake hash and two nonces, one committed by the device before it sees the server's, so neither side can steer it. The code feeds a PAKE, CPace, which lets both sides prove they hold the same code without sending it. A wrong code fails the proof and learns nothing. A man in the middle relaying between two handshakes has two different handshake hashes and therefore two different codes, and fails on both legs. The new long-term PSK crosses the wire wrapped under the PAKE output, so only the party that completed the proof can read it.
 
@@ -59,7 +59,7 @@ Spec: [Unpaired Access](/build/spec/#unpaired-access), [Source messages](/build/
 flowchart TD
     A["First contact<br/>Sentinel PSK, unpaired"] --> B{Operator decides}
     B -->|Approve| C["Unpaired playback<br/>on an approved client"]
-    B -->|Pair| D["Pairing attempt<br/>token, dynamic code or static code"]
+    B -->|Pair| D["Pairing attempt<br/>dynamic code or static code,<br/>or an automated PSK hand-off"]
     C -->|Pair later| D
     D -->|Record stored on both sides| E["Paired session<br/>re-handshake to the long-term PSK"]
     E -->|server/unpair| A
@@ -73,7 +73,7 @@ Spec: [Sentinel Fallback](/build/spec/#sentinel-fallback), [Pairing Records](/bu
 
 ## What to keep, and what losing it costs
 
-On the **client**: the identity keypair, the pairing PSK, the static pairing code if it has one, at least five pairing records, the last-playback server, the unpaired-access setting and the round counter. Lose the keypair and the device is a stranger to every server. Lose the records and every paired server sees a mismatch and asks to re-pair. Lose a pairing PSK the device generated itself and the printed token stops working; a factory reset restores a manufactured one. Reset the round counter on every boot and a power cycle becomes the gesture the limit relies on, so persist it.
+On the **client**: the identity keypair, the pairing PSK, the static pairing code if it has one, at least five pairing records, the last-playback server, the unpaired-access setting and the round counter. Lose the keypair and the device is a stranger to every server. Lose the records and every paired server sees a mismatch and asks to re-pair. Lose a pairing PSK the device generated itself and any platform holding its token can no longer pair it; a factory reset restores a manufactured one. Reset the round counter on every boot and a power cycle becomes the gesture the limit relies on, so persist it.
 
 On the **server**: the identity keypair, the pairing records and the approvals. Lose the keypair and you are a new server; records filed under the old identity are useless, and every device has to be paired again. Lose the records and your paired devices still hold theirs, but you connect as a stranger and the operator re-pairs. Lose the approvals and the operator re-approves. Back up the keypair and the records together, or neither.
 
