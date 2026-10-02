@@ -635,28 +635,6 @@ section[id] { scroll-margin-top: calc(72px + var(--sp-4)); }
 .page-content li > ul,
 .page-content li > ol { margin-top: var(--sp-2); margin-bottom: 0; }
 
-/* Spec-conformance badge on the SDK list. --rc1 marks an SDK that already
-   implements Release Candidate 1; --pre marks one still on an earlier draft. */
-.sdk-status {
-  display: inline-block;
-  vertical-align: 2px;
-  margin-left: var(--sp-2);
-  padding: 1px 9px;
-  border-radius: var(--r-pill);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-.sdk-status--rc1 {
-  background: rgba(91, 159, 126, 0.18);
-  color: #3D7159;
-}
-.sdk-status--pre {
-  background: rgba(224, 160, 74, 0.20);
-  color: #8A5A15;
-}
-
 .page-content :is(h1, h2, h3, h4, h5, h6)[id] {
   position: relative;
 }
