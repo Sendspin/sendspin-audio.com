@@ -7,19 +7,20 @@ order: 21
 
 Pairing is the one-time step that turns an unpaired connection into one where both sides know exactly who the other is. It is optional for playback: a speaker can admit [unpaired access](#unpaired-access-is-your-default-to-choose), which users know as guest mode, and play music for any server the operator approves. It is required before a server will activate the source role on an unauthenticated device, and it is what lets a server trust your device after the setup phase. This chapter covers the client side; the [trust model](/build/guide/pairing-and-encryption/) explains why it is built this way, and the [server UX chapter](/build/guide/server/ux/) covers what the operator sees.
 
-From the user's point of view there are three ways a device joins a server: guest mode, a dynamic PIN the device shows or speaks, or a static PIN printed on it. That is the whole menu a person should ever see.
+From the user's point of view there are three ways a device joins a server: guest mode, a dynamic PIN the device shows, speaks or displays in your app, or a static PIN printed on the device. That is the whole menu a person should ever see.
 
 ## Choose the code method for your hardware
 
-You offer exactly one code-based method, chosen by what the device can show or say.
+You offer exactly one code-based method, chosen by where the device can show or say a code.
 
 | Your device has | Offer |
 |---|---|
 | A display | Dynamic pairing code, as digits and as a QR code |
 | A speaker but no display | Dynamic pairing code, spoken |
-| Neither | Static pairing code on a label, behind a pairing window opened by a button, a pinhole or a power-cycle pattern |
+| An app of its own | Dynamic pairing code, shown in the app; the app is the device's display |
+| None of these | Static pairing code printed on the device, behind a pairing window opened by a button, a pinhole or a power-cycle pattern |
 
-Never list both code methods. The server would have to ask the operator which one to use, and the operator has no way to know. A device that gained Sendspin in a firmware update and has no label can still offer a dynamic code if it has a display or speaker; if it has neither, let your app hand the pairing PSK over as described next.
+Never list both code methods. The server would have to ask the operator which one to use, and the operator has no way to know. A vendor app counts as a display: the device generates the code as usual and the app shows it, which also covers devices that gained Sendspin in a firmware update and have no code on their label.
 
 Spec: [Methods](/build/spec/#methods), [pair-method descriptor](/build/spec/#client--server-clienthello-pair-method-descriptor).
 

@@ -26,7 +26,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>A WiiM-class streamer or a Sonocotta-style DIY board: no speaker of its own, feeding a DAC, an amplifier or an optical input.</li>
       <li>The DAC, DSP and amplifier behind the port add delay the device cannot see. Measure it once and ship it as the default output delay; expose it in settings.</li>
-      <li>Pairing: a static code on a label, entered while a button press opens the pairing window, since there is no display or speaker to show a dynamic code. Most users will simply use guest mode.</li>
+      <li>Pairing: a dynamic code shown in your app if you have one, otherwise a static code printed on the device, entered while a button press opens the pairing window. Most users will simply use guest mode.</li>
       <li>Report hardware volume knobs as read-only when they cannot be set remotely.</li>
       <li>Sendspin can run next to AirPlay and Cast on the same box. Report the device unavailable while another protocol owns the output.</li>
     </ul>
@@ -125,7 +125,8 @@ Use server-initiated connections unless you have a reason not to. The client adv
 |---|---|
 | A display | Dynamic pairing code, as digits and as a QR code |
 | A speaker but no display | Dynamic pairing code, spoken |
-| Neither | Static pairing code on a label, entered while a button, a pinhole or a power-cycle pattern opens the pairing window |
-| A platform or app that already knows the device | No code at all: the platform hands the device's pairing PSK to the server, the way Home Assistant does for ESPHome devices |
+| An app of its own | Dynamic pairing code shown in the app, which acts as the device's display |
+| None of these | Static pairing code printed on the device, entered while a button, a pinhole or a power-cycle pattern opens the pairing window |
+| A platform that already knows the device | No code at all: the platform hands the device's pairing PSK to the server, the way Home Assistant does for ESPHome devices |
 
 Offer one code-based method, not both, so the user never has to choose between them. Every client also implements the pairing PSK method, but that one is for automated hand-offs between systems, not for users. And remember that many users will never pair at all: a speaker with guest mode on plays for any server the operator approves. The [client pairing chapter](/build/guide/client/pairing/) has the details.
