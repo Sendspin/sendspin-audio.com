@@ -88,6 +88,6 @@ For a server the table applies in reverse: run each role against sendspin-cpp-cl
 
 ## Certification
 
-A Sendspin Certified program is in preparation, modeled on [Works with Home Assistant](https://works-with.home-assistant.io/). Certification will involve testing and a nominal fee, and grants the right to use the certification mark and logo on the product and in its marketing, plus a listing on this website. The test plan is being built from the conformance suite, the sync measurements and the pairing drills above, so preparing for it means doing what this chapter describes and keeping the results.
+A Sendspin certification program is in preparation. Certification will involve testing and a nominal fee, and grants the right to use the certification mark and logo on the product and in its marketing, plus a listing on this website. The test plan is being built from the conformance suite, the sync measurements and the pairing drills above, so preparing for it means doing what this chapter describes and keeping the results.
 
 Until the program opens, the trademark rules are the ones on the [licensing page](/licensing/): you may state factually that your product implements or is compatible with Sendspin, and using the name or logo on a product that is sold needs permission. If you want to be among the first products certified, or have a launch date that depends on it, email [sendspin@openhomefoundation.org](mailto:sendspin@openhomefoundation.org).
