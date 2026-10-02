@@ -91,11 +91,7 @@ Spec: [Rounds](/build/spec/#rounds), [Pairing Window](/build/spec/#pairing-windo
 
 The round limit, the window and attempt limits, and the cooldown are what a test lab can point at when it asks how authentication resists brute force; ETSI EN 303 645 provision 5.1-5 and EN 18031-1 mechanism AUM-6 ask that question. Document the limits your firmware enforces and the gesture that resets them. Per-device identity keys, pairing PSKs and static codes drawn from a CSPRNG answer the provisions on universal default credentials.
 
-A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol.
-
-## Harden the decoders
-
-Encryption authenticates the channel, not the content. A chunk from an unpaired peer, or from a paired peer that was compromised, is untrusted input to your FLAC or Opus decoder, and both decoders have had CVEs. Fuzz your decode path like any network-facing parser, bound every buffer by the declared size, and keep the decoder where a crash takes down a stream rather than the server.
+A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol. Expect one more question from a reviewer: with guest mode on, audio from an unauthenticated peer reaches your decoder, so treat the decode path as network-facing input and fuzz it like one.
 
 ## Where to look next
 
