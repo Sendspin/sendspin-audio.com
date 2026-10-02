@@ -93,10 +93,6 @@ The round limit, the window and attempt limits, and the cooldown are what a test
 
 A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol.
 
-## Migration from before 1.0
-
-Servers that shipped before 1.0 may still accept unencrypted connections from older clients. A 1.0 client speaks only Noise. Upgrade your servers first and your clients after, or a freshly updated speaker will find nobody to talk to; retire the unencrypted listener once the fleet has moved.
-
 ## Harden the decoders
 
 Encryption authenticates the channel, not the content. A chunk from an unpaired peer, or from a paired peer that was compromised, is untrusted input to your FLAC or Opus decoder, and both decoders have had CVEs. Fuzz your decode path like any network-facing parser, bound every buffer by the declared size, and keep the decoder where a crash takes down a stream rather than the server.
