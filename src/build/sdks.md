@@ -13,12 +13,10 @@ Want to try Sendspin from the command line? [sendspin-cpp-cli](https://github.co
   sendspin-cpp-cli as the recommended CLI/reference player wherever a CLI comes up.
 -->
 
-Each SDK shows the specification version it implements. **Spec RC1** matches the [current specification](/build/spec/). **Pre-RC1** implements an earlier draft and will still change.
-
-- **C++** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
+- **C++** - [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)
   - Used by [ESPHome](https://github.com/esphome/esphome/pull/14933), [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)
 
-- **Python** <span class="sdk-status sdk-status--pre">Pre-RC1</span> - [aiosendspin](https://github.com/Sendspin/aiosendspin)
+- **Python** - [aiosendspin](https://github.com/Sendspin/aiosendspin)
   - Used by [Music Assistant](https://www.music-assistant.io), [sendspin-cli](https://github.com/Sendspin/sendspin-cli)
 
 ## Contributing
