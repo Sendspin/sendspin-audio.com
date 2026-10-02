@@ -203,7 +203,7 @@
   columns: 2;
   column-gap: var(--sp-6);
   margin: 0 0 var(--sp-6);
-  padding-left: 1.4em;
+  padding-left: 2.2em;
 }
 .page-content .guide-print__toc li { font-size: 15px; padding: 2px 0; break-inside: avoid; }
 .guide-print__chapter {
