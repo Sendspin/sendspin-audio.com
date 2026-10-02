@@ -72,6 +72,6 @@ We are looking for forward-thinking manufacturers to help us pioneer this exciti
 
 ### Start building today
 
-- [Sendspin client implementation guide](/build/guide/)
+- [Sendspin implementation guide](/build/guide/)
 - [SDKs & libraries](/build/sdks/)
 - [Protocol specification](/build/spec/)

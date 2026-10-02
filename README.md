@@ -77,11 +77,14 @@ Redirects live in `public/_redirects`, which ships to the site root.
 ├── src/                       # Source files
 │   ├── _data/                 # Footer links, allowed referrers
 │   ├── _includes/             # Layout, brand markup, SVG icons
-│   │   └── base.html          # Main layout template
+│   │   ├── base.html          # Main layout template
+│   │   └── guide.html         # Implementation guide layout (sidebar, pager)
 │   ├── build/                 # Builder section, served at /build/
 │   │   ├── index.md           # Section hub
 │   │   ├── manufacturers.md   # Why build on Sendspin
-│   │   ├── guide.md           # Client implementation guide
+│   │   ├── guide/             # Implementation guide, one file per chapter
+│   │   │   ├── guide.11tydata.json  # Layout, tag and stylesheet for every chapter
+│   │   │   └── all.html       # One-page / print view
 │   │   ├── sdks.md            # SDKs and libraries
 │   │   └── spec.md            # Protocol specification
 │   ├── index.html             # Homepage
@@ -89,6 +92,8 @@ Redirects live in `public/_redirects`, which ships to the site root.
 ├── public/                    # Static assets, copied to the site root
 │   ├── style.css              # Tokens, chrome, and shared primitives
 │   ├── homepage.css           # Homepage section styles
+│   ├── guide.css              # Implementation guide layout, callouts, print
+│   ├── videos/                # Pairing walkthroughs recorded by ma-pairing-e2e
 │   ├── _redirects             # Netlify redirects
 │   ├── js/                    # Live demo card, mermaid
 │   └── images/                # Images and partner logos
