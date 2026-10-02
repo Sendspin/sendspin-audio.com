@@ -6,25 +6,13 @@ section: Ship it
 order: 51
 ---
 
-Sendspin is developed in the open, and the people who implement it are the people expected to improve it. This chapter explains how the project is run, how a change gets into the specification, and what the release process means for the code you ship. The authoritative documents are in the [specification repository](https://github.com/Sendspin/spec); this chapter summarizes them and links to each.
+Sendspin is developed in the open, and the people who implement it are the people expected to improve it. This chapter explains how a change gets into the specification and what the release process means for the code you ship. The authoritative documents are in the [specification repository](https://github.com/Sendspin/spec); this chapter links to them rather than repeating them.
 
-## Who runs the project
+## Governance and releases
 
-Sendspin is a project of the [Open Home Foundation](https://www.openhomefoundation.org), a Swiss non-profit. Foundation staff maintain the specification together with volunteer contributors; there is no membership body and no fee to take part. The Community Specification License calls the project a "Working Group", and the Foundation acts for it where the license gives the Working Group a right or duty.
+Sendspin is a project of the [Open Home Foundation](https://www.openhomefoundation.org). [GOVERNANCE.md](https://github.com/Sendspin/spec/blob/main/GOVERNANCE.md) describes who maintains the specification, how changes are approved and how releases are made; [SCOPE.md](https://github.com/Sendspin/spec/blob/main/SCOPE.md) and the [license](https://github.com/Sendspin/spec/blob/main/LICENSE.md) complete the picture.
 
-Three roles appear in [GOVERNANCE.md](https://github.com/Sendspin/spec/blob/main/GOVERNANCE.md):
-
-- The **project lead**, currently Marcel van der Veldt, sets direction and has the final say on disputed changes.
-- **Editors** are maintainers with write access who review and merge changes.
-- **Contributors** are everyone whose contribution has been merged.
-
-Changes to the governance, [scope](https://github.com/Sendspin/spec/blob/main/SCOPE.md) or licensing documents go through a pull request and need the project lead's approval. Everything else is reviewed and merged by the editors.
-
-## Draft and Approved
-
-The specification is developed on the `main` branch. Under the license, `main` and every pre-release, which today means the tag `1.0.0-rc1`, are the **Draft specification**. A version becomes the **Approved specification** when the editors publish it as a final release such as `1.0.0`. The difference matters for patents: contributors' licenses cover the Draft as it stands at the time of each contribution, and the Approved specification carries the full patent commitment for its scope.
-
-A final release is announced at least 45 days ahead, either by publishing a release candidate or by opening a pull request that announces it. During that window a contributor may file an exclusion notice in [NOTICES.md](https://github.com/Sendspin/spec/blob/main/NOTICES.md). Only clarifications and corrections land between the last release candidate and the final release; a behavioral change starts a new release candidate and a new window.
+What matters when you ship: `main` and release candidates are the Draft specification, and a final release such as `1.0.0` is the Approved specification that carries the full patent commitment. A final release is announced at least 45 days ahead, and only clarifications land between the last release candidate and the final release.
 
 <div class="callout callout--note">
 <p class="callout__title">What RC1 means for you</p>
@@ -32,8 +20,6 @@ A final release is announced at least 45 days ahead, either by publishing a rele
 Release Candidate 1 is a frozen protocol. What you build against it today will work with 1.0, because the only changes still allowed are the kind that make the text clearer, not the wire different. Watch the repository for the final tag; it gives you and the partner program a fixed version to name in documentation and test reports.
 
 </div>
-
-Role versions evolve independently of releases. A release records which role versions exist at that time, and a new role version can appear on `main` without a new release of the specification as a whole.
 
 ## How the specification repository works
 
