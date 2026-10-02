@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Build with Sendspin
-description: Everything you need to build Sendspin into your product; the manufacturer pitch, the client implementation guide, and SDKs for C++ and Python.
+description: Everything you need to build Sendspin into your product; the manufacturer pitch, the client implementation guide, and the SDKs.
 ---
 
 Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra control and visualization features to create a truly immersive music experience for your customers.

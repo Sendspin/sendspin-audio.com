@@ -1,7 +1,7 @@
 ---
 layout: base
 title: SDKs & libraries
-description: Official Sendspin SDKs, libraries, and code samples for C++ and Python.
+description: Official Sendspin SDKs, libraries, and code samples.
 ---
 
 Official software development kits (SDK), libraries, and code samples to help you build Sendspin into your projects. New to the protocol? Start with the [implementation guide](/build/guide/).
