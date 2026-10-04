@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Music Assistant walkthrough video">
+  <rect width="1280" height="720" fill="#201A17"/>
+  <circle cx="640" cy="360" r="72" fill="#E25C4C"/>
+  <polygon points="616,318 616,402 688,360" fill="#F5F4EC"/>
+  <text x="640" y="500" text-anchor="middle" font-family="Figtree, system-ui, sans-serif" font-size="30" font-weight="600" fill="#ECEDDE">Music Assistant walkthrough</text>
+  <text x="640" y="544" text-anchor="middle" font-family="Figtree, system-ui, sans-serif" font-size="22" fill="#AFC8E6">Recorded automatically from the end-to-end tests</text>
+</svg>

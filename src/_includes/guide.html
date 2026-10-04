@@ -1,0 +1,70 @@
+---
+layout: base
+custom_main: true
+---
+{% assign chapters = collections.guideChapters %}
+{% assign prev = chapters | getPreviousCollectionItem %}
+{% assign next = chapters | getNextCollectionItem %}
+{% assign headings = content | guideHeadings %}
+<main class="page-content guide">
+  <div class="container guide__shell">
+    <details class="guide__drawer" open>
+      <summary class="guide__drawer-summary">Guide contents</summary>
+      <nav class="guide__nav" aria-label="Implementation guide chapters">
+        {% for s in collections.guideSections %}
+        {% if s.name != blank %}<p class="eyebrow guide__nav-section">{{ s.name }}</p>{% endif %}
+        <ul class="guide__nav-list">
+          {% for chapter in s.chapters %}
+          {% assign current = false %}
+          {% if chapter.url == page.url %}{% assign current = true %}{% endif %}
+          <li>
+            <a class="guide__nav-link{% if current %} is-active{% endif %}" href="{{ chapter.url }}"{% if current %} aria-current="page"{% endif %}>{{ chapter.data.nav_title | default: chapter.data.title }}</a>
+            {% if current and headings.size > 0 %}
+            <ul class="guide__nav-sub">
+              {% for h in headings %}<li><a href="#{{ h.id }}">{{ h.text }}</a></li>{% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endfor %}
+        <p class="eyebrow guide__nav-section">More</p>
+        <ul class="guide__nav-list">
+          <li><a class="guide__nav-link" href="/build/sdks/">SDKs &amp; tools</a></li>
+          <li><a class="guide__nav-link" href="/build/spec/">Protocol specification</a></li>
+          <li><a class="guide__nav-link" href="/licensing/">Licensing &amp; trademarks</a></li>
+          <li><a class="guide__nav-link" href="/build/guide/all/">One page / PDF</a></li>
+        </ul>
+      </nav>
+    </details>
+    <script>
+      // A closed <details> cannot be opened from CSS, so keep the drawer open on
+      // wide screens and collapsed on narrow ones, also across resizes.
+      (function () {
+        var drawer = document.querySelector(".guide__drawer");
+        var narrow = window.matchMedia("(max-width: 900px)");
+        function sync() { drawer.open = !narrow.matches; }
+        sync();
+        narrow.addEventListener("change", sync);
+      })();
+    </script>
+    <article class="guide__article">
+      <h1>{{ title }}</h1>
+      {{ content }}
+      <nav class="guide__pager" aria-label="Previous and next chapter">
+        {% if prev %}
+        <a class="guide__pager-link guide__pager-link--prev" href="{{ prev.url }}">
+          <span class="guide__pager-label">Previous</span>
+          <span class="guide__pager-title">{{ prev.data.nav_title | default: prev.data.title }}</span>
+        </a>
+        {% endif %}
+        {% if next %}
+        <a class="guide__pager-link guide__pager-link--next" href="{{ next.url }}">
+          <span class="guide__pager-label">Next</span>
+          <span class="guide__pager-title">{{ next.data.nav_title | default: next.data.title }}</span>
+        </a>
+        {% endif %}
+      </nav>
+    </article>
+  </div>
+</main>

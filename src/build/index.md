@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Build with Sendspin
-description: Everything you need to build Sendspin into your product; the manufacturer pitch, the client implementation guide, and the SDKs.
+description: Everything you need to build Sendspin into your product; the manufacturer pitch, the implementation guide, and the SDKs.
 ---
 
 Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra control and visualization features to create a truly immersive music experience for your customers.
@@ -14,7 +14,7 @@ Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra con
   </a>
   <a class="hub-card" href="/build/guide/">
     <h3>Implementation guide</h3>
-    <p>How a Sendspin client works: the components you need, the connection flow, and how the SDKs fit together.</p>
+    <p>The handbook for building a client or a server: concepts, worked use cases, step-by-step chapters, pairing UX, ESPHome, testing and certification.</p>
     <span class="hub-card__go">Read the guide {% include "icons/arrow.svg" %}</span>
   </a>
   <a class="hub-card" href="/build/sdks/">
@@ -29,4 +29,4 @@ Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra con
   </a>
 </div>
 
-Questions? Join the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>.
+Questions? Join the `#sendspin-protocol` channel on the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>. Want to help build Sendspin? The specification, the SDKs and the conformance suite are developed in the open; the [contributing chapter](/build/guide/contributing/) explains how the project works and how to take part.
