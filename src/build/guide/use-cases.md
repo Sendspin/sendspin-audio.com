@@ -2,7 +2,6 @@
 title: Worked use cases
 nav_title: Use cases
 description: What Sendspin looks like inside common products; speakers, streamers, displays, controllers, lights, set-top boxes, input bridges, apps and software players.
-section: Start here
 order: 13
 ---
 
@@ -28,7 +27,7 @@ Each case names the roles involved, how the device connects, which pairing metho
       <li>The DAC, DSP and amplifier behind the port add delay the device cannot see. Measure it once and ship it as the default output delay; expose it in settings.</li>
       <li>Pairing: a dynamic code shown in your app if you have one, otherwise a static code printed on the device, entered while a button press opens the pairing window. Most users will simply use guest mode.</li>
       <li>Report hardware volume knobs as read-only when they cannot be set remotely.</li>
-      <li>Sendspin can run next to AirPlay and Cast on the same box. Report the device unavailable while another protocol owns the output.</li>
+      <li>Sendspin can run next to AirPlay and Cast on the same box. While another protocol is playing, leave the Sendspin group but stay available, so the user can take the device back with Sendspin at any time. Report it unavailable only if it will not yield.</li>
     </ul>
   </div>
   <div class="hub-card">
@@ -67,7 +66,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>As a player it joins the speakers for music. As a source it feeds TV audio into the system so the room's speakers play the film.</li>
       <li>Never pass the TV audio to the local speakers directly while sending it to the system: the local output would run ahead of the network. A device that is source and player plays only what the server sends back.</li>
-      <li>When the user switches to a game console or another protocol owns the output, report the player unavailable; the server parks it and never pulls it back on its own.</li>
+      <li>When the user switches to a game console or another input, leave the Sendspin group but stay available if Sendspin may interrupt, or report the player unavailable if it must not. Either way the server parks it and never pulls it back on its own.</li>
       <li>An embedded server lets the box drive the room on its own, without a music server in the house. See the app case for how client and server mode coexist.</li>
     </ul>
   </div>
@@ -89,7 +88,6 @@ Each case names the roles involved, how the device connects, which pairing metho
       <li>Idle, the app is a client: it shows up as a target for Music Assistant or any other server in the home.</li>
       <li>When the user starts playback in the app, it becomes a server and sends to the other speakers. Say goodbye to the server you were a client of with reason <code>another_server</code>, and advertise <code>_sendspin-server._tcp</code> as well so client-initiated devices find you.</li>
       <li>Clients listen on 8928 and servers on 8927 by convention, so both can run on one machine.</li>
-      <li>Browsers need a user gesture before audio plays, and their clocks are coarse; sendspin-js handles both.</li>
     </ul>
   </div>
   <div class="hub-card">

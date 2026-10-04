@@ -1,7 +1,6 @@
 ---
 title: How Sendspin works
 description: The mental model behind Sendspin; clients, servers, roles, discovery, encryption, pairing, clock sync, streams and groups, explained without the message formats.
-section: Start here
 order: 11
 mermaid: true
 ---

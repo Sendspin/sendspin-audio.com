@@ -29,4 +29,4 @@ Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra con
   </a>
 </div>
 
-Questions? Join the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>.
+Questions? Join the `#sendspin-protocol` channel on the <a href="https://discord.gg/kaVm8hGpne" target="_blank">Music Assistant Discord</a>. Want to help build Sendspin? The specification, the SDKs and the conformance suite are developed in the open; the [contributing chapter](/build/guide/contributing/) explains how the project works and how to take part.

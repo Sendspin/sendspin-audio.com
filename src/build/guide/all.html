@@ -21,7 +21,6 @@ mermaid: true
   </ol>
   {% for chapter in collections.guideChapters %}
   <section class="guide-print__chapter" id="{{ chapter.url | guideSlug }}">
-    <p class="eyebrow guide__eyebrow">{{ chapter.data.section }}</p>
     <h2>{{ chapter.data.title }}</h2>
     {{ chapter.templateContent | guidePrintContent: chapter.url }}
   </section>

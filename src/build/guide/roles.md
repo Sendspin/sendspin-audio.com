@@ -2,7 +2,6 @@
 title: Roles and the products they make
 nav_title: Roles
 description: The seven Sendspin roles, which products use them, what each one needs from the hardware, and how they combine.
-section: Start here
 order: 12
 ---
 

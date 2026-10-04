@@ -2,7 +2,6 @@
 title: Sendspin implementation guide
 nav_title: Welcome
 description: The handbook for building Sendspin into a product or application; who it is for, what a client and a server are, and where to start.
-section: Start here
 order: 10
 ---
 
@@ -10,7 +9,7 @@ Sendspin is an open protocol for playing music in sync across the devices in a h
 
 The guide is non-normative. Where it restates a rule, the specification is the authority and the text links to it. Where it gives advice, that advice comes from the people who wrote the specification and shipped the first implementations.
 
-## Two words you need
+## Definitions
 
 <div class="callout callout--note">
 <p class="callout__title">Definitions</p>
@@ -23,7 +22,7 @@ A **server** sends audio to clients and keeps them in sync. It can also reroute 
 
 One device can be both. A set-top box plays music as a client and can at the same time be a server that sends TV audio to the speakers in the room. The [concepts chapter](/build/guide/concepts/) explains how the pieces fit together.
 
-## Pick your door
+## Choose your implementation path
 
 <div class="hub-cards">
   <div class="hub-card">
@@ -53,15 +52,6 @@ One device can be both. A set-top box plays music as a client and can at the sam
       <li><a href="/build/guide/pairing-and-encryption/">The trust model</a></li>
     </ul>
   </div>
-  <div class="hub-card">
-    <h3>You want to help</h3>
-    <p>The specification, the SDKs and the conformance suite are developed in the open by the Open Home Foundation community.</p>
-    <ul>
-      <li><a href="/build/guide/contributing/">How the project works</a></li>
-      <li><a href="/build/guide/testing/">Testing and certification</a></li>
-      <li><a href="https://discord.gg/kaVm8hGpne" target="_blank" rel="noopener noreferrer">Join the Discord</a></li>
-    </ul>
-  </div>
 </div>
 
 ## Where the protocol stands
@@ -72,7 +62,7 @@ Implementing the protocol is free. There are no royalties and the specification 
 
 ## How to read this guide
 
-- **Start here** gives you the vocabulary and the shapes of products people build.
+- The first chapters give you the vocabulary and the shapes of products people build.
 - **Building a client** and **Building a server** walk through the work in order, pointing at the specification and the SDK hooks as they go. Read the side you are building; skim the other to understand your counterpart.
 - **Security** explains pairing and encryption in plain language, for the people who need to sign off on them.
 - **Ship it** covers testing, certification and how to take part in the project.

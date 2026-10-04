@@ -16,7 +16,6 @@
    stretch the column past the viewport without this. */
 .guide__article { min-width: 0; }
 .guide__article h1 { margin-top: 0; }
-.guide__eyebrow { margin: 0 0 var(--sp-2); }
 .guide :is(h2, h3, h4)[id] { scroll-margin-top: calc(72px + var(--sp-5)); }
 
 /* ---------- Sidebar ---------- */

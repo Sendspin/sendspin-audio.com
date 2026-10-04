@@ -46,7 +46,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("guideSections", (api) => {
     const sections = [];
     for (const item of sortedGuideChapters(api)) {
-      const name = item.data.section || "Guide";
+      const name = item.data.section || "";
       let section = sections.find((s) => s.name === name);
       if (!section) sections.push((section = { name, chapters: [] }));
       section.chapters.push(item);
