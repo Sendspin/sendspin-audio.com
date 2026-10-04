@@ -12,7 +12,6 @@ The guide is non-normative. Where it restates a rule, the specification is the a
 ## Definitions
 
 <div class="callout callout--note">
-<p class="callout__title">Definitions</p>
 
 A **client** is an endpoint that receives audio from an existing Sendspin server. With the source role it can also hand its own audio to that server, which distributes it to other clients. Speakers, amplifiers, streamers, displays and lights are clients.
 
