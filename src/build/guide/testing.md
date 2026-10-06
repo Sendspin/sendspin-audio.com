@@ -6,14 +6,14 @@ section: Ship it
 order: 50
 ---
 
-The specification tells you what a conforming client or server does. This chapter tells you how to find out whether yours does it, in the order that catches the most problems for the least effort: real peers first, then the automated suite, then measurement.
+Test against real peers first, then run the automated conformance suite and measure synchronization.
 
 ## Test against real peers
 
-Nothing replaces playing music through your implementation next to one that is known to work. The project maintains enough of them to cover every role.
+Play music through your implementation alongside a reference implementation. Use the following peers to test every role.
 
-- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)** is the reference player. It runs headless on Linux, a Raspberry Pi or an Apple-silicon Mac, has a guided installer, and starts with `sendspin-cli -n living-room`. Keep one running next to your device for the whole project; if the two drift apart, yours is the one to look at.
-- **[sendspin-python-cli](https://github.com/Sendspin/sendspin-python-cli)** is a second, independent player (`pip install sendspin` or `uv tool install sendspin`). A bug that shows against both players is almost certainly yours.
+- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)** is the reference player. It runs headless on Linux, a Raspberry Pi or an Apple-silicon Mac, has a guided installer, and starts with `sendspin-cli -n living-room`. Keep one running next to your device for the whole project; if the two drift apart, compare their timing to find the cause.
+- **[sendspin-python-cli](https://github.com/Sendspin/sendspin-python-cli)** is a second, independent player (`pip install sendspin` or `uv tool install sendspin`). Reproducing a failure with both players helps narrow down the cause.
 - **[Music Assistant](https://www.music-assistant.io)** is the reference server. If you are building a client, test against it first and treat its behavior as the expected one.
 - **An ESPHome device**, such as the Home Assistant Voice Preview Edition, is a reference client in the field and what a server will meet in most homes.
 - **A browser tab with [sendspin-js](https://github.com/Sendspin/sendspin-js)**, the client behind the Music Assistant web UI and the [live demo](/#live-demo) on this site, has coarse clocks and a user-gesture requirement, which exercises paths a native player never hits.
@@ -44,7 +44,7 @@ While iterating you will usually want a single pair:
 conformance run --from your-impl --to target-impl
 ```
 
-Read the matrix by row and by column. A failure in your row against every peer is yours. A failure against one peer only is either a bug in that peer or a disagreement about the specification, and both are worth an issue. A scenario that passes against the reference implementations but fails against a community port says the port is not yet at 1.0, not that you are wrong.
+Read the matrix by row and by column. If your implementation fails against every peer, investigate it first. If it fails against only one peer, compare both implementations with the specification and file an issue with the failing scenario.
 
 Run the suite in your own CI; a single `conformance run` against sendspin-cpp-cli or aiosendspin takes a minute or two. Then open a pull request with your adapter so the public matrix includes you, and every change to any implementation is tested against yours as well.
 
@@ -54,14 +54,14 @@ The specification sets an [accuracy floor](/build/spec/#sync-accuracy) of ±1 ms
 
 [sync-test](https://github.com/Sendspin/sync-test) measures the actual offset between two clients: it plays a test signal through both, records them on the two channels of a USB sound card and reports the difference over time. Put sendspin-cpp-cli on one channel and your implementation on the other, then run:
 
-- **An hour, not a minute.** Drift and filter stability only show over time. Log the offset for an hour and look at the trend, not only the average.
+- **An hour of playback.** Drift and filter stability only show over time. Log the offset for an hour and look at the trend, not only the average.
 - **Wi-Fi and Ethernet.** Wi-Fi has larger and more variable round-trip times, which is where the time filter's burst strategy matters. The [time-filter](https://github.com/Sendspin/time-filter) reference does about eight exchanges back to back every ten seconds and feeds the sample with the lowest `max_error`; if your numbers are worse than sendspin-cpp-cli's on the same network, compare your strategy to that first.
 - **A late joiner.** Start the reference player, let it run, then join with yours. It should become available only after its filter has converged and land in sync without an audible step.
 - **A seek and a track change.** Both clear the buffer and continue the stream. The offset after the seek must equal the offset before it.
 
 ## Pairing and recovery drills
 
-Pairing is where implementations differ most, and the failures only show up in a real home. Walk through each of these with your device and a server, and watch what the user sees as well as what the protocol does.
+Run each drill with your device and a server. Check what the user sees as well as what the protocol does.
 
 - **Factory reset while paired.** The server's next connection lands in the [Sentinel fallback](/build/spec/#sentinel-fallback). The server must not play, should tell its operator and offer re-pairing; the client comes back as a fresh, unpaired device with its manufactured identity and pairing PSK intact.
 - **Evict records by pairing with six servers.** A client stores at least [five pairing records](/build/spec/#pairing-records) and never fails a pairing for lack of space. Confirm the sixth pairing succeeds and the evicted server gets a clean credential-mismatch signal rather than a hang.

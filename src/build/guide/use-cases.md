@@ -16,7 +16,7 @@ Each case names the roles involved, how the device connects, which pairing metho
       <li>Pairing: a dynamic code spoken through the speaker if it has no display, otherwise shown on the display.</li>
       <li>Decide whether unpaired access is on by default. For a plain speaker it usually is: the user expects to pick it in the app and hear music.</li>
       <li>Set the output delay for anything after the port, such as an external amplifier, and let the user adjust it.</li>
-      <li>Fast lane: <a href="/build/guide/esphome/">ESPHome</a> for ESP32 designs, <a href="https://github.com/Sendspin/sendspin-cpp">sendspin-cpp</a> for anything else.</li>
+      <li>Start with <a href="/build/guide/esphome/">ESPHome</a> for ESP32 designs, <a href="https://github.com/Sendspin/sendspin-cpp">sendspin-cpp</a> for anything else.</li>
     </ul>
   </div>
   <div class="hub-card">
@@ -25,7 +25,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>A network streamer or a DIY board: no speaker of its own, feeding a DAC, an amplifier or an optical input.</li>
       <li>The DAC, DSP and amplifier behind the port add delay the device cannot see. Measure it once and ship it as the default output delay; expose it in settings.</li>
-      <li>Pairing: a dynamic code shown in your app if you have one, otherwise a static code printed on the device, entered while a button press opens the pairing window. Most users will simply use guest mode.</li>
+      <li>Pairing: a dynamic code shown in your app if you have one, otherwise a static code printed on the device, entered while a button press opens the pairing window. Most users will use guest mode.</li>
       <li>Report hardware volume knobs as read-only when they cannot be set remotely.</li>
       <li>Sendspin can run next to AirPlay and Cast on the same box. While another protocol is playing, leave the Sendspin group but stay available, so the user can take the device back with Sendspin at any time. Report it unavailable only if it will not yield.</li>
     </ul>
@@ -36,9 +36,9 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>Ask for artwork in exactly the pixel size you render; the server scales for you. Use a second channel for a blurred background.</li>
       <li>Scheduled metadata lets you show "up next" before the track changes.</li>
-      <li>Pairing: a dynamic code or a QR code on the display is the best experience available.</li>
+      <li>Pairing: show a dynamic code or a QR code on the display.</li>
       <li>A controller acts on the group the display is in. Give the user a way to switch groups.</li>
-      <li>Fast lane: <a href="https://github.com/Sendspin/sendspin-js">sendspin-js</a> for web-based panels, sendspin-cpp for embedded displays.</li>
+      <li>Start with <a href="https://github.com/Sendspin/sendspin-js">sendspin-js</a> for web-based panels, sendspin-cpp for embedded displays.</li>
     </ul>
   </div>
   <div class="hub-card">
@@ -74,7 +74,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <h3>Turntable, AUX or Bluetooth bridge</h3>
     <p><strong>Roles:</strong> source.</p>
     <ul>
-      <li>The simplest Sendspin device: capture, timestamp, send. The server resamples and mixes.</li>
+      <li>The device captures, timestamps and sends audio. The server resamples and mixes.</li>
       <li>Report line sense when you can detect signal; the server can start the room when the needle drops and stop it when the record ends.</li>
       <li>Timestamp from the time filter including drift, not offset alone, or the stream wanders over an evening.</li>
       <li>After a network stall, drop the backlog and resume from live capture instead of bursting old audio.</li>
@@ -97,7 +97,7 @@ Each case names the roles involved, how the device connects, which pairing metho
       <li>A software music player, a Linux audio box, a home-automation hub: add the server side to send its output to Sendspin devices, add the client side to be a target for other servers, or do both.</li>
       <li>Reuse <a href="https://github.com/Sendspin/aiosendspin">aiosendspin</a> if you are in Python; it is the server inside Music Assistant.</li>
       <li>Your server identity key must survive backups and migrations, or every device will treat the restored server as a stranger.</li>
-      <li>Read the <a href="/build/guide/server/ux/">server UX chapter</a>: discovery, approval and pairing are where users decide whether the integration feels finished.</li>
+      <li>The <a href="/build/guide/server/ux/">server UX chapter</a> covers discovery, approval and pairing.</li>
     </ul>
   </div>
   <div class="hub-card">
@@ -106,8 +106,8 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>Music Assistant, a phone app and a set-top box can all be servers at once. Server-initiated connections make this work without configuration.</li>
       <li>A client holds one playback connection. A server that starts playing takes it; the one that loses it gets <code>another_server</code>, keeps showing the device as available, and does not reconnect in a loop.</li>
-      <li>Each server pairs separately. A client stores at least five pairing records, so a normal home never runs out.</li>
-      <li>Make the hand-over visible in your server UI: "playing from somewhere else" is a state, not an error.</li>
+      <li>Each server pairs separately. A client stores at least five pairing records.</li>
+      <li>Show the hand-over as "playing from somewhere else" in your server UI.</li>
     </ul>
   </div>
 </div>
@@ -124,6 +124,6 @@ Use server-initiated connections unless you have a reason not to. The client adv
 | A speaker but no display | Dynamic pairing code, spoken |
 | An app of its own | Dynamic pairing code shown in the app, which acts as the device's display |
 | None of these | Static pairing code printed on the device, entered while a button, a pinhole or a power-cycle pattern opens the pairing window |
-| A platform that already knows the device | No code at all: the platform hands the device's pairing PSK to the server, the way Home Assistant does for ESPHome devices |
+| A platform that already knows the device | The platform hands the device's pairing PSK to the server, the way Home Assistant does for ESPHome devices |
 
-Offer one code-based method, not both, so the user never has to choose between them. Every client also implements the pairing PSK method, but that one is for automated hand-offs between systems, not for users. And remember that many users will never pair at all: a speaker with guest mode on plays for any server the operator approves. The [client pairing chapter](/build/guide/client/pairing/) has the details.
+Offer one code-based method, not both, so the user never has to choose between them. Every client also implements the pairing PSK method for automated hand-offs between systems. A speaker with guest mode on plays for any server the operator approves, so many users will never need to pair. The [client pairing chapter](/build/guide/client/pairing/) has the details.

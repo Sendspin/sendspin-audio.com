@@ -6,18 +6,18 @@ section: Ship it
 order: 51
 ---
 
-Sendspin is developed in the open, and the people who implement it are the people expected to improve it. This chapter explains how a change gets into the specification and what the release process means for the code you ship. The authoritative documents are in the [specification repository](https://github.com/Sendspin/spec); this chapter links to them rather than repeating them.
+Sendspin is developed in the open, with contributions from implementors. This chapter explains how to propose changes and what the release process means for the code you ship. The authoritative documents are in the [specification repository](https://github.com/Sendspin/spec).
 
 ## Governance and releases
 
 Sendspin is a project of the [Open Home Foundation](https://www.openhomefoundation.org). [GOVERNANCE.md](https://github.com/Sendspin/spec/blob/main/GOVERNANCE.md) describes who maintains the specification, how changes are approved and how releases are made; [SCOPE.md](https://github.com/Sendspin/spec/blob/main/SCOPE.md) and the [license](https://github.com/Sendspin/spec/blob/main/LICENSE.md) complete the picture.
 
-What matters when you ship: `main` and release candidates are the Draft specification, and a final release such as `1.0.0` is the Approved specification that carries the full patent commitment. A final release is announced at least 45 days ahead, and only clarifications land between the last release candidate and the final release.
+`main` and release candidates are the Draft specification, and a final release such as `1.0.0` is the Approved specification that carries the full patent commitment. A final release is announced at least 45 days ahead, and only clarifications land between the last release candidate and the final release.
 
 <div class="callout callout--note">
 <p class="callout__title">What RC1 means for you</p>
 
-Release Candidate 1 is a frozen protocol. What you build against it today will work with 1.0, because the only changes still allowed are the kind that make the text clearer, not the wire different. Watch the repository for the final tag; it gives you and the partner program a fixed version to name in documentation and test reports.
+Release Candidate 1 is a frozen protocol. What you build against it today will work with 1.0, because only clarifications are still allowed. Watch the repository for the final tag; it gives you and the partner program a fixed version to name in documentation and test reports.
 
 </div>
 
@@ -43,15 +43,15 @@ The pull request template has one checkbox: accepting the [Contributor License A
 
 The project accepts changes that have been tried. If you want a new message, field or role, prototype it first, typically in Music Assistant and one client, and bring the experience with you: what you built, what worked and what the specification would need to say. Proposals without an implementation behind them are discussed but rarely merged.
 
-The protocol gives you a way to do this without stepping on anyone: [application-specific roles](/build/spec/#application-specific-roles) start with an underscore and carry an explicit version. Use `_wip_<role>@v1` for a draft meant to become part of the specification, and `_vendorname_<role>@v1` for something specific to your products. Servers ignore roles they do not implement, so a draft role can ship in a product and be refined in the open.
+Use [application-specific roles](/build/spec/#application-specific-roles), which start with an underscore and carry an explicit version. Use `_wip_<role>@v1` for a draft meant to become part of the specification, and `_vendorname_<role>@v1` for something specific to your products. Servers ignore roles they do not implement, so a draft role can ship in a product and be refined in the open.
 
-Keep in mind what belongs where. The specification says what goes on the wire; this guide says how to build well. A pull request to the specification that reads like a tutorial will be asked to move here, and a guide chapter that starts to define behavior will be asked to point at the specification instead.
+Put protocol rules in the specification and implementation advice in this guide. A pull request to the specification that reads like a tutorial will be asked to move here, and a guide chapter that starts to define behavior will be asked to point at the specification instead.
 
 Discussion happens in two places. The `#sendspin-protocol` channel on the [Music Assistant Discord](https://discord.gg/kaVm8hGpne) is for developers and implementors: questions, design conversations and anything that is not yet a concrete change. Issues and pull requests in the [spec repository](https://github.com/Sendspin/spec/issues) are for concrete changes, and the thread on a pull request is kept for developers discussing that change.
 
 ## Role versioning for implementors
 
-Role versions are how the protocol gains features without breaking what already ships. The rules are in [Role Versioning](/build/spec/#role-versioning) and [Protocol evolution](/build/spec/#protocol-evolution); what they ask of you is small:
+Role versions are how the protocol gains features without breaking what already ships. Follow [Role Versioning](/build/spec/#role-versioning) and [Protocol evolution](/build/spec/#protocol-evolution):
 
 - **A client lists every version it supports**, most preferred first: `["player@v2", "player@v1"]`. The server activates the first one it implements and never a version the client did not list.
 - **A server implements every version of every role** in the specification it claims, and tracks requests for roles or versions it does not know as a sign that it needs updating.
@@ -61,9 +61,9 @@ If you propose a change that breaks an existing role's contract, it becomes a ne
 
 ## Contributing to the SDKs and this guide
 
-The SDKs, reference players and test tools live in the [Sendspin GitHub organization](https://github.com/Sendspin), each with its own license and contribution notes. Bugs found while testing against a reference implementation are as welcome in that implementation's tracker as in your own, and a failing scenario in the [conformance suite](https://github.com/Sendspin/conformance) with a clear description is the most useful report there is.
+The SDKs, reference players and test tools live in the [Sendspin GitHub organization](https://github.com/Sendspin), each with its own license and contribution notes. Report bugs in the affected implementation's tracker. Include a failing scenario from the [conformance suite](https://github.com/Sendspin/conformance) and a clear description when possible.
 
-This guide is part of the [website repository](https://github.com/Sendspin/sendspin-audio.com), in `src/build/guide/`, and fixes arrive the same way, by pull request. If a chapter left you with a question that the specification did answer, the chapter needs the fix, not you.
+This guide is part of the [website repository](https://github.com/Sendspin/sendspin-audio.com), in `src/build/guide/`, and fixes arrive the same way, by pull request. If the specification answers a question this guide leaves open, submit a clarification here.
 
 ## Code of conduct and contacts
 

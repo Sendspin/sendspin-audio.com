@@ -5,11 +5,11 @@ description: The work of building a Sendspin server in the order you will meet i
 order: 30
 ---
 
-A server is where the complexity of Sendspin lives. It discovers every client, encodes a stream per client, keeps them on one timeline, and owns pairing, groups and volume. This chapter walks through that work in order, a few sentences per step with a link to the rule behind it. The user interface is in [what users expect from a server](/build/guide/server/ux/); the reasoning behind pairing is in [the trust model](/build/guide/pairing-and-encryption/).
+A server discovers clients, encodes a stream per client, keeps them on one timeline, and manages pairing, groups and volume. Each step below links to the relevant specification rules. The user interface is in [what users expect from a server](/build/guide/server/ux/); the reasoning behind pairing is in [the trust model](/build/guide/pairing-and-encryption/).
 
 ## 1. Choose your base
 
-If you work in Python, start from [aiosendspin](https://github.com/Sendspin/aiosendspin), the Apache 2.0 server that runs inside Music Assistant. It handles the handshake, the per-client encoders, send-ahead and pairing, and leaves you a queue, a user interface and a policy for groups. A C++ server is on the roadmap. In any other language, implement from the [specification](/build/spec/) and run the [conformance suite](/build/guide/testing/) from the first day. Whatever you build, keep a Music Assistant instance next to it as the reference to compare behavior with.
+If you work in Python, start from [aiosendspin](https://github.com/Sendspin/aiosendspin), the Apache 2.0 server that runs inside Music Assistant. It handles the handshake, the per-client encoders, send-ahead and pairing. You implement the queue, user interface and group policy. A C++ server is on the roadmap. In any other language, implement from the [specification](/build/spec/) and run the [conformance suite](/build/guide/testing/) from the first day. Whatever you build, keep a Music Assistant instance next to it as the reference to compare behavior with.
 
 ## 2. Discovery
 
@@ -27,9 +27,9 @@ Spec: [Identities](/build/spec/#identities).
 
 ## 4. Hello and activation
 
-After the handshake, send `server/hello` with your name and the operator's `languages`. Devices use that list to pick the language in which they speak or display a pairing code, so send what the operator actually set. Read `client/hello`: roles, formats, `device_info`, whether the device admits unpaired access, and the pairing methods it offers. When a client lists a role or version you do not implement, count it. It means the client speaks a newer revision than you do and your server needs an update.
+After the handshake, send `server/hello` with your name and the operator's `languages`. Devices use that list to pick the language in which they speak or display a pairing code, so send the operator's configured languages. Read `client/hello`: roles, formats, `device_info`, whether the device admits unpaired access, and the pairing methods it offers. When a client lists a role or version you do not implement, count it. It means the client speaks a newer revision than you do and your server needs an update.
 
-Then declare your purpose with `server/activate`: `playback` only when you will actually play on this client, `pairing` while a pairing attempt runs, and nothing otherwise. Drop an activity as soon as its purpose ends. Clients arbitrate between servers on the highest activity declared, so a `playback` that lingers after the music stopped blocks the next server from using that device.
+Then declare your purpose with `server/activate`: `playback` only when you will play on this client, `pairing` while a pairing attempt runs, and nothing otherwise. Drop an activity as soon as its purpose ends. Clients arbitrate between servers on the highest activity declared, so a `playback` that lingers after the music stopped blocks the next server from using that device.
 
 Spec: [`server/hello`](/build/spec/#server--client-serverhello), [`client/hello`](/build/spec/#client--server-clienthello), [`server/activate`](/build/spec/#server--client-serveractivate), [Detecting Outdated Servers](/build/spec/#detecting-outdated-servers).
 
@@ -45,13 +45,13 @@ Spec: [player support object](/build/spec/#client--server-clienthello-playerv1-s
 
 Every chunk carries the server time at which it plays. After a `stream/start` from empty or a `stream/clear`, schedule the first chunk at least `min_buffer_ms + output_delay_ms` ahead, and extend the lead toward `required_lead_time_ms` only when that adds no latency: for a library track, yes; for a turntable, no. Chunks are 15 to 150 ms. In a group the send-ahead is the maximum over its members; recompute it on every join, leave or timing update, and when it drops, decide between lower latency (reduce) and no glitches (keep).
 
-For buffered content, fill each player toward its `buffer_capacity`; the accounting counts header plus payload of every chunk until its completion time has passed. Debounce the timing updates clients send so one noisy device does not reschedule the group every few seconds. A late joiner gets future timestamps only, so it buffers and comes in on the beat. Take `server_transmitted` and `send_ahead` as late as you can, right before encryption; a timestamp taken when the chunk was queued poisons the client's delay measurements.
+For buffered content, fill each player toward its `buffer_capacity`; the accounting counts header plus payload of every chunk until its completion time has passed. Debounce the timing updates clients send so one noisy device does not reschedule the group every few seconds. A late joiner gets future timestamps only, so it buffers and comes in on the beat. Take `server_transmitted` and `send_ahead` as late as you can, right before encryption; a timestamp taken when the chunk was queued distorts the client's delay measurements.
 
 Spec: [Server Audio Send Constraints](/build/spec/#server-audio-send-constraints), [Player Buffer Accounting](/build/spec/#player-buffer-accounting), [Transmit timestamps](/build/spec/#transmit-timestamps).
 
 ## 7. Metadata, artwork and color
 
-The moment you activate `metadata`, `controller` or `color`, send the current state. The moment an artwork stream starts, send the current image on every channel; a display that joins mid-track must not stay blank until the next song. Updates for the next track carry a future timestamp and go out no more than 20 seconds ahead.
+Send the current state when you activate `metadata`, `controller` or `color`. When an artwork stream starts, send the current image on every channel; a display that joins mid-track must not stay blank until the next song. Updates for the next track carry a future timestamp and go out no more than 20 seconds ahead.
 
 Artwork travels in parts of at most 65519 bytes. Pace them: a large image sent back to back sits in front of the audio chunks on the same connection, and the player hears it as jitter. Palettes come with contrast rules, 4.5:1 between each background and the text that goes on it, so check before you send.
 
@@ -66,7 +66,7 @@ Spec: [`server/state`](/build/spec/#server--client-serverstate), [Scheduled meta
 
 ## 8. Controller semantics
 
-A `play` with nothing queued resumes what the group last played, and that history survives a restart of your server; a single button on a wall panel depends on it. Group volume is not "set everyone to 40": compute the delta from the current average, apply it to every player that supports volume, clamp, redistribute what clamping lost among the rest, and only then send one command per player. A player that reports a volume but does not list the `volume` command has a knob; show its level read-only. `switch` cycles the client through playing multi-client groups, then players playing alone, then its own solo group, with its previous group first if it was parked there.
+A `play` with nothing queued resumes what the group last played, and that history survives a restart of your server; a single button on a wall panel depends on it. For group volume, compute the delta from the current average, apply it to every player that supports volume, clamp, redistribute what clamping lost among the rest, and then send one command per player. A player that reports a volume but does not list the `volume` command has a knob; show its level read-only. `switch` cycles the client through playing multi-client groups, then players playing alone, then its own solo group, with its previous group first if it was parked there.
 
 Spec: [Command behaviour](/build/spec/#command-behaviour), [Switch command cycle](/build/spec/#switch-command-cycle), [controller state object](/build/spec/#server--client-serverstate-controller-object).
 
@@ -93,7 +93,7 @@ Spec: [External Source Handling](/build/spec/#external-source-handling).
 
 ## 11. Reconnection
 
-Follow the goodbye reasons. Reconnect on `restart`, and after a silent drop of a connection whose activities were empty or included `playback`, since that most likely was a restart too. Do not reconnect on `another_server`, `user_request`, `shutdown`, `unpaired` or `pairing_required`; retry later on `concurrent_attempt`. Back off exponentially when the Noise handshake fails repeatedly. A client that left for another server is not an error: show it as available and leave the reconnect to the operator or the next play command.
+Follow the goodbye reasons. Reconnect on `restart`, and after a silent drop of a connection whose activities were empty or included `playback`, since that most likely was a restart too. Do not reconnect on `another_server`, `user_request`, `shutdown`, `unpaired` or `pairing_required`; retry later on `concurrent_attempt`. Back off exponentially when the Noise handshake fails repeatedly. Show a client that left for another server as available, and reconnect when the operator requests it or the next play command needs it.
 
 Spec: [`client/goodbye`](/build/spec/#client--server-clientgoodbye), [Failure Handling](/build/spec/#failure-handling).
 

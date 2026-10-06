@@ -5,23 +5,23 @@ description: The work of building a Sendspin client in the order you will do it;
 order: 20
 ---
 
-This chapter walks through a client in the order you will build it. Each step says what to do, points at the rule in the [specification](/build/spec/) and names the hook in the SDK that does it. It stays at overview depth; the [pairing chapter](/build/guide/client/pairing/) and the [roles chapter](/build/guide/roles/) go deeper where it matters.
+Build a client in the following order. Each step links to the relevant [specification](/build/spec/) rules and SDK hooks. See the [pairing chapter](/build/guide/client/pairing/) and the [roles chapter](/build/guide/roles/) for details.
 
 ## 1. Pick an SDK
 
-Three SDKs exist, and the choice is mostly made by your platform.
+Choose an SDK for your platform:
 
 - **[sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)** is the C++ library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux and macOS hosts. You add the roles you need when you set up the client, and roles you never use can be left out of the build to save flash. You provide an `on_audio_write` callback, a network-ready provider and a persistence provider; the library hosts the WebSocket server and does Noise, decoding and time sync itself.
 - **[aiosendspin](https://github.com/Sendspin/aiosendspin)** is Python. It is the server inside Music Assistant; its client side is mainly a test and reference client.
 - **[sendspin-js](https://github.com/Sendspin/sendspin-js)** is TypeScript for browsers and is being updated to spec 1.0.
 
-Whatever you pick, install [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Raspberry Pi or a Mac first. It is the quickest way to have a known-good reference player next to yours to compare against. The [SDK page](/build/sdks/) lists everything. If you are on ESP32, read the [ESPHome fast lane](/build/guide/esphome/) before writing any code.
+Whatever you pick, install [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Raspberry Pi or a Mac first. Use it as a reference player to compare against yours. The [SDK page](/build/sdks/) lists everything. If you are on ESP32, read the [ESPHome chapter](/build/guide/esphome/) before writing any code.
 
 ## 2. The components
 
 <p><img src="/images/client-implementation-guide.jpg" alt="The components of a Sendspin client and the connection flow" /></p>
 
-A client is four things: an mDNS advertisement (`_sendspin._tcp` with the `path` TXT record), a small WebSocket server for servers to connect to, the Sendspin core (handshake, messages, time filter), and your sinks: the audio output, and a display or lights if you have them. The SDK is the core and, in sendspin-cpp, the WebSocket server; the advertisement and the sinks are yours.
+A client has four components: an mDNS advertisement (`_sendspin._tcp` with the `path` TXT record), a small WebSocket server for servers to connect to, the Sendspin core (handshake, messages, time filter), and your sinks: the audio output, and a display or lights if you have them. The SDK is the core and, in sendspin-cpp, the WebSocket server; the advertisement and the sinks are yours.
 
 Spec: [Server Initiated Connections](/build/spec/#server-initiated-connections), [Encryption](/build/spec/#encryption).
 
@@ -54,7 +54,7 @@ Spec: [Clock Synchronization](/build/spec/#clock-synchronization).
 
 ## 6. Report timing parameters honestly
 
-Two numbers in your player state tell the server how far ahead to send. `required_lead_time_ms` is measured from the start trigger to the first chunk you can play in full; it is often lower for a `stream/clear` on a warm pipeline than for a cold `stream/start`, and you may lower it while a stream runs. `min_buffer_ms` comes from the upper tail, around the 95th percentile, of the arrival-delay distribution, measured over a window long enough to include interference, and debounced so it does not jump on every blip. Report the lowest values that reliably avoid underruns. Live sources such as a turntable or a TV want low latency, and padding these numbers costs every listener.
+Two numbers in your player state tell the server how far ahead to send. `required_lead_time_ms` is measured from the start trigger to the first chunk you can play in full; it is often lower for a `stream/clear` on a warm pipeline than for a cold `stream/start`, and you may lower it while a stream runs. `min_buffer_ms` comes from the upper tail, around the 95th percentile, of the arrival-delay distribution, measured over a window long enough to include interference, and debounced so it does not jump on every blip. Report the lowest values that reliably avoid underruns. Padding these numbers adds latency for every listener, which is especially noticeable with live sources such as a turntable or a TV.
 
 Spec: [`client/state` player object](/build/spec/#client--server-clientstate-player-object), [Server Audio Send Constraints](/build/spec/#server-audio-send-constraints).
 
@@ -99,7 +99,7 @@ Spec: [`client/goodbye`](/build/spec/#client--server-clientgoodbye).
 
 ## 12. Power an attached amplifier from playback state
 
-`group/update` tells you whether your group is playing. Switch the amplifier on when it is and off after a vendor-chosen idle time. The user should never think about the amplifier.
+`group/update` tells you whether your group is playing. Switch the amplifier on when it is and off after a vendor-chosen idle time.
 
 Spec: [`group/update`](/build/spec/#server--client-groupupdate).
 
