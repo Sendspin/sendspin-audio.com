@@ -1,13 +1,13 @@
 ---
 title: Pairing on the device
 nav_title: Pairing
-description: How a client offers pairing; choosing the method for your hardware, speaking or showing the code, unpaired access defaults, pairing records, rounds and cooldowns, the pairing window, and what to build so a test lab is satisfied.
+description: How a client offers pairing; choosing the method for your hardware, speaking or showing the code, unpaired access defaults, pairing records, rounds and cooldowns, the pairing window, and the security controls to document for testing.
 order: 21
 ---
 
 Pairing is the one-time step that turns an unpaired connection into one where both sides know exactly who the other is. It is optional for playback: a speaker can admit [unpaired access](#unpaired-access-is-your-default-to-choose), which users know as guest mode, and play music for any server the operator approves. It is required before a server will activate the source role on an unauthenticated device, and it is what lets a server trust your device after the setup phase. This chapter covers the client side; the [trust model](/build/guide/pairing-and-encryption/) explains why it is built this way, and the [server UX chapter](/build/guide/server/ux/) covers what the operator sees.
 
-From the user's point of view there are three ways a device joins a server: guest mode, a dynamic PIN the device shows, speaks or displays in your app, or a static PIN printed on the device. That is the whole menu a person should ever see.
+From the user's point of view there are three ways a device joins a server: guest mode, a dynamic PIN the device shows, speaks or displays in your app, or a static PIN printed on the device. Keep automated pairing out of this menu.
 
 ## Choose the code method for your hardware
 
@@ -26,7 +26,7 @@ Spec: [Methods](/build/spec/#methods), [pair-method descriptor](/build/spec/#cli
 
 ## The pairing PSK is for automation
 
-Every client also implements the pairing PSK method, but it is not a user-facing option. It exists for pairing that happens between systems: Home Assistant handing an ESPHome device's secret to Music Assistant so the device shows up already paired, a vendor cloud or app provisioning a server it manages, one server enrolling devices on behalf of another. The device exposes the secret as a pairing token (text or QR, starting with `SP:`) to the system that is allowed to read it; the user never types it. Treat the token like a Wi-Fi password: available to the owner's own platform, never printed where a visitor can photograph it.
+Every client also implements the pairing PSK method for automated pairing between systems: Home Assistant handing an ESPHome device's secret to Music Assistant so the device shows up already paired, a vendor cloud or app provisioning a server it manages, one server enrolling devices on behalf of another. The device exposes the secret as a pairing token (text or QR, starting with `SP:`) to the system that is allowed to read it; the user never types it. Treat the token like a Wi-Fi password: available to the owner's own platform, never printed where a visitor can photograph it.
 
 Spec: [Pairing PSK Flow](/build/spec/#pairing-psk-flow), [Pairing Token](/build/spec/#pairing-token).
 
@@ -46,7 +46,7 @@ Spec: [Unpaired Access](/build/spec/#unpaired-access).
 
 ## Pairing records
 
-Store at least five records, each a long-term PSK with the server's `server_id`. When the sixth pairing arrives, evict the least recently used record that is not backing an open connection. Nothing needs to be told: the evicted server's next handshake references a PSK you no longer hold, lands in the Sentinel fallback, and the server can offer its operator to pair again.
+Store at least five records, each a long-term PSK with the server's `server_id`. When the sixth pairing arrives, evict the least recently used record that is not backing an open connection. You do not need to notify the evicted server. Its next handshake references a PSK you no longer hold and falls back to the Sentinel key, so the server can offer to pair again.
 
 Spec: [Pairing Records](/build/spec/#pairing-records), [Sentinel Fallback](/build/spec/#sentinel-fallback).
 
@@ -58,12 +58,12 @@ Spec: [Entering and leaving pairing](/build/spec/#entering-and-leaving-pairing).
 
 ## Rounds, cooldown and the operator action
 
-In the dynamic flow an attempt runs rounds against the same code until the server's key confirmation verifies. After 20 consecutive failed rounds you must stop retrying and hold attempts back until a deliberate operator action on the device, which also resets the count. You may hold attempts back earlier, with a cooldown, and you should.
+In the dynamic flow an attempt runs rounds against the same code until the server's key confirmation verifies. After 20 consecutive failed rounds you must stop retrying and hold attempts back until a deliberate operator action on the device, which also resets the count. Add a cooldown before reaching that limit.
 
 <div class="callout callout--warn">
-<p class="callout__title">The too lean cooldown</p>
+<p class="callout__title">Add a cooldown from the start</p>
 
-A product ships permissive: playback is open to any approved server and pairing is a convenience. Two years later a firmware update adds a role with higher security needs, say a microphone, and gates it behind pairing. By then an attacker who brute-forced a code has a pairing record that is indistinguishable from a legitimate one, and only a factory reset restores security. If the only thing between an attacker and the next 20 rounds is an action they can induce, brute-forcing a six-digit code takes about a day. With a cooldown that grows after a few failures it takes decades. Build the cooldown in from the start.
+A device may initially allow playback from any approved server, then gain a privacy-sensitive role, such as a microphone, in a firmware update. An attacker who brute-forced a code before the update would already hold a pairing record indistinguishable from a legitimate one. Do not rely only on the 20-round limit if an attacker can trigger the action that resets it. Add a cooldown that grows after repeated failures, even when pairing is optional for the features you ship today.
 
 </div>
 

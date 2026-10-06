@@ -5,7 +5,7 @@ description: The seven Sendspin roles, which products use them, what each one ne
 order: 12
 ---
 
-A role is a capability a client offers. The client lists the roles it supports in its hello message, the server activates the ones it wants, and from then on each role has its own messages and, where needed, its own binary stream. Servers implement every role, so your choice of roles is purely a product decision.
+A role is a capability a client offers. The client lists the roles it supports in its hello message, the server activates the ones it wants, and from then on each role has its own messages and, where needed, its own binary stream. Servers implement every role, so choose the roles your product needs.
 
 ## The seven roles
 
@@ -23,7 +23,7 @@ Spec: [Role Versioning](/build/spec/#role-versioning), and one section per role 
 
 ## How they combine
 
-Most real products use more than one role.
+Most products use more than one role.
 
 - **Speaker or amplifier:** `player` plus `controller`, so the buttons on the device act on the group it is in. Add `source` if it has a line input.
 - **Streamer (output only):** `player` alone, or `player` plus `controller` when it has a remote or an app.
@@ -35,15 +35,15 @@ Most real products use more than one role.
 <div class="callout callout--note">
 <p class="callout__title">One client per audio output</p>
 
-A device with several independent outputs, say a two-zone amplifier, should present itself as one client per output. Each client gets its own identity, group, volume and timing parameters, and the two time filters run off the same host clock, so the device can even sum two streams onto one physical output if it wants to.
+A device with several independent outputs, say a two-zone amplifier, should present itself as one client per output. Each client gets its own identity, group, volume and timing parameters. The two time filters run off the same host clock, so the device can also sum two streams onto one physical output.
 
 </div>
 
 ## Things every role shares
 
-Whatever roles you pick, the client needs the same foundation: a stable identity, the Noise handshake, the time filter, the hello and activate exchange, and the ability to report whether it is available. The [client chapter](/build/guide/client/) walks through that foundation once; the roles sit on top of it.
+Whatever roles you pick, the client needs the same foundation: a stable identity, the Noise handshake, the time filter, the hello and activate exchange, and the ability to report whether it is available. The [client chapter](/build/guide/client/) covers these shared components.
 
-Roles are activated and deactivated by the server over the life of a connection. A client keeps per-role state only while the role is active and starts clean when it is activated again.
+The server activates and deactivates roles over the life of a connection. A client keeps per-role state only while the role is active and starts clean when it is activated again.
 
 ## Roles that do not exist yet
 

@@ -5,13 +5,13 @@ description: The user journey a Sendspin server has to support; discovering devi
 order: 31
 ---
 
-The protocol says what goes over the wire. Most of what a user notices is what the server shows around it: the device list, the approve button, the code entry, the warning when something is wrong. This chapter follows the user from the moment a new device appears to the day it is replaced, and names the rule behind each screen. The device side of the same flows is in [client pairing](/build/guide/client/pairing/); the reasoning behind them is in [the trust model](/build/guide/pairing-and-encryption/).
+Your server needs a device list, approval and pairing controls, and messages that help users recover from errors. This chapter covers those screens and the protocol rules behind them. The device side of the same flows is in [client pairing](/build/guide/client/pairing/); the reasoning behind them is in [the trust model](/build/guide/pairing-and-encryption/).
 
 ## Discover: the device list
 
-Show every discovered client under the name from its `client/hello`, with the manufacturer and model from `device_info` next to it, so "Kitchen" is recognizably the speaker and not the wall tablet. Three states must look different: paired, approved for unpaired access, and unknown (neither). This is a rule, not a taste. A new client that claims a familiar name must never pass for the existing device. If a second "Kitchen" shows up among the unknown devices, the operator sees the difference; if the two look the same, an attacker wins by naming a laptop after a speaker.
+Show every discovered client under the name from its `client/hello`, with the manufacturer and model from `device_info` next to it, so "Kitchen" is recognizably the speaker and not the wall tablet. The specification requires three visually distinct states: paired, approved for unpaired access, and unknown (neither). A new client that claims a familiar name must never pass for the existing device. If a second "Kitchen" shows up among the unknown devices, the operator sees the difference; if the two look the same, an attacker wins by naming a laptop after a speaker.
 
-A device that another server is playing on is a fourth state, not an error. Your connection to it ended with `another_server` or was refused with `concurrent_attempt`; show it as available, say where it went if you know, and let the next play command take it back.
+Show a fourth state for a device that is playing from another server. Your connection to it ended with `another_server` or was refused with `concurrent_attempt`; show it as available, say where it went if you know, and let the next play command take it back.
 
 Spec: [Unpaired Access](/build/spec/#unpaired-access), [`client/goodbye`](/build/spec/#client--server-clientgoodbye).
 
@@ -25,9 +25,9 @@ Spec: [Unpaired Access](/build/spec/#unpaired-access), [Source messages](/build/
 
 ### Pairing as an action
 
-Offer pairing as a clearly visible action for every unknown client, and keep it available as an upgrade for approved ones. The device's `client/hello` tells you which code method it offers and where its static code lives: printed on the device or on a leaflet in the box. A person pairs with that code and nothing else, so the pairing action starts the one code method the device lists; if you ever see both, prefer the dynamic code. Select the `qr_code` format only when your interface can actually scan a QR code. A desktop app without a camera asks for digits.
+Offer pairing as a clearly visible action for every unknown client, and keep it available as an upgrade for approved ones. The device's `client/hello` tells you which code method it offers and where its static code lives: printed on the device or on a leaflet in the box. A person pairs with that code and nothing else, so the pairing action starts the one code method the device lists; if you ever see both, prefer the dynamic code. Select the `qr_code` format only when your interface can scan a QR code. A desktop app without a camera asks for digits.
 
-Every device also implements the pairing PSK method, but keep it out of the user-facing flow. It is for automation: Home Assistant hands an ESPHome device's token to Music Assistant, and the device appears paired without anyone being asked anything. Expose it where integrations and administrators live, an API or an advanced settings page, not as a button next to the code entry. Wherever you accept a token, decode leniently: trim whitespace, uppercase, accept it with or without the `SP:` prefix, and read `9` as `2`, since the token alphabet substitutes one for the other. Before starting, check that the client key inside the token is the `client_id` of the connection. A token for a different device deserves a clear message, not a failed handshake.
+Every device also implements the pairing PSK method, but keep it out of the user-facing flow. It is for automation: Home Assistant hands an ESPHome device's token to Music Assistant, and the device appears paired without anyone being asked anything. Expose it through an API or an advanced settings page for integrations and administrators. Keep it out of the code-entry screen. Wherever you accept a token, decode leniently: trim whitespace, uppercase, accept it with or without the `SP:` prefix, and read `9` as `2`, since the token alphabet substitutes one for the other. Before starting, check that the client key inside the token is the `client_id` of the connection. If the token belongs to a different device, explain the mismatch before starting the handshake.
 
 Spec: [pair-method descriptor](/build/spec/#client--server-clienthello-pair-method-descriptor), [Pairing Token](/build/spec/#pairing-token), [Pairing PSK Flow](/build/spec/#pairing-psk-flow).
 
@@ -35,7 +35,7 @@ Spec: [pair-method descriptor](/build/spec/#client--server-clienthello-pair-meth
 
 Show one slot per digit, grouped the way the device groups them: `123-456` for a dynamic code, `1234-5678` for a static one. The grouping makes the expected length obvious; strip hyphens and spaces from whatever is typed or pasted. For a device that speaks its code, add a step before you start the attempt: "Press continue and the speaker will read out a six-digit code." The device speaks the code as soon as the first round begins, and an operator who was still looking at the phone has to ask for another round, of which the device allows at most twenty before it insists on a button press.
 
-A wrong code is not the end. In the dynamic flow the device asks for another round and shows or speaks the same code again; in the static flow the attempt fails and you start a new one, within the five the device's pairing window allows. Say "that code did not match" and put the cursor back in the first slot. While the device holds an attempt back, it sends `client/pair-pending`, sometimes with a `message` such as "Press the pairing button on the back". Show that message verbatim, as plain text attributed to the device, never as markup or a link, because it comes from a peer you have not authenticated yet. Apply your own timeout while you wait; a device that never comes back must not leave a spinner forever. A cancel button sends `pair/abort` with reason `user_cancelled`, followed by an activation that leaves pairing, so the device can show why the attempt ended.
+After a wrong dynamic code, the device asks for another round and shows or speaks the same code again. After a wrong static code, the attempt fails and you start a new one, within the five the device's pairing window allows. Say "that code did not match" and put the cursor back in the first slot. While the device holds an attempt back, it sends `client/pair-pending`, sometimes with a `message` such as "Press the pairing button on the back". Show that message verbatim, as plain text attributed to the device, never as markup or a link, because it comes from a peer you have not authenticated yet. Apply your own timeout while you wait; a device that never comes back must not leave a spinner forever. A cancel button sends `pair/abort` with reason `user_cancelled`, followed by an activation that leaves pairing, so the device can show why the attempt ended.
 
 Spec: [Pairing Code Presentation](/build/spec/#pairing-code-presentation), [Rounds](/build/spec/#rounds), [Pairing Window](/build/spec/#pairing-window), [`client/pair-pending`](/build/spec/#client--server-clientpair-pending), [`pair/abort`](/build/spec/#client--server-pairabort), [Entering and leaving pairing](/build/spec/#entering-and-leaving-pairing).
 
@@ -49,7 +49,7 @@ Pairing starts from the player picker: an unknown speaker shows a pair action ne
 <figcaption>Music Assistant: pairing a speaker with a pairing code. Recorded automatically from the end-to-end tests.</figcaption>
 </figure>
 
-The recording comes from the [Music Assistant end-to-end tests](https://github.com/Sendspin/ma-pairing-e2e) and is regenerated on every run, so it shows the current release rather than a screenshot from last year.
+The [Music Assistant end-to-end tests](https://github.com/Sendspin/ma-pairing-e2e) regenerate the recording on every run.
 
 </div>
 
@@ -67,11 +67,11 @@ Spec: [Sentinel Fallback](/build/spec/#sentinel-fallback), [Pairing Records](/bu
 
 ## Play
 
-Renaming a device, moving it between groups and changing its volume must never interrupt playback. The temptation is to reconnect after a settings change; resist it. A reconnect resets the device's clock filter, and the device comes back late and out of sync for the seconds the filter takes to converge. Groups are a server-side concept, so a regroup is a `group/update` and a new stream, not a new connection.
+Renaming a device, moving it between groups and changing its volume must never interrupt playback. Reconnecting after a settings change resets the device's clock filter, and the device comes back late and out of sync for the seconds the filter takes to converge. Groups are a server-side concept, so a regroup is a `group/update` and a new stream, not a new connection.
 
 Send the operator's languages in `server/hello`. A speaker that reads out a pairing code or a display that shows a pending message picks its language from that list, and an operator who set Catalan should not hear English digits.
 
-Sources get their own flow: a separate, explicit approval, a clear way to start and stop streaming an input, and a visible indicator while it streams. Respect privacy inputs. A microphone device ships with unpaired access off, so it will not be approvable until paired, and your interface should say so rather than look broken.
+Sources get their own flow: a separate, explicit approval, a clear way to start and stop streaming an input, and a visible indicator while it streams. A microphone device ships with unpaired access off. Explain that it needs pairing before the user can approve it.
 
 Spec: [`server/hello`](/build/spec/#server--client-serverhello), [Source messages](/build/spec/#source-messages).
 

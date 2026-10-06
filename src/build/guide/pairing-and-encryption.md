@@ -13,7 +13,7 @@ This chapter is for the engineer who implements the handshake and for the person
 
 Every Sendspin connection is encrypted. There is no plaintext mode and no downgrade: a peer that cannot complete the handshake gets no session at all. Encryption gives you confidentiality (nobody on the network reads the audio or the metadata), integrity (a modified message fails authentication and ends the connection) and replay protection (a repeated or reordered message fails the same way). Ephemeral keys in every handshake add forward secrecy, so a key stolen tomorrow does not decrypt the traffic recorded today.
 
-What encryption does not give you on its own is knowledge of who is on the other end. A secure channel to an unknown party is still a channel to an unknown party. That is what pairing adds.
+Pairing authenticates the peer at the other end of the encrypted connection.
 
 Spec: [Encryption](/build/spec/#encryption), [Pattern](/build/spec/#pattern).
 
@@ -37,9 +37,9 @@ Spec: [Cipher Suites](/build/spec/#cipher-suites), [Identities](/build/spec/#ide
 
 ## Three ways to pair
 
-**Pairing PSK.** A system that already knows the device hands its pairing token to the server: Home Assistant passing an ESPHome device's secret to Music Assistant, or a platform provisioning its own servers. The token carries the `client_id` and the pairing PSK together, so the server knows which device it is talking to and holds a secret only that device has. The handshake with that PSK authenticates both sides from the first byte, and no person enters anything. The flip side: whoever holds the token can pair. Keep it inside the owner's own platform, protect it the way you protect a Wi-Fi password, and never print it where a visitor can photograph it.
+**Pairing PSK.** A system that already knows the device hands its pairing token to the server: Home Assistant passing an ESPHome device's secret to Music Assistant, or a platform provisioning its own servers. The token carries the `client_id` and the pairing PSK together, so the server knows which device it is talking to and holds a secret only that device has. The handshake with that PSK authenticates both sides from the first byte, and no person enters anything. Whoever holds the token can pair. Keep it inside the owner's own platform, protect it the way you protect a Wi-Fi password, and never print it where a visitor can photograph it.
 
-**Dynamic pairing code.** The device shows or speaks a six-digit code that exists only for this attempt. It is derived from the handshake hash and two nonces, one committed by the device before it sees the server's, so neither side can steer it. The code feeds a PAKE, CPace, which lets both sides prove they hold the same code without sending it. A wrong code fails the proof and learns nothing. A man in the middle relaying between two handshakes has two different handshake hashes and therefore two different codes, and fails on both legs. The new long-term PSK crosses the wire wrapped under the PAKE output, so only the party that completed the proof can read it.
+**Dynamic pairing code.** The device shows or speaks a six-digit code that exists only for this attempt. It is derived from the handshake hash and two nonces, one committed by the device before it sees the server's, so neither side can steer it. The code feeds a PAKE, CPace, which lets both sides prove they hold the same code without sending it. If the code is wrong, the proof fails without revealing the correct code. A man in the middle relaying between two handshakes has two different handshake hashes and therefore two different codes, and fails on both legs. The new long-term PSK crosses the wire wrapped under the PAKE output, so only the party that completed the proof can read it.
 
 **Static pairing code.** The same PAKE, but the eight-digit code is fixed and printed on the device, so anyone who learns it can pair. Two things bound the exposure: an attempt needs an operator gesture on the device that opens a pairing window, and the window closes after five failed attempts. It exists for devices with no display or speaker; a device that has one should use the dynamic code.
 
@@ -49,7 +49,7 @@ Spec: [Methods](/build/spec/#methods), [Pairing PSK Flow](/build/spec/#pairing-p
 
 A Sentinel session is encrypted, but neither side knows to whom. Someone on the same network can impersonate the speaker to the server, or the server to the speaker, and relay between them. For music on a living room speaker that risk is accepted every day in the form of cast targets, so a device may admit unpaired access and a server may use it once its operator approves the device.
 
-For an input the calculus is different: an attacker in the middle of an unpaired source session hears the room. The source role therefore needs explicit operator approval, never approval implied by pressing play, and a device with a microphone or any other privacy-sensitive input ships with unpaired access off. Pairing closes the gap; from then on the server knows it is talking to the device it paired and nothing else.
+An attacker in the middle of an unpaired source session can hear the captured audio. The source role therefore needs explicit operator approval, never approval implied by pressing play, and a device with a microphone or any other privacy-sensitive input ships with unpaired access off. After pairing, the server can authenticate the device.
 
 Spec: [Unpaired Access](/build/spec/#unpaired-access), [Source messages](/build/spec/#source-messages).
 
@@ -81,9 +81,9 @@ Spec: [Identities](/build/spec/#identities), [Pairing Records](/build/spec/#pair
 
 ## Brute force and cooldowns
 
-The dynamic code has a million values and is fresh per attempt; a guess is a round, and after twenty failed rounds the device holds attempts back until a deliberate operator action. The static code has a hundred million values, five attempts per window, and every window needs a gesture. Both are far beyond what anyone can guess over a network.
+The dynamic code has a million values and is fresh per attempt; a guess is a round, and after twenty failed rounds the device holds attempts back until a deliberate operator action. The static code has a hundred million values, five attempts per window, and every window needs a gesture.
 
-Clients should add a cooldown between failed rounds anyway, because the limits assume the gesture is deliberate. Consider a speaker whose gesture is cheap, say the count resets on reboot and the speaker hangs off a smart plug. An attacker on the network can run rounds back to back, and a million-value code falls in about a day. Today that buys a stranger the right to play music. Next year a firmware update adds a microphone, and the attacker's pairing record from the permissive days is indistinguishable from the owner's. Nobody notices, and a factory reset is the only cure. A cooldown that starts at a few seconds and doubles per failed round turns the same search from a day into decades, at no cost to an operator who mistypes twice.
+Add a cooldown between failed rounds because the limits depend on a deliberate operator gesture. If the counter resets on reboot, an attacker who controls the speaker's smart plug could repeatedly reset it and continue guessing. A pairing record obtained this way remains indistinguishable from a legitimate one after a firmware update adds a privacy-sensitive role. Add a cooldown that starts at a few seconds and doubles per failed round to slow repeated guesses.
 
 Spec: [Rounds](/build/spec/#rounds), [Pairing Window](/build/spec/#pairing-window).
 
@@ -91,7 +91,7 @@ Spec: [Rounds](/build/spec/#rounds), [Pairing Window](/build/spec/#pairing-windo
 
 The round limit, the window and attempt limits, and the cooldown are what a test lab can point at when it asks how authentication resists brute force; ETSI EN 303 645 provision 5.1-5 and EN 18031-1 mechanism AUM-6 ask that question. Document the limits your firmware enforces and the gesture that resets them. Per-device identity keys, pairing PSKs and static codes drawn from a CSPRNG answer the provisions on universal default credentials.
 
-A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol. Expect one more question from a reviewer: with guest mode on, audio from an unauthenticated peer reaches your decoder, so treat the decode path as network-facing input and fuzz it like one.
+A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol. With guest mode on, audio from an unauthenticated peer reaches your decoder. Treat the decode path as network-facing input and fuzz it.
 
 ## Where to look next
 

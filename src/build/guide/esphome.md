@@ -1,12 +1,12 @@
 ---
-title: "Fast lane: ESPHome"
+title: Build with ESPHome
 nav_title: ESPHome
-description: The fastest route to a finished Sendspin firmware on ESP32; what the ESPHome sendspin component ships, how onboarding through Home Assistant removes the pairing step, an example configuration, and when to use sendspin-cpp directly instead.
+description: Building Sendspin firmware on ESP32 with ESPHome; what the ESPHome sendspin component ships, how onboarding through Home Assistant removes the pairing step, an example configuration, and when to use sendspin-cpp directly instead.
 section: Building a client
 order: 22
 ---
 
-If your device is an ESP32, you can have a Sendspin player on the bench in an afternoon without writing C++. [ESPHome](https://esphome.io) ships a `sendspin` component that wraps [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp) and plugs it into the rest of the ESPHome audio stack. You describe the hardware in YAML, ESPHome builds the firmware, and Home Assistant takes care of onboarding, updates and pairing.
+Use ESPHome to build a Sendspin player for an ESP32 without writing C++. [ESPHome](https://esphome.io) ships a `sendspin` component that wraps [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp) and plugs it into the rest of the ESPHome audio stack. You describe the hardware in YAML, ESPHome builds the firmware, and Home Assistant takes care of onboarding, updates and pairing.
 
 ## What ships
 
@@ -27,20 +27,20 @@ The [ESPHome documentation](https://esphome.io/components/sendspin/) has the ful
 
 The experience for the user is the normal ESPHome one. They power the device, add it to Home Assistant through Improv or by adopting it in the ESPHome dashboard, and from then on they get OTA updates and a device page with its entities.
 
-The Sendspin part comes for free. Home Assistant hands the device's pairing PSK to Music Assistant, so the device shows up in Music Assistant already paired, with no code to type and no QR to scan. This is what the pairing PSK method is for: pairing between systems, so the user never sees it. The manual pairing methods stay available for other servers in the home: a phone app or a second music server still pairs the way the [pairing chapter](/build/guide/client/pairing/) describes.
+Home Assistant hands the device's pairing PSK to Music Assistant, so the device shows up in Music Assistant already paired, with no code to type and no QR to scan. The manual pairing methods stay available for other servers in the home: a phone app or a second music server still pairs the way the [pairing chapter](/build/guide/client/pairing/) describes.
 
 The guest-mode switch controls unpaired access from Home Assistant, so the user decides from the dashboard whether a server that is not paired may play on the device. For products that need an EN 18031 compliant default, an action lets your firmware enable Sendspin only once a per-device key has been set, so a device never listens with a shared or empty secret.
 
 <div class="callout callout--example">
 <p class="callout__title">Music Assistant does it like this</p>
 
-Music Assistant receives the device's pairing PSK from Home Assistant and completes the pairing PSK flow the first time it connects. The result is an ordinary pairing record on both sides, no different from one the user created by typing a code. Nothing about the device is special-cased: any other server pairs with it through the methods it advertises.
+Music Assistant receives the device's pairing PSK from Home Assistant and completes the pairing PSK flow the first time it connects. Both sides store an ordinary pairing record, as they would after code-based pairing. Other servers pair with the device through the methods it advertises.
 
 </div>
 
 ## An example configuration
 
-This is an example to adapt, not a reference design. Pins, board, sample rate and names depend on your hardware; the entity names are what the user sees in Home Assistant.
+Adapt the pins, board, sample rate and names to your hardware. The entity names are what the user sees in Home Assistant.
 
 ```yaml
 # Example: an ESP32-S3 driving an external I2S DAC. Adapt to your board.
@@ -120,14 +120,16 @@ switch:
     name: Sendspin
 ```
 
-Flash it, adopt the device in Home Assistant, and it appears in Music Assistant as a player. Measure the delay of the DAC and amplifier behind the port and put it in `initial_static_delay`, then compare the device against [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Pi before you call the timing done.
+Flash it, adopt the device in Home Assistant, and it appears in Music Assistant as a player. Measure the delay of the DAC and amplifier behind the port and put it in `initial_static_delay`, then compare the device against [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Pi to check synchronization.
 
-## Why this is the fast lane
+<span id="why-this-is-the-fast-lane"></span>
 
-- **OTA and configuration are solved.** ESPHome's update mechanism and YAML configuration replace a build system, an updater and a settings store you would otherwise write.
-- **Home Assistant integration for free.** Entities, device pages, automations and the pairing hand-off to Music Assistant all come with the ESPHome native API.
+## What ESPHome handles
+
+- **OTA and configuration.** ESPHome's update mechanism and YAML configuration replace a build system, an updater and a settings store you would otherwise write.
+- **Home Assistant integration.** Entities, device pages, automations and the pairing hand-off to Music Assistant all come with the ESPHome native API.
 - **A path to certification.** A device built this way can qualify for [Made for ESPHome](https://esphome.io/guides/made_for_esphome) and go through [Sendspin testing and certification](/build/guide/testing/) with the SDK the conformance suite is developed against.
-- **The protocol work is done.** Noise, the time filter, decoding and sync corrections are sendspin-cpp's, maintained by the project.
+- **Protocol implementation.** sendspin-cpp handles Noise, the time filter, decoding and sync corrections, and the project maintains it.
 
 ## When to use sendspin-cpp directly
 
