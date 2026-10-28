@@ -564,7 +564,7 @@ if (!root) {
   }
 
   function handlePlayerStateChange() {
-    if (!state.player) {
+    if (!state.isListening) {
       return;
     }
 
@@ -588,25 +588,7 @@ if (!root) {
     );
   }
 
-  function destroyPlayer(reason = "shutdown") {
-    stopSyncUpdates();
-
-    if (!state.player) {
-      return;
-    }
-
-    const activePlayer = state.player;
-    state.player = null;
-
-    try {
-      activePlayer.destroy(reason);
-    } catch (err) {
-      console.warn("Failed to destroy player:", err);
-    }
-  }
-
-  async function createPlayer() {
-    const { SendspinPlayer } = await sdkImport;
+  function createPlayer({ SendspinPlayer }) {
     return new SendspinPlayer({
       url: serverUrl,
       onStateChange: handlePlayerStateChange,
@@ -614,35 +596,11 @@ if (!root) {
   }
 
   async function connectPlayer() {
-    if (state.player?.isConnected) {
-      return state.player;
-    }
-
-    destroyPlayer("user_request");
-
-    const nextPlayer = await createPlayer();
-    state.player = nextPlayer;
-
-    try {
-      await nextPlayer.connect();
-      startSyncUpdates();
-      return nextPlayer;
-    } catch (err) {
-      if (state.player === nextPlayer) {
-        destroyPlayer("user_request");
-      } else {
-        try {
-          nextPlayer.destroy("user_request");
-        } catch (disconnectErr) {
-          console.warn(
-            "Failed to clean up after connection error:",
-            disconnectErr,
-          );
-        }
-      }
-
-      throw err;
-    }
+    state.player ??= createPlayer(sdk ?? (await sdkImport));
+    await state.player.unlock();
+    await state.player.connect();
+    startSyncUpdates();
+    return state.player;
   }
 
   function updateSyncStatus() {
@@ -715,7 +673,13 @@ if (!root) {
   }
 
   function disconnect(reason = "shutdown") {
-    destroyPlayer(reason);
+    stopSyncUpdates();
+
+    try {
+      state.player?.disconnect(reason);
+    } catch (err) {
+      console.warn("Failed to disconnect player:", err);
+    }
 
     state.isListening = false;
     state.isStarting = false;
@@ -743,11 +707,16 @@ if (!root) {
   });
 
   window.addEventListener("pagehide", () => {
-    destroyPlayer("shutdown");
+    stopSyncUpdates();
+    state.player?.destroy("shutdown");
   });
 
   const sdkImport =
     import("https://cdn.jsdelivr.net/npm/@sendspin/sendspin-js@6.0.0/+esm");
+  let sdk = null;
+  sdkImport.then((module) => {
+    sdk = module;
+  });
 
   renderUiState();
   resetSyncDisplay();
