@@ -21,13 +21,13 @@ This page lists the implementations that are at specification 1.0. All of them a
 |---|---|---|---|---|
 | C++ | [sendspin-cpp](https://github.com/Sendspin/sendspin-cpp) | player, controller, metadata, artwork, visualizer, color | 1.0 | [ESPHome](https://esphome.io/), [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) |
 | Python | [aiosendspin](https://github.com/Sendspin/aiosendspin) (client) | see repository | 1.0 | Test and reference client |
-| JavaScript | [sendspin-js](https://github.com/Sendspin/sendspin-js) | player; see repository | being updated to 1.0 | [Music Assistant](https://www.music-assistant.io) web UI, the [live demo](/#live-demo) on this site |
+| JavaScript | [sendspin-js](https://github.com/Sendspin/sendspin-js) | player; see repository | 1.0 | [Music Assistant](https://www.music-assistant.io) web UI, the [live demo](/#live-demo) on this site |
 
 **sendspin-cpp** is the library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux and macOS hosts, decodes FLAC and PCM with Opus as an option, and has the Noise encryption built in. The repository's `integration-guide.md`, `internals.md` and `playback-sync.md` cover what the guide here does not. Apache 2.0.
 
 **aiosendspin** is the async Python library. Its client side is complete and conformant, but it is best treated as a reference and test client: something to script against your server, or to read when the specification leaves you unsure. On PyPI as `aiosendspin`. Apache 2.0.
 
-**sendspin-js** is the TypeScript client for browsers, with `SendspinPlayer` for a complete player and the lower-level `SendspinCore` for your own user interface. It handles the browser's user-gesture requirement and coarse clocks. It is being brought up to specification 1.0; check the repository for the current state before you depend on a specific feature. On npm as `@sendspin/sendspin-js`.
+**sendspin-js** is the TypeScript client for browsers, with `SendspinPlayer` for a complete player and the lower-level `SendspinCore` for your own user interface. It handles the browser's user-gesture requirement and coarse clocks. On npm as `@sendspin/sendspin-js`.
 
 ## Server implementations
 

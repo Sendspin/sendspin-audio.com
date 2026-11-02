@@ -19,7 +19,7 @@ Sendspin is an open alternative to Apple AirPlay and Google Cast, with extra con
   </a>
   <a class="hub-card" href="/build/sdks/">
     <h3>SDKs &amp; libraries</h3>
-    <p>Official SDKs for C++ and Python, from microcontrollers to servers, plus a reference CLI player.</p>
+    <p>Official SDKs for C++, JavaScript and Python, from microcontrollers to servers, plus a reference CLI player.</p>
     <span class="hub-card__go">Browse the SDKs {% include "icons/arrow.svg" %}</span>
   </a>
   <a class="hub-card" href="/build/spec/">
