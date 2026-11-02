@@ -9,7 +9,7 @@ A server discovers clients, encodes a stream per client, keeps them on one timel
 
 ## 1. Choose your base
 
-If you work in Python, start from [aiosendspin](https://github.com/Sendspin/aiosendspin), the Apache 2.0 server that runs inside Music Assistant. It handles the handshake, the per-client encoders, send-ahead and pairing. You implement the queue, user interface and group policy. A C++ server is on the roadmap. In any other language, implement from the [specification](/build/spec/) and run the [conformance suite](/build/guide/testing/) from the first day. Whatever you build, keep a Music Assistant instance next to it as the reference to compare behavior with.
+If you work in Python, start from [aiosendspin](https://github.com/Sendspin/aiosendspin), the Apache 2.0 server that runs inside Music Assistant. It handles the handshake, the per-client encoders, send-ahead and pairing. You implement the queue, user interface and group policy. In C++, [sendspin-server-cpp](https://github.com/Sendspin/sendspin-server-cpp) is in early development; pin a commit if you build on it. In any other language, implement from the [specification](/build/spec/) and run the [conformance suite](/build/guide/testing/) from the first day. Whatever you build, keep a Music Assistant instance next to it as the reference to compare behavior with.
 
 ## 2. Discovery
 

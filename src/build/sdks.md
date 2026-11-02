@@ -34,9 +34,11 @@ This page lists the implementations that are at specification 1.0. All of them a
 | Language | Repository | Roles | Spec status | Used by |
 |---|---|---|---|---|
 | Python | [aiosendspin](https://github.com/Sendspin/aiosendspin) (server) | all | 1.0 | [Music Assistant](https://www.music-assistant.io) |
-| C++ | planned | all | not started | |
+| C++ | [sendspin-server-cpp](https://github.com/Sendspin/sendspin-server-cpp) | all | 1.0, early development | |
 
-**aiosendspin** is the server inside Music Assistant, which makes it the reference server: whatever it does is what clients in the field expect. If you are building a server in Python, build on it. A **C++ server** for embedded and desktop products is on the roadmap but has not been started; if you need one, say so on the Discord so the work can be planned with you.
+**aiosendspin** is the server inside Music Assistant, which makes it the reference server: whatever it does is what clients in the field expect. If you are building a server in Python, build on it.
+
+**sendspin-server-cpp** is the C++ server library, for a media player, a sound-server sink or a small daemon that streams to Sendspin players. It runs on Linux and macOS hosts and builds as an ESP-IDF component, streams PCM, FLAC or Opus resampled for each player, and has the Noise encryption and pairing built in. `examples/server_cli` is a complete host to start from. It is in early development with no release yet, and its API changes without deprecation, so pin a commit if you build on it. Apache 2.0.
 
 ## Reference players and tools
 
