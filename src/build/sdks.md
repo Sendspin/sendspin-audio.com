@@ -23,7 +23,7 @@ This page lists the implementations that are at specification 1.0. All of them a
 | Python | [aiosendspin](https://github.com/Sendspin/aiosendspin) (client) | see repository | 1.0 | Test and reference client |
 | JavaScript | [sendspin-js](https://github.com/Sendspin/sendspin-js) | player; see repository | 1.0 | [Music Assistant](https://www.music-assistant.io) web UI, the [live demo](/#live-demo) on this site |
 
-**sendspin-cpp** is the library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux and macOS hosts, decodes FLAC and PCM with Opus as an option, and has the Noise encryption built in. The repository's `integration-guide.md`, `internals.md` and `playback-sync.md` cover what the guide here does not. Apache 2.0.
+**sendspin-cpp** is the library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux, macOS and Windows hosts, decodes FLAC and PCM with Opus as an option, and has the Noise encryption built in. The repository's `integration-guide.md`, `internals.md` and `playback-sync.md` cover what the guide here does not. Apache 2.0.
 
 **aiosendspin** is the async Python library. Its client side is complete and conformant, but it is best treated as a reference and test client: something to script against your server, or to read when the specification leaves you unsure. On PyPI as `aiosendspin`. Apache 2.0.
 
@@ -40,7 +40,7 @@ This page lists the implementations that are at specification 1.0. All of them a
 
 ## Reference players and tools
 
-- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)**: the recommended CLI and reference player. Headless, for Linux, Raspberry Pi and Apple-silicon macOS, with a guided installer. Start it with `sendspin-cli -n living-room` and you have a known-good player to compare your own against.
+- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)**: the recommended CLI and reference player. Headless, for Linux, Raspberry Pi, Apple-silicon macOS and Windows, with a guided installer. Start it with `sendspin-cli -n living-room` and you have a known-good player to compare your own against.
 - **[sendspin-python-cli](https://github.com/Sendspin/sendspin-python-cli)**: a Python player (`pip install sendspin` or `uv tool install sendspin`) with an interactive terminal client, a daemon mode and a party mode.
 - **[time-filter](https://github.com/Sendspin/time-filter)**: the C++ reference implementation of the clock-synchronization Kalman filter the specification requires, including the known-good burst strategy. Use it as is or port it line by line.
 - **[conformance](https://github.com/Sendspin/conformance)**: the harness that runs every implementation against every other and publishes the [results matrix](https://sendspin.github.io/conformance/). Add an adapter for yours; the [testing chapter](/build/guide/testing/) explains how.

@@ -11,11 +11,11 @@ Build a client in the following order. Each step links to the relevant [specific
 
 Choose an SDK for your platform:
 
-- **[sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)** is the C++ library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux and macOS hosts. You add the roles you need when you set up the client, and roles you never use can be left out of the build to save flash. You provide an `on_audio_write` callback, a network-ready provider and a persistence provider; the library hosts the WebSocket server and does Noise, decoding and time sync itself.
+- **[sendspin-cpp](https://github.com/Sendspin/sendspin-cpp)** is the C++ library for devices. It runs on ESP32 through the ESP-IDF component registry (`sendspin/sendspin-cpp`) and on Linux, macOS and Windows hosts. You add the roles you need when you set up the client, and roles you never use can be left out of the build to save flash. You provide an `on_audio_write` callback, a network-ready provider and a persistence provider; the library hosts the WebSocket server and does Noise, decoding and time sync itself.
 - **[aiosendspin](https://github.com/Sendspin/aiosendspin)** is Python. It is the server inside Music Assistant; its client side is mainly a test and reference client.
 - **[sendspin-js](https://github.com/Sendspin/sendspin-js)** is TypeScript for browsers.
 
-Whatever you pick, install [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Raspberry Pi or a Mac first. Use it as a reference player to compare against yours. The [SDK page](/build/sdks/) lists everything. If you are on ESP32, read the [ESPHome chapter](/build/guide/esphome/) before writing any code.
+Whatever you pick, install [sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli) on a Raspberry Pi, a Mac or a Windows PC first. Use it as a reference player to compare against yours. The [SDK page](/build/sdks/) lists everything. If you are on ESP32, read the [ESPHome chapter](/build/guide/esphome/) before writing any code.
 
 ## 2. The components
 

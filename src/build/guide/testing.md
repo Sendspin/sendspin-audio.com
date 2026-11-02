@@ -12,7 +12,7 @@ Test against real peers first, then run the automated conformance suite and meas
 
 Play music through your implementation alongside a reference implementation. Use the following peers to test every role.
 
-- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)** is the reference player. It runs headless on Linux, a Raspberry Pi or an Apple-silicon Mac, has a guided installer, and starts with `sendspin-cli -n living-room`. Keep one running next to your device for the whole project; if the two drift apart, compare their timing to find the cause.
+- **[sendspin-cpp-cli](https://github.com/Sendspin/sendspin-cpp-cli)** is the reference player. It runs headless on Linux, a Raspberry Pi, an Apple-silicon Mac or Windows, has a guided installer, and starts with `sendspin-cli -n living-room`. Keep one running next to your device for the whole project; if the two drift apart, compare their timing to find the cause.
 - **[sendspin-python-cli](https://github.com/Sendspin/sendspin-python-cli)** is a second, independent player (`pip install sendspin` or `uv tool install sendspin`). Reproducing a failure with both players helps narrow down the cause.
 - **[Music Assistant](https://www.music-assistant.io)** is the reference server. If you are building a client, test against it first and treat its behavior as the expected one.
 - **An ESPHome device**, such as the Home Assistant Voice Preview Edition, is a reference client in the field and what a server will meet in most homes.
