@@ -747,7 +747,7 @@ if (!root) {
   });
 
   const sdkImport =
-    import("https://unpkg.com/@sendspin/sendspin-js@3.0.1/dist/index.js?module");
+    import("https://cdn.jsdelivr.net/npm/@sendspin/sendspin-js@5.0.0/+esm");
 
   renderUiState();
   resetSyncDisplay();
