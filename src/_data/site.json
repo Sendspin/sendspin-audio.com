@@ -4,7 +4,7 @@
       { "href": "/#whole-room", "label": "The experience" },
       { "href": "/#live-demo", "label": "Live demo" },
       { "href": "/#start", "label": "Get started" },
-      { "href": "https://www.home-assistant.io/voice-pe/", "label": "Voice PE" }
+      { "href": "https://www.home-assistant.io/connect/aux-2/", "label": "Connect AUX-2" }
     ],
     "build": [
       { "href": "/build/", "label": "Build with Sendspin" },

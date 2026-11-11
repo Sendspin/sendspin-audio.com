@@ -427,6 +427,13 @@
      they only make sense once the panel is open, so they live inside the
      clipped area and appear with it. */
 }
+/* On phones the button sits under the track, so the title and artist get the card's full width. */
+@media (max-width: 540px) {
+  .demo-card__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 .demo-card__now {
   display: flex;
   flex-direction: column;
@@ -858,7 +865,7 @@
 
 .partners__grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: var(--sp-3);
   align-items: stretch;
 }

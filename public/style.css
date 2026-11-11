@@ -185,6 +185,8 @@ body {
   font-weight: var(--fw-regular);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* No one-word last lines in body copy; headings set their own balance. */
+  text-wrap: pretty;
   overflow-x: hidden;
 }
 
