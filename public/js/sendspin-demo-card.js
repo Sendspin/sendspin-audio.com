@@ -1,4 +1,4 @@
-const DEMO_SERVER_URL = "https://sendspin-demo.openhomefoundation.org";
+const DEMO_SERVER_URL = "wss://sendspin-demo.openhomefoundation.org/sendspin";
 const MAX_VOLUME = 100;
 const UI_ACTIVATION_MS = 550;
 const SYNC_UPDATE_INTERVAL_MS = 250;
@@ -599,16 +599,16 @@ if (!root) {
     state.player = null;
 
     try {
-      activePlayer.disconnect(reason);
+      activePlayer.destroy(reason);
     } catch (err) {
-      console.warn("Failed to disconnect player:", err);
+      console.warn("Failed to destroy player:", err);
     }
   }
 
   async function createPlayer() {
     const { SendspinPlayer } = await sdkImport;
     return new SendspinPlayer({
-      baseUrl: serverUrl,
+      url: serverUrl,
       onStateChange: handlePlayerStateChange,
     });
   }
@@ -632,7 +632,7 @@ if (!root) {
         destroyPlayer("user_request");
       } else {
         try {
-          nextPlayer.disconnect("user_request");
+          nextPlayer.destroy("user_request");
         } catch (disconnectErr) {
           console.warn(
             "Failed to clean up after connection error:",
@@ -747,7 +747,7 @@ if (!root) {
   });
 
   const sdkImport =
-    import("https://cdn.jsdelivr.net/npm/@sendspin/sendspin-js@5.0.0/+esm");
+    import("https://cdn.jsdelivr.net/npm/@sendspin/sendspin-js@6.0.0/+esm");
 
   renderUiState();
   resetSyncDisplay();
