@@ -91,7 +91,7 @@ Spec: [Rounds](/build/spec/#rounds), [Pairing Window](/build/spec/#pairing-windo
 
 The round limit, the window and attempt limits, and the cooldown are what a test lab can point at when it asks how authentication resists brute force; ETSI EN 303 645 provision 5.1-5 and EN 18031-1 mechanism AUM-6 ask that question. Document the limits your firmware enforces and the gesture that resets them. Per-device identity keys, pairing PSKs and static codes drawn from a CSPRNG answer the provisions on universal default credentials.
 
-A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol. With guest mode on, audio from an unauthenticated peer reaches your decoder. Treat the decode path as network-facing input and fuzz it.
+A device can go further and keep Sendspin disabled until a per-device credential exists, so it never answers on the network without an identity. ESPHome offers an action for this, which lets you build EN 18031-style defaults without changing the protocol. With guest mode on, audio, artwork images and metadata from an unauthenticated peer reach your decoders and parsers. Treat those paths as network-facing input and fuzz them.
 
 ## Where to look next
 
