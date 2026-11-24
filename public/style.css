@@ -330,6 +330,29 @@ section[id], h2[id], .page-content [id] { scroll-margin-top: calc(72px + var(--s
 .btn:hover .arrow { transform: translateX(4px); }
 
 /* ============================================================
+   BANNER — site-wide announcement above the nav; scrolls away
+   ============================================================ */
+.banner {
+  background: var(--bg-inverse);
+  color: var(--fg-on-dark);
+  font-size: var(--fs-small);
+  padding-block: var(--sp-2);
+}
+.banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1) var(--sp-3);
+}
+.banner__cta {
+  color: var(--fg-on-dark-strong);
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+.banner__cta:hover { color: var(--ss-coral-soft); }
+
+/* ============================================================
    NAV — sticky, blurred
    ============================================================ */
 .nav {
