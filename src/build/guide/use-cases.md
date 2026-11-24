@@ -36,6 +36,7 @@ Each case names the roles involved, how the device connects, which pairing metho
     <ul>
       <li>Ask for artwork in exactly the pixel size you render; the server scales for you. Use a second channel for a blurred background.</li>
       <li>Scheduled metadata lets you show "up next" before the track changes.</li>
+      <li>The <code>artwork_url</code> in metadata can be any URL the server likes. Only load it as an image, and only when it is an http or https URL.</li>
       <li>Pairing: show a dynamic code or a QR code on the display.</li>
       <li>A controller acts on the group the display is in. Give the user a way to switch groups.</li>
       <li>Start with <a href="https://github.com/Sendspin/sendspin-js">sendspin-js</a> for web-based panels, sendspin-cpp for embedded displays.</li>
