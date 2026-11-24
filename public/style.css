@@ -336,11 +336,25 @@ section[id], h2[id], .page-content [id] { scroll-margin-top: calc(72px + var(--s
   background: var(--bg-inverse);
   color: var(--fg-on-dark);
   font-size: var(--fs-small);
-  text-align: center;
   padding-block: var(--sp-2);
 }
-.banner a { color: var(--fg-on-dark-strong); font-weight: var(--fw-semibold); }
-.banner a:hover { color: var(--ss-coral-soft); }
+.banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1) var(--sp-3);
+}
+.banner__cta {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.banner__cta:hover { background: var(--accent-deep); color: var(--accent-fg); }
 
 /* ============================================================
    NAV — sticky, blurred
