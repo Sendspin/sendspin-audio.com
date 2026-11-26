@@ -42,7 +42,14 @@ Spec: [Identities](/build/spec/#identities), [Pairing Records](/build/spec/#pair
 
 ## 4. Announce what you can do
 
-`client/hello` is where the server learns what it is talking to. List your roles in preference order. List formats with `flac` or `pcm` present so every server can serve you; Opus is optional and carries third-party patent licensing for commercial hardware. A player that cannot switch sample rates without a gap should list one rate and let the server resample. Fill in `device_info` with manufacturer, model and firmware version. Send the MAC address only when you have a deliberate reason: it is a stable identifier. Add a name, your current `unpaired_access` setting and the pairing methods you offer.
+`client/hello` is where the server learns what it is talking to. List your roles in preference order. If you implement the player role, list at least one `supported_formats` entry that is guaranteed to be supported by every server:
+
+- `flac` with a `bit_depth` of 16 or 24
+- `pcm` with a `bit_depth` of 16
+
+Either one needs 1 or 2 `channels` and a `sample_rate` of 44100 or 48000. Without such an entry, a server may have no format it can send you, so it never starts a stream.
+
+Opus is optional and carries third-party patent licensing for commercial hardware. A player that cannot switch sample rates without a gap should list one rate and let the server resample. Fill in `device_info` with manufacturer, model and firmware version. Send the MAC address only when you have a deliberate reason: it is a stable identifier. Add a name, your current `unpaired_access` setting and the pairing methods you offer.
 
 Spec: [`client/hello`](/build/spec/#client--server-clienthello), [player@v1 support object](/build/spec/#client--server-clienthello-playerv1-support-object).
 
